@@ -97,9 +97,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister, onSele
         {/* Left Column: Text Content & Info */}
         <div className="relative">
           {/* Badge */}
-          <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 sm:px-3.5 font-tech text-[10px] sm:text-[11px] uppercase tracking-wider text-white/80 backdrop-blur leading-tight">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 sm:px-3.5 font-tech text-[10px] sm:text-[11px] uppercase tracking-wider text-white/80 backdrop-blur leading-tight">
             <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse"></span>
-            <span>Registration open · Learn · Build · Connect · Grow</span>
+            <span className="whitespace-nowrap">Registration Live · Learn · Build · Connect</span>
           </div>
 
           {/* Heading */}

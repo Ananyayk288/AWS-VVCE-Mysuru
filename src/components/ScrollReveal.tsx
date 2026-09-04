@@ -18,21 +18,36 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el) {
+      setIsVisible(true);
+      return;
+    }
+
+    // Safety fallback: ensure content becomes visible within 150ms if observer is slow or blocked on localhost
+    const fallbackTimer = setTimeout(() => {
+      setIsVisible(true);
+    }, 150);
+
+    if (!('IntersectionObserver' in window)) {
+      setIsVisible(true);
+      return () => clearTimeout(fallbackTimer);
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
           observer.unobserve(el);
+          clearTimeout(fallbackTimer);
         }
       },
-      { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
+      { threshold: 0.01, rootMargin: '100px 0px 100px 0px' }
     );
 
     observer.observe(el);
 
     return () => {
+      clearTimeout(fallbackTimer);
       if (el) observer.unobserve(el);
     };
   }, []);
@@ -42,11 +57,11 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
       case 'fade-left':
         return isVisible
           ? 'opacity-100 translate-x-0'
-          : 'opacity-0 -translate-x-12';
+          : 'opacity-0 -translate-x-6';
       case 'fade-right':
         return isVisible
           ? 'opacity-100 translate-x-0'
-          : 'opacity-0 translate-x-12';
+          : 'opacity-0 translate-x-6';
       case 'zoom-in':
         return isVisible
           ? 'opacity-100 scale-100'
@@ -55,7 +70,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
       default:
         return isVisible
           ? 'opacity-100 translate-y-0'
-          : 'opacity-0 translate-y-10';
+          : 'opacity-0 translate-y-6';
     }
   };
 
@@ -63,9 +78,10 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
     <div
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${getVariantStyles()} ${className}`}
+      className={`transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${getVariantStyles()} ${className}`}
     >
       {children}
     </div>
   );
 };
+
