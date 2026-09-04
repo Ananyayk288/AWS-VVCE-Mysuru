@@ -5,9 +5,13 @@ interface HeaderProps {
   onOpenRegister: () => void;
 }
 
+const cyclingWords = ['AI/ML', 'Data', 'DevOps', 'Cloud', 'Security', 'Serverless', 'Containers'];
+
 export const Header: React.FC<HeaderProps> = ({ onOpenRegister }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [wordIndex, setWordIndex] = useState(0);
+  const [wordVisible, setWordVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +19,17 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRegister }) => {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const cycle = setInterval(() => {
+      setWordVisible(false);
+      setTimeout(() => {
+        setWordIndex(i => (i + 1) % cyclingWords.length);
+        setWordVisible(true);
+      }, 350);
+    }, 2200);
+    return () => clearInterval(cycle);
   }, []);
 
   const navItems = [
@@ -51,8 +66,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRegister }) => {
           </span>
           <span className="flex flex-col leading-none">
             <span className="text-base font-bold tracking-tight text-white">AWS Community Day</span>
-            <span className="font-tech text-[10px] uppercase tracking-[0.2em] text-white/45 mt-0.5">
-              where builders meet the cloud
+            <span className="font-tech text-[10px] uppercase tracking-[0.2em] text-white/45 mt-0.5 flex items-center gap-1">
+              where builders meet{' '}
+              <span
+                style={{
+                  opacity: wordVisible ? 1 : 0,
+                  transform: wordVisible ? 'translateY(0px)' : 'translateY(-4px)',
+                  transition: 'opacity 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1)',
+                  display: 'inline-block',
+                }}
+              >
+                {cyclingWords[wordIndex]}
+              </span>
             </span>
           </span>
         </a>

@@ -11,6 +11,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister, onSele
   const [speakers, setSpeakers] = useState(0);
   const [sessions, setSessions] = useState(0);
 
+  const cyclingWords = ['AI/ML', 'Data', 'DevOps', 'Cloud', 'Security', 'Serverless', 'Containers'];
+  const [wordIndex, setWordIndex] = useState(0);
+  const [wordVisible, setWordVisible] = useState(true);
+
   useEffect(() => {
     const duration = 1500;
     const steps = 40;
@@ -28,6 +32,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister, onSele
     }, intervalTime);
 
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const cycle = setInterval(() => {
+      setWordVisible(false);
+      setTimeout(() => {
+        setWordIndex(i => (i + 1) % cyclingWords.length);
+        setWordVisible(true);
+      }, 350);
+    }, 2200);
+    return () => clearInterval(cycle);
   }, []);
 
   const nodes = [
@@ -82,29 +97,39 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister, onSele
         {/* Left Column: Text Content & Info */}
         <div className="relative">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 font-tech text-[11px] uppercase tracking-widest text-white/70 backdrop-blur">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse"></span>
-            Registration open · Learn · Build · Connect · Grow
+          <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 sm:px-3.5 font-tech text-[10px] sm:text-[11px] uppercase tracking-wider text-white/80 backdrop-blur leading-tight">
+            <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse"></span>
+            <span>Registration open · Learn · Build · Connect · Grow</span>
           </div>
 
           {/* Heading */}
-          <h1 className="mt-6 text-4xl font-black leading-[1.02] tracking-tight text-white sm:text-6xl lg:text-7xl">
-            Where Builders<br />
-            Meet the <span className="text-gradient-cool">Cloud.</span>
+          <h1 className="mt-4 sm:mt-6 text-3xl font-black leading-[1.08] sm:leading-[1.02] tracking-tight text-white sm:text-6xl lg:text-7xl">
+            Where Builders<br className="hidden sm:inline" />{' '}
+            Meet{' '}
+            <span
+              className="text-gradient-cool inline-block"
+              style={{
+                opacity: wordVisible ? 1 : 0,
+                transform: wordVisible ? 'translateY(0px)' : 'translateY(-12px)',
+                transition: 'opacity 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1)',
+              }}
+            >
+              {cyclingWords[wordIndex]}.
+            </span>
           </h1>
 
           {/* Description */}
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70 sm:text-lg">
+          <p className="mt-4 sm:mt-6 max-w-xl text-sm leading-relaxed text-white/70 sm:text-lg">
             A one-day, community-run AWS conference for students, developers, architects, and the cloud-curious. Deep talks, hands-on workshops, and the kind of people you'll want to build the future with.
           </p>
 
           {/* Buttons */}
-          <div className="mt-8 flex flex-wrap items-center gap-4">
+          <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4">
             <a
               href="https://konfhub.com/aws-student-community-day-mysuru-2026"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex cursor-pointer items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold tracking-tight text-black shadow-[0_2px_12px_rgba(214,163,75,0.25)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(214,163,75,0.45)]"
+              className="group relative inline-flex cursor-pointer items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold tracking-tight text-black shadow-[0_2px_12px_rgba(214,163,75,0.25)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(214,163,75,0.45)] text-center"
               style={{ background: 'linear-gradient(120deg, #B7791F, #D6A34B 60%, #B7791F)' }}
             >
               Register Now <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -112,16 +137,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister, onSele
 
             <a
               href="#agenda"
-              className="group relative inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-white/10 hover:border-white/30"
+              className="group relative inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-white/10 hover:border-white/30 text-center"
             >
               Explore Agenda
             </a>
           </div>
 
           {/* Metadata Pills */}
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/60">
+          <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-x-6 gap-y-2.5 text-xs sm:text-sm text-white/60">
             <span className="flex items-center gap-2">
-              <CalendarDays className="h-4 w-4 text-[#A78BFA]" />
+              <CalendarDays className="h-4 w-4 text-[#A78BFA] shrink-0" />
               Saturday, November 21, 2026
             </span>
 
@@ -131,37 +156,37 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister, onSele
               rel="noopener noreferrer"
               className="flex items-center gap-2 transition-colors hover:text-white underline decoration-white/30 underline-offset-4"
             >
-              <MapPin className="h-4 w-4 text-[#A78BFA]" />
+              <MapPin className="h-4 w-4 text-[#A78BFA] shrink-0" />
               Vidyavardhaka College of Engineering
             </a>
 
             <span className="flex items-center gap-2 font-tech text-xs text-white/40">
-              <Sparkles className="h-3.5 w-3.5 text-[#A78BFA]" />
+              <Sparkles className="h-3.5 w-3.5 text-[#A78BFA] shrink-0" />
               // sudo attend aws-community-day
             </span>
           </div>
 
           {/* Stats Cards */}
-          <div className="mt-10 grid grid-cols-3 gap-3">
-            <div className="glass rounded-2xl p-4 border border-white/10 bg-white/[0.03] backdrop-blur-md">
-              <p className="text-3xl font-bold text-white tracking-tight">
+          <div className="mt-8 sm:mt-10 grid grid-cols-3 gap-2.5 sm:gap-3">
+            <div className="glass rounded-2xl p-3 sm:p-4 border border-white/10 bg-white/[0.03] backdrop-blur-md text-center">
+              <p className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 <span>{attendees}</span><span className="text-[#A78BFA]">+</span>
               </p>
-              <p className="mt-1 font-tech text-[10px] uppercase tracking-widest text-white/50">Attendees</p>
+              <p className="mt-1 font-tech text-[9px] sm:text-[10px] uppercase tracking-widest text-white/50">Attendees</p>
             </div>
 
-            <div className="glass rounded-2xl p-4 border border-white/10 bg-white/[0.03] backdrop-blur-md">
-              <p className="text-3xl font-bold text-white tracking-tight">
+            <div className="glass rounded-2xl p-3 sm:p-4 border border-white/10 bg-white/[0.03] backdrop-blur-md text-center">
+              <p className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 <span>{speakers}</span><span className="text-[#A78BFA]">+</span>
               </p>
-              <p className="mt-1 font-tech text-[10px] uppercase tracking-widest text-white/50">Speakers</p>
+              <p className="mt-1 font-tech text-[9px] sm:text-[10px] uppercase tracking-widest text-white/50">Speakers</p>
             </div>
 
-            <div className="glass rounded-2xl p-4 border border-white/10 bg-white/[0.03] backdrop-blur-md">
-              <p className="text-3xl font-bold text-white tracking-tight">
+            <div className="glass rounded-2xl p-3 sm:p-4 border border-white/10 bg-white/[0.03] backdrop-blur-md text-center">
+              <p className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 <span>{sessions}</span><span className="text-[#A78BFA]">+</span>
               </p>
-              <p className="mt-1 font-tech text-[10px] uppercase tracking-widest text-white/50">Sessions</p>
+              <p className="mt-1 font-tech text-[9px] sm:text-[10px] uppercase tracking-widest text-white/50">Sessions</p>
             </div>
           </div>
         </div>
