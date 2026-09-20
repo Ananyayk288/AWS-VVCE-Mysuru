@@ -1,42 +1,49 @@
-/* Custom design tokens and animations for AWS Community Day Clone */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* Custom design tokens and animations for AWS Community Day */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 /* ── Design Tokens ─────────────────────────────────────────── */
 :root {
-  --background: #050508;
-  --foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.1);
-  --primary: #7C3AED;
-  --primary-foreground: #ffffff;
-  --secondary: #1a1a2e;
-  --muted: #0f0f1a;
-  --muted-foreground: rgba(255, 255, 255, 0.5);
-  --accent: #1e1b4b;
-  --accent-foreground: #ffffff;
+  --background: #ffffff;
+  --foreground: #222b38;
+  --border: rgba(30, 41, 59, 0.15);
+  --input: rgba(30, 41, 59, 0.08);
+  --primary: #01c1ac;
+  --primary-foreground: #2c3746;
+  --secondary: #d4dcc9;
+  --muted: #f1f5f9;
+  --muted-foreground: #94a3b8;
+  --accent: #01c1ac;
+  --accent-foreground: #2c3746;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --card: rgba(255, 255, 255, 0.03);
+  --card: #222b38;
   --card-foreground: #ffffff;
-  --popover: #0c0a1d;
+  --popover: #222b38;
   --popover-foreground: #ffffff;
-  --ring: #7C3AED;
+  --ring: #01c1ac;
   --radius: 0.5rem;
-  --sidebar: #050508;
-  --sidebar-foreground: rgba(255, 255, 255, 0.7);
-  --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-ring: #7C3AED;
+  --sidebar: #2c3746;
+  --sidebar-foreground: #64748b;
+  --sidebar-border: rgba(148, 163, 184, 0.1);
+  --sidebar-ring: #01c1ac;
 
   /* Brand Color System */
-  --purple-light: #A78BFA;
-  --purple: #7C3AED;
-  --purple-dark: #5B21B6;
-  --green: #7CCB8C;
+  --navy: #222b38;
+  --navy-deep: #2c3746;
+  --navy-light: #3a4759;
+  --sage: #ffffff;
+  --sage-dark: #f1f5f9;
+  --sage-light: #e8ede0;
+  --mint: #01c1ac;
+  --teal: #00728f;
+  --teal-dark: #01c1ac;
+  --green-accent: #00DF89;
   --orange: #FF9900;
-  --black-base: #050508;
-  --black-elevated: #0c0a1d;
+  --bg-base: #ffffff;
+  --bg-card: #222b38;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-tech: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --font-serif: 'DM Serif Display', Georgia, serif;
+  --font-tech: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
 }
 
 /* ── Base Styles ───────────────────────────────────────────── */
@@ -61,12 +68,12 @@ body {
 }
 
 /* ── Keyframes ─────────────────────────────────────────────── */
-@keyframes aurora {
-  0%   { transform: translate(0, 0) scale(1); opacity: 0.7; }
-  25%  { transform: translate(5%, -3%) scale(1.05); opacity: 0.85; }
-  50%  { transform: translate(3%, 6%) scale(0.98); opacity: 0.7; }
-  75%  { transform: translate(-4%, 2%) scale(1.08); opacity: 0.9; }
-  100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+@keyframes float {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(3%, -2%) scale(1.03); }
+  50%  { transform: translate(-2%, 4%) scale(0.98); }
+  75%  { transform: translate(4%, 1%) scale(1.04); }
+  100% { transform: translate(0, 0) scale(1); }
 }
 
 @keyframes dash {
@@ -98,84 +105,56 @@ body {
 }
 
 /* ── Animation Utilities ───────────────────────────────────── */
-.animate-aurora {
-  animation: aurora 18s ease-in-out infinite;
+.animate-float {
+  animation: float 18s ease-in-out infinite;
 }
 
 .animate-pulse-glow {
   animation: pulse-glow 3.2s ease-in-out infinite;
 }
 
-/* ── Glassmorphism ─────────────────────────────────────────── */
+/* ── Dark Cards ──────────────────────────────────────────── */
 .glass {
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  background: linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(30, 41, 59, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  backdrop-filter: blur(12px);
 }
 
 .glass-strong {
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  background: linear-gradient(rgba(255,255,255,0.08), rgba(255,255,255,0.04));
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-/* ── Grid Background ───────────────────────────────────────── */
-.grid-bg {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.043) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.043) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(black 40%, transparent 85%);
-  -webkit-mask-image: radial-gradient(black 40%, transparent 85%);
-}
-
-/* ── Noise Overlay ─────────────────────────────────────────── */
-.noise {
-  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background: rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  backdrop-filter: blur(16px);
 }
 
 /* ── Text Gradients ────────────────────────────────────────── */
 .text-gradient-cool {
   color: transparent;
-  background: linear-gradient(120deg, #faf5ff 0%, #ddd6fe 48%, #7c3aed 100%);
+  background: linear-gradient(120deg, #00728f 0%, #01c1ac 50%, #00DF89 100%);
   -webkit-background-clip: text;
   background-clip: text;
 }
 
 .text-gradient-aws {
   color: transparent;
-  background: linear-gradient(120deg, #f5e6ff 0%, #c4b5fd 42%, #8b5cf6 72%, #6d28d9 100%);
+  background: linear-gradient(120deg, #00728f 0%, #01c1ac 42%, #00DF89 72%, #00728f 100%);
   -webkit-background-clip: text;
   background-clip: text;
 }
 
 /* ── Font Utilities ────────────────────────────────────────── */
 .font-tech {
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, SF Mono, Consolas, monospace;
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
   font-feature-settings: "ss01", "cv01";
 }
 
-/* ── Colors ────────────────────────────────────────────────── */
-.text-purple-light { color: var(--purple-light); }
-.text-purple       { color: var(--purple); }
-.text-green        { color: var(--green); }
-.bg-green          { background-color: var(--green); }
-
-/* ── Color Variables for Tailwind classes ──────────────────── */
-:root {
-  --color-purple-light: var(--purple-light);
-  --color-purple: var(--purple);
-  --color-purple-dark: var(--purple-dark);
-  --color-green: var(--green);
-  --color-orange: var(--orange);
+.font-serif {
+  font-family: 'DM Serif Display', Georgia, serif;
 }
 
 /* ── Selection ─────────────────────────────────────────────── */
 ::selection {
-  background: rgba(124, 58, 237, 0.35);
-  color: #ffffff;
+  background: rgba(134, 239, 172, 0.3);
+  color: #2c3746;
 }
 
 /* ── SVG Dash Animation ────────────────────────────────────── */
@@ -189,14 +168,14 @@ svg line[style*="animation"] {
 }
 
 ::-webkit-scrollbar-track {
-  background: #050508;
+  background: #222b38;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(124, 58, 237, 0.4);
+  background: rgba(134, 239, 172, 0.4);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(167, 139, 250, 0.6);
+  background: rgba(134, 239, 172, 0.6);
 }

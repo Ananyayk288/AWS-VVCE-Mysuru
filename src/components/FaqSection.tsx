@@ -1,96 +1,97 @@
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
 
-interface FaqItem {
-  question: string;
-  answer: string;
-}
-
 export const FaqSection: React.FC = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const faqs: FaqItem[] = [
+  const faqs = [
     {
-      question: 'What can I expect from the event?',
-      answer: 'Expect keynote sessions, technical talks, hands-on workshops, networking opportunities, sponsor booths, community interactions, giveaways, and real-world insights from AWS experts and community leaders.',
+      question: "What is AWS Community Day?",
+      answer: "AWS Community Days are community-led conferences where event logistics and content is planned, sourced, and delivered by community leaders. They feature technical discussions, workshops, and hands-on labs led by expert AWS users and industry leaders from around the world."
     },
     {
-      question: 'Who can attend AWS Community Day?',
-      answer: 'Students, Teachers/faculty, developers, software engineers, cloud professionals, startup founders, IT enthusiasts, educators, and anyone interested in cloud technology are welcome to attend.',
+      question: "Who should attend this event?",
+      answer: "The event is designed for cloud builders of all levels. Whether you're a student just starting with AWS, a developer looking to deploy your first container, or an experienced architect running production workloads, you'll find sessions tailored to your expertise."
     },
     {
-      question: 'Do I need prior AWS or cloud experience?',
-      answer: 'No! No prior experience is required. While AWS is a part of the event, we focus on exploring various tech domains and emerging technologies beyond AWS as well.',
+      question: "Do I need to bring my laptop?",
+      answer: "Yes, if you plan to participate in the hands-on workshops. We recommend bringing a fully charged laptop. Wi-Fi will be provided at the venue. For standard talks and keynotes, a laptop is not required but can be useful for taking notes."
     },
     {
-      question: 'Will food and refreshments be provided?',
-      answer: 'Yes. Complimentary refreshments and lunch will be provided. Check the agenda for scheduled meal breaks.',
+      question: "Are there any prerequisites for the workshops?",
+      answer: "Prerequisites vary by workshop. Most will require an active AWS Account (Free Tier is fine) and basic familiarity with the command line. Specific requirements will be shared with registered attendees closer to the event date."
     },
     {
-      question: 'Will Transportation be provided?',
-      answer: 'Yes — details regarding local transportation and directions to Vidyavardhaka College of Engineering, Mysuru will be shared with registered attendees.',
+      question: "Will food and beverages be provided?",
+      answer: "Yes, your ticket includes morning tea/coffee, a full buffet lunch, and evening high-tea. We will have vegetarian options available. If you have specific dietary requirements, please mention them during registration."
     },
     {
-      question: 'Do I need to bring a laptop?',
-      answer: 'Recommended for workshops. Talks and keynotes can be enjoyed empty-handed with a coffee in the other.',
-    },
-    {
-      question: 'Is there Wi-Fi?',
-      answer: 'Yes — venue Wi-Fi credentials are printed on your badge. Sponsors also provide backup networks.',
-    },
+      question: "How can I become a speaker or sponsor?",
+      answer: "Call for Speakers (CFP) is currently open! Check the 'Register' section for the application link. For sponsorships, we have multiple tiers available. Please contact us at awsugmysuru@gmail.com for the sponsorship prospectus."
+    }
   ];
 
+  const toggleFaq = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
-    <section id="faq" className="relative py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          <ScrollReveal variant="fade-left">
-            <header className="max-w-3xl">
-              <p className="font-tech text-xs uppercase tracking-[0.25em] text-[#A78BFA]">
-                <span className="text-white/40">#</span>08 · FAQ
-              </p>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
-                Frequently asked <span className="text-gradient-cool">questions.</span>
+    <section
+      id="faq"
+      className="relative flex w-full max-w-full overflow-hidden flex-col items-center justify-center p-5 py-16 sm:p-8 sm:py-20 md:p-10 lg:p-20 bg-[#EFF0F3] scroll-mt-20"
+    >
+      <div className="mx-auto w-full max-w-[1720px]">
+        <div className="grid w-full grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-16">
+          
+          {/* Left Column: Heading */}
+          <div className="lg:col-span-1">
+            <ScrollReveal variant="fade-right">
+              <h2 className="font-sans w-full text-4xl leading-[105%] font-medium tracking-[-0.03em] text-[#23303E] sm:text-5xl">
+                FAQ's
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-white/60 sm:text-lg">
-                Everything you need to know about tickets, logistics, and what to expect on event day.
-              </p>
-            </header>
-          </ScrollReveal>
-
-          <div className="space-y-4">
-            {faqs.map((faq, index) => {
-              const isOpen = openIndex === index;
-              return (
-                <ScrollReveal key={index} variant="fade-up" delay={index * 80}>
-                  <div
-                    className="glass overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md transition-colors hover:border-white/20"
-                  >
-                    <button
-                      onClick={() => setOpenIndex(isOpen ? null : index)}
-                      className="flex w-full cursor-pointer items-center justify-between p-5 sm:p-6 text-left transition-colors"
-                    >
-                      <span className="text-base font-semibold text-white sm:text-lg">
-                        {faq.question}
-                      </span>
-                      <ChevronDown
-                        className={`h-5 w-5 shrink-0 text-[#A78BFA] transition-transform duration-300 ${
-                          isOpen ? 'rotate-180' : ''
-                        }`}
-                      />
-                    </button>
-
-                    {isOpen && (
-                      <div className="px-5 pb-6 sm:px-6 text-sm leading-relaxed text-white/70 border-t border-white/5 pt-4">
-                        {faq.answer}
-                      </div>
-                    )}
-                  </div>
-                </ScrollReveal>
-              );
-            })}
+            </ScrollReveal>
           </div>
+
+          {/* Right Column: Accordion Items */}
+          <div className="lg:col-span-2">
+            <div className="flex w-full flex-col">
+              {faqs.map((faq, index) => {
+                const isOpen = openIndex === index;
+
+                return (
+                  <ScrollReveal key={index} variant="fade-up" delay={index * 40}>
+                    <div className="border-b border-[#5A6C86]/40">
+                      <button
+                        type="button"
+                        onClick={() => toggleFaq(index)}
+                        aria-expanded={isOpen}
+                        className="group flex w-full items-center justify-between py-5 text-left font-sans text-2xl leading-[105%] font-normal tracking-[-0.03em] text-[#23303E] sm:text-3xl cursor-pointer transition-colors"
+                      >
+                        <span className="pr-4">{faq.question}</span>
+                        <Plus
+                          className={`h-6 w-6 text-[#23303E] shrink-0 transition-transform duration-200 ease-out ${
+                            isOpen ? 'rotate-45' : 'rotate-0'
+                          }`}
+                        />
+                      </button>
+
+                      <div
+                        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                          isOpen ? 'max-h-96 opacity-100 pb-6' : 'max-h-0 opacity-0'
+                        }`}
+                      >
+                        <p className="font-sans text-base sm:text-lg font-light leading-relaxed text-[#23303E]/85">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                );
+              })}
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

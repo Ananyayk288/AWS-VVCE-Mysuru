@@ -57,11 +57,11 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
       case 'fade-left':
         return isVisible
           ? 'opacity-100 translate-x-0'
-          : 'opacity-0 -translate-x-6';
+          : 'opacity-0 -translate-x-4';
       case 'fade-right':
         return isVisible
           ? 'opacity-100 translate-x-0'
-          : 'opacity-0 translate-x-6';
+          : 'opacity-0 translate-x-4';
       case 'zoom-in':
         return isVisible
           ? 'opacity-100 scale-100'
@@ -78,7 +78,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
     <div
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${getVariantStyles()} ${className}`}
+      className={`transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] max-w-full ${getVariantStyles()} ${className}`}
     >
       {children}
     </div>

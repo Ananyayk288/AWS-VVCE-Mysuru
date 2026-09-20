@@ -1,84 +1,105 @@
 import React from 'react';
-import { CalendarDays, MapPin, ArrowRight, Sparkles, ExternalLink } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
 
 interface RegisterSectionProps {
-  onOpenRegister: () => void;
+  onOpenRegister?: () => void;
 }
 
-export const RegisterSection: React.FC<RegisterSectionProps> = () => {
+export const RegisterSection: React.FC<RegisterSectionProps> = ({ onOpenRegister }) => {
   return (
-    <section id="register" className="relative pt-24 pb-12 sm:pt-32 sm:pb-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <ScrollReveal variant="zoom-in">
-          <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-gradient-to-br from-[#120e29] via-[#080714] to-[#1a0f35] p-8 sm:p-12 lg:p-16 shadow-[0_0_80px_rgba(124,58,237,0.25)]">
-            {/* Background Ambient Blur */}
-            <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[#FF9900]/20 blur-3xl"></div>
-            <div className="pointer-events-none absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-[#7C3AED]/25 blur-3xl"></div>
+    <section
+      id="venue"
+      className="relative flex h-full w-full max-w-full items-center justify-center overflow-hidden bg-[#23303E] scroll-mt-20"
+    >
+      {/* Anchor for any existing register link compatibility */}
+      <span id="register" className="sr-only" aria-hidden="true" />
 
-            <div className="relative z-10 grid gap-8 lg:grid-cols-2 lg:items-center">
-              <div>
-                <span className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1.5 font-tech text-xs uppercase tracking-widest text-amber-400">
-                  <Sparkles className="h-3.5 w-3.5" /> Limited Seats Available
-                </span>
+      {/* Solid Dark Navy Base Layer on Left side to guarantee 100% solid background behind text */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-0 hidden w-full lg:block lg:w-[50%] bg-[#23303E] select-none" />
 
-                <h2 className="mt-6 text-3xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
-                  Ready to Join the <span className="text-gradient-cool">Cloud Movement?</span>
-                </h2>
+      {/* Desktop Cloud & Concentric Contour Pattern with Embedded VVCE Entrance Photograph */}
+      <div className="pointer-events-none absolute right-0 bottom-0 hidden w-full lg:block select-none z-0">
+        <img
+          alt="Venue Pattern Background"
+          loading="lazy"
+          width="1440"
+          height="480"
+          className="absolute right-0 bottom-0 aspect-auto"
+          src="/venue/Cloud-Desktop.svg"
+        />
+      </div>
 
-                <p className="mt-4 text-base leading-relaxed text-white/70 sm:text-lg">
-                  Secure your pass for AWS Student Community Day Mysuru 2026. Access all technical tracks, hands-on workshops, lunch, networking & official swag.
-                </p>
+      {/* Mobile Cloud & Concentric Contour Pattern with Embedded VVCE Entrance Photograph */}
+      <div className="pointer-events-none absolute right-0 -bottom-10 block w-full lg:hidden select-none z-0">
+        <img
+          alt="Mobile Venue Background"
+          loading="lazy"
+          width="360"
+          height="480"
+          className="aspect-auto w-full"
+          src="/venue/Cloud-Mobile.svg"
+        />
+      </div>
 
-                <div className="mt-8 flex flex-wrap gap-4">
-                  <a
-                    href="https://konfhub.com/aws-student-community-day-mysuru-2026"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative inline-flex cursor-pointer items-center justify-center gap-2.5 rounded-full px-8 py-4 text-base font-bold text-black shadow-[0_2px_20px_rgba(214,163,75,0.4)] transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(214,163,75,0.6)]"
-                    style={{ background: 'linear-gradient(120deg, #B7791F, #D6A34B 60%, #B7791F)' }}
-                  >
-                    Register Now on KonfHub <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                  </a>
-                </div>
-              </div>
+      {/* Content Container */}
+      <div className="relative z-10 flex min-h-[480px] lg:min-h-[480px] w-full flex-col items-center justify-center px-5 py-12 sm:px-8 sm:py-16 md:px-10 lg:px-20 lg:py-20">
+        <div className="flex h-full w-full flex-col items-start gap-8 lg:justify-between">
+          
+          {/* Left-Aligned Text Content Constrained to Stay 100% Inside Dark Navy Region */}
+          <ScrollReveal variant="fade-left" className="w-full">
+            <div className="flex w-full flex-col items-start justify-center gap-3 max-w-[340px] sm:max-w-[420px] lg:max-w-[380px] xl:max-w-[440px]">
+              <h2 className="w-full font-mono text-xs tracking-[0.1em] text-[#D1E5CD] uppercase sm:text-sm font-semibold">
+                VENUE
+              </h2>
+              
+              <h3 className="w-full font-sans text-3xl leading-[108%] font-medium tracking-[-0.03em] text-[#FAFAFA] sm:text-4xl lg:text-5xl">
+                Vidyavardhaka<br />College of Engineering
+              </h3>
 
-              {/* Venue & Event Details Card */}
-              <div className="glass rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-6 sm:p-8 space-y-6">
-                <h3 className="text-lg font-bold text-white tracking-tight border-b border-white/10 pb-4">
-                  Event Logistics & Venue
-                </h3>
-
-                <div className="flex items-start gap-3.5">
-                  <CalendarDays className="h-5 w-5 text-[#A78BFA] shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-semibold text-white">Date & Time</h4>
-                    <p className="text-xs text-white/70 mt-0.5">Saturday, November 21, 2026</p>
-                    <p className="text-xs text-white/50">9:00 AM – 6:00 PM IST</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3.5">
-                  <MapPin className="h-5 w-5 text-[#A78BFA] shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-semibold text-white">Venue Location</h4>
-                    <p className="text-xs text-white/70 mt-0.5">Vidyavardhaka College of Engineering</p>
-                    <p className="text-xs text-white/50">Kannada Sahithya Parishath Road, III Stage, Gokulam, Mysuru - 570002</p>
-                  </div>
-                </div>
-
-                <a
-                  href="https://www.google.com/maps/search/?api=1&query=Vidyavardhaka+College+of+Engineering,Mysuru,Karnataka"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 py-3 text-xs font-semibold text-white transition-colors hover:bg-white/10"
-                >
-                  Get Google Maps Directions <ExternalLink className="h-3.5 w-3.5" />
-                </a>
-              </div>
+              <p className="w-full font-sans text-sm sm:text-base lg:text-lg leading-[135%] font-light tracking-[-0.015em] text-[#FAFAFA]/95 mt-1">
+                Kannada Sahithya Parishath Road, III Stage, Gokulam, Mysuru - 570002.
+                <br className="hidden sm:inline" />
+                Providing the premier setting for a full day of cloud learning, workshops, and community networking.
+              </p>
             </div>
-          </div>
-        </ScrollReveal>
+          </ScrollReveal>
+
+          {/* Action Buttons */}
+          <ScrollReveal variant="fade-up" className="w-full">
+            <div className="flex w-full flex-row flex-wrap items-center justify-start gap-3">
+              {/* Button 1: VIEW DIRECTIONS */}
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Vidyavardhaka+College+of+Engineering,Mysuru,Karnataka"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group/button cursor-pointer shrink-0 items-center justify-center text-xs font-medium whitespace-nowrap transition-all outline-none select-none flex h-11 min-h-11 rounded-none border-none bg-[#D1E5CD] px-5 hover:bg-[#D1E5CD]/80 flex-row gap-2"
+              >
+                <span className="font-mono text-sm tracking-[-0.02em] text-[#23303E] uppercase sm:text-base">
+                  View Directions
+                </span>
+                <ArrowUpRight className="h-5 w-5 text-[#23303E] shrink-0 transition-transform group-hover/button:translate-x-0.5 group-hover/button:-translate-y-0.5" />
+              </a>
+
+              {/* Button 2: REGISTER */}
+              <a
+                href="https://konfhub.com/aws-student-community-day-mysuru-2026"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  if (onOpenRegister) onOpenRegister();
+                }}
+                className="group/button cursor-pointer shrink-0 items-center justify-center text-xs font-medium whitespace-nowrap transition-all outline-none select-none flex h-11 min-h-11 rounded-none border border-[#D1E5CD] bg-[#23303E] px-5 hover:bg-[#23303E]/80 flex-row gap-2"
+              >
+                <span className="font-mono text-sm tracking-[-0.02em] text-[#D1E5CD] uppercase sm:text-base">
+                  Register
+                </span>
+                <ArrowUpRight className="h-5 w-5 text-[#D1E5CD] shrink-0 transition-transform group-hover/button:translate-x-0.5 group-hover/button:-translate-y-0.5" />
+              </a>
+            </div>
+          </ScrollReveal>
+
+        </div>
       </div>
     </section>
   );
