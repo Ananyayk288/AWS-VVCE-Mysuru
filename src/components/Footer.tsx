@@ -49,11 +49,14 @@ export const Footer: React.FC<FooterProps> = ({
             onClick={(e) => handleNav(e, '/#')}
             className="flex items-center gap-3 group cursor-pointer"
           >
-            <img
-              src="/aws_user_group_mysuru_cropped.png"
-              alt="AWS Community Day Mysuru"
-              className="h-10 w-auto object-contain brightness-0 invert"
-            />
+            <div className="h-10 w-10 rounded-full overflow-hidden shrink-0 flex items-center justify-center">
+              <img
+                src="/club_logo.png"
+                alt="AWS Student Builder Group VVCE"
+                className="w-[145%] h-[145%] object-cover scale-100"
+                style={{ objectPosition: 'center center', marginTop: '-2%' }}
+              />
+            </div>
             <span className="flex flex-col leading-none">
               <span className="text-base font-bold tracking-tight text-[#FAFAFA]">
                 COMMUNITY DAY
