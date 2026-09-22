@@ -1,10 +1,120 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Check } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
 
 export const TicketsSection: React.FC = () => {
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+
+    // Helper to ensure KonfHub widget iframe receives the required btnColor parameter.
+    // Without btnColor in the URL, KonfHub's widget CSS sets '--widget-button: auto',
+    // which makes the checkout "Proceed" button transparent with white text (blank white button).
+    const appendBtnColor = (urlStr: string) => {
+      if (typeof urlStr === 'string' && urlStr.includes('konfhub.com/widget/') && !urlStr.includes('btnColor')) {
+        const delimiter = urlStr.includes('?') ? '&' : '?';
+        return `${urlStr}${delimiter}btnColor=23303E&btnBg=23303E`;
+      }
+      return urlStr;
+    };
+
+    const originalSrcDesc = Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, 'src');
+    if (originalSrcDesc && originalSrcDesc.set) {
+      Object.defineProperty(HTMLIFrameElement.prototype, 'src', {
+        set(val: string) {
+          return originalSrcDesc.set!.call(this, appendBtnColor(val));
+        },
+        get() {
+          return originalSrcDesc.get!.call(this);
+        },
+        configurable: true,
+      });
+    }
+
+    const originalSetAttribute = HTMLIFrameElement.prototype.setAttribute;
+    HTMLIFrameElement.prototype.setAttribute = function (name: string, val: string) {
+      if (name.toLowerCase() === 'src') {
+        val = appendBtnColor(val);
+      }
+      return originalSetAttribute.call(this, name, val);
+    };
+
+    // Create a dedicated top-level portal root attached to document.body
+    // This isolates the KonfHub modal from any CSS transforms, clipping, or card hover transitions.
+    let portal = document.getElementById('konfhub-portal-root');
+    if (!portal) {
+      portal = document.createElement('div');
+      portal.id = 'konfhub-portal-root';
+      document.body.appendChild(portal);
+    }
+
+    // Inject the exact official KonfHub widget script if not already present
+    if (!portal.querySelector('script[button_id="btn_7129a9d5f0e9"]')) {
+      const script = document.createElement('script');
+      script.src = 'https://widget.konfhub.com/widget.js';
+      script.setAttribute('button_id', 'btn_7129a9d5f0e9');
+      script.async = true;
+      portal.appendChild(script);
+    }
+
+    // Scroll lock observer: Lock body scroll when the popup is open, restore when closed,
+    // and ensure any existing iframe also has the btnColor parameter.
+    const observer = new MutationObserver(() => {
+      const modal = document.querySelector('.modal-container-wrapper');
+      if (modal) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+
+      const iframe = document.querySelector<HTMLIFrameElement>('.konfhub-buttons-ifrm');
+      if (iframe && iframe.src && iframe.src.includes('konfhub.com/widget/') && !iframe.src.includes('btnColor')) {
+        iframe.src = appendBtnColor(iframe.src);
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Backdrop click-to-close handler
+    const handleBackdropClick = (e: MouseEvent) => {
+      const modalWrapper = document.querySelector('.modal-container-wrapper');
+      if (!modalWrapper) return;
+      const iframeButtons = modalWrapper.querySelector('.iframe-konfhub-buttons');
+      if (
+        iframeButtons &&
+        !iframeButtons.contains(e.target as Node) &&
+        modalWrapper.contains(e.target as Node)
+      ) {
+        const closeBtn = modalWrapper.querySelector<HTMLButtonElement>('.iframe-konfhub-close-btn');
+        if (closeBtn) {
+          closeBtn.click();
+        }
+      }
+    };
+
+    window.addEventListener('click', handleBackdropClick, true);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('click', handleBackdropClick, true);
+      document.body.style.overflow = '';
+      if (originalSrcDesc) {
+        Object.defineProperty(HTMLIFrameElement.prototype, 'src', originalSrcDesc);
+      }
+      HTMLIFrameElement.prototype.setAttribute = originalSetAttribute;
+    };
+  }, []);
+
+  const handleOpenKonfHub = () => {
+    const triggerBtn = document.querySelector<HTMLButtonElement>('#konfhub-portal-root .reg-button');
+    if (triggerBtn) {
+      triggerBtn.click();
+    } else if (typeof window !== 'undefined' && (window as unknown as { konfhubButton?: (id: string) => void }).konfhubButton) {
+      (window as unknown as { konfhubButton: (id: string) => void }).konfhubButton('btn_7129a9d5f0e9');
+    }
+  };
+
   const tickets = [
     {
       id: 'super-early-bird',
@@ -12,8 +122,7 @@ export const TicketsSection: React.FC = () => {
       subtitle: 'Be Super, Be Early!',
       price: '₹149',
       availability: 'Available Till: 17th Sep 2026, 06:36 PM (GMT+05:30)',
-      buttonText: 'SOLD OUT',
-      buttonStatus: 'sold-out',
+      buttonText: 'GRAB YOUR TICKET',
       features: [
         'Full access to the entire AWS Student Community Day Mysuru 2026 on 21st November 2026',
         'Exclusive event Swags & Goodies',
@@ -31,8 +140,7 @@ export const TicketsSection: React.FC = () => {
       subtitle: 'Early Bird, Be Quick!',
       price: '₹249',
       availability: 'Starts On: 26th Sep 2026, 04:58 PM (GMT+05:30)',
-      buttonText: 'COMING SOON',
-      buttonStatus: 'coming-soon',
+      buttonText: 'GRAB YOUR TICKET',
       badge: 'Avail Off',
       features: [
         'Full access to the entire AWS Student Community Day Mysuru 2026 on 21st November 2026',
@@ -51,8 +159,7 @@ export const TicketsSection: React.FC = () => {
       subtitle: 'Early Bird, Be Quick!',
       price: '₹349',
       availability: 'Starts On: 22nd Oct 2026, 05:54 PM (GMT+05:30)',
-      buttonText: 'COMING SOON',
-      buttonStatus: 'coming-soon',
+      buttonText: 'GRAB YOUR TICKET',
       features: [
         'Full access to the entire AWS Student Community Day Mysuru 2026 on 21st November 2026',
         'Exclusive event Swags & Goodies',
@@ -136,8 +243,9 @@ export const TicketsSection: React.FC = () => {
             {/* Bottom Button */}
             <div className="mt-8 pt-4 border-t border-white/10">
               <button
-                disabled
-                className="w-full h-11 rounded-none font-mono text-xs uppercase tracking-wider font-bold bg-[#7B9285] text-[#23303E] cursor-not-allowed opacity-90 flex items-center justify-center transition-colors"
+                type="button"
+                onClick={handleOpenKonfHub}
+                className="w-full h-11 rounded-none font-mono text-xs uppercase tracking-wider font-bold bg-[#CDE3CB] text-[#23303E] hover:bg-[#CDE3CB]/90 cursor-pointer flex items-center justify-center transition-colors shadow-xs"
               >
                 {ticket.buttonText}
               </button>
