@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
@@ -6,6 +8,7 @@ interface SponsorItem {
   name: string;
   logo?: string | null;
   url?: string;
+  logoClassName?: string;
 }
 
 interface SponsorTier {
@@ -51,11 +54,17 @@ export const SponsorsSection: React.FC = () => {
     },
     {
       category: 'COMMUNITY PARTNER',
-      layout: 'full',
+      layout: 'grid-4',
       sponsors: [
         {
           name: 'AWS User Groups Mysuru',
           logo: '/aws_user_group_mysuru_logo.png',
+          logoClassName: 'max-w-[180px] sm:max-w-[240px] max-h-24 sm:max-h-32',
+        },
+        {
+          name: 'Cloud Native Mysore',
+          logo: '/cloud_native_mysore.png',
+          logoClassName: 'max-w-[180px] sm:max-w-[220px] max-h-52 sm:max-h-60',
         },
       ],
     },
@@ -82,7 +91,7 @@ export const SponsorsSection: React.FC = () => {
         <ScrollReveal variant="fade-right">
           <div className="flex h-full w-full flex-col items-start justify-start lg:items-end">
             <a
-              href="mailto:awsugmysuru@gmail.com"
+              href="mailto:awscloudclub@vvce.ac.in"
               className="cursor-pointer shrink-0 items-center justify-center text-xs font-medium whitespace-nowrap transition-all flex h-11 min-h-11 rounded-none border-none bg-[#23303E] px-5 hover:bg-[#23303E]/80 flex-row gap-2"
             >
               <span className="font-mono text-sm tracking-[-0.02em] text-[#fafafa] uppercase sm:text-base">
@@ -125,7 +134,9 @@ export const SponsorsSection: React.FC = () => {
                             alt={sponsor.name}
                             loading="lazy"
                             className={`h-auto w-auto object-contain select-none ${
-                              isFullWidth ? 'max-w-64 sm:max-w-80 max-h-16 sm:max-h-20' : 'max-w-44 sm:max-w-56 max-h-12'
+                              sponsor.logoClassName
+                                ? sponsor.logoClassName
+                                : isFullWidth ? 'max-w-64 sm:max-w-80 max-h-16 sm:max-h-20' : 'max-w-44 sm:max-w-56 max-h-12'
                             }`}
                           />
                         ) : (
@@ -142,7 +153,9 @@ export const SponsorsSection: React.FC = () => {
                             alt={sponsor.name}
                             loading="lazy"
                             className={`h-auto w-auto object-contain select-none ${
-                              isFullWidth ? 'max-w-64 sm:max-w-80 max-h-16 sm:max-h-20' : 'max-w-44 sm:max-w-56 max-h-12'
+                              sponsor.logoClassName
+                                ? sponsor.logoClassName
+                                : isFullWidth ? 'max-w-64 sm:max-w-80 max-h-16 sm:max-h-20' : 'max-w-44 sm:max-w-56 max-h-12'
                             }`}
                           />
                         ) : (

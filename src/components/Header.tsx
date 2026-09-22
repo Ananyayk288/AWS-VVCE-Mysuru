@@ -1,8 +1,11 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 
 interface HeaderProps {
-  onOpenRegister: () => void;
+  onOpenRegister?: () => void;
   onNavigateHome?: (hash?: string) => void;
   onNavigateSchedule?: () => void;
   onNavigateTeam?: () => void;
@@ -18,8 +21,12 @@ export const Header: React.FC<HeaderProps> = ({
   onNavigateSchedule,
   onNavigateTeam,
   onNavigateBadge,
-  currentPath = '/',
+  currentPath: currentPathProp,
 }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const currentPath = currentPathProp || pathname || '/';
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [wordIndex, setWordIndex] = useState(0);
@@ -113,16 +120,19 @@ export const Header: React.FC<HeaderProps> = ({
 
     if (item.href === '/badge') {
       if (onNavigateBadge) onNavigateBadge();
+      else router.push('/badge');
       return;
     }
 
     if (item.href === '/schedule') {
       if (onNavigateSchedule) onNavigateSchedule();
+      else router.push('/schedule');
       return;
     }
 
     if (item.href === '/team') {
       if (onNavigateTeam) onNavigateTeam();
+      else router.push('/team');
       return;
     }
 
@@ -131,6 +141,8 @@ export const Header: React.FC<HeaderProps> = ({
     if (currentPath !== '/') {
       if (onNavigateHome) {
         onNavigateHome(`#${targetId}`);
+      } else {
+        router.push(`/#${targetId}`);
       }
       return;
     }
@@ -171,18 +183,21 @@ export const Header: React.FC<HeaderProps> = ({
           href="/"
           onClick={(e) => {
             e.preventDefault();
-            if (onNavigateHome) onNavigateHome();
+            if (onNavigateHome) {
+              onNavigateHome();
+            } else if (currentPath === '/') {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+              router.push('/');
+            }
           }}
           className="flex items-center gap-3 group cursor-pointer shrink-0"
         >
-          <div className="h-10 w-10 rounded-full overflow-hidden shrink-0 flex items-center justify-center">
-            <img
-              src="/club_logo.png"
-              alt="AWS Student Builder Group VVCE"
-              className="w-[145%] h-[145%] object-cover scale-100"
-              style={{ objectPosition: 'center center', marginTop: '-2%' }}
-            />
-          </div>
+          <img
+            src="/aws_logo.svg"
+            alt="AWS"
+            className="h-9 w-auto object-contain shrink-0"
+          />
           <span className="flex flex-col leading-none">
             <span className="text-base font-bold tracking-tight text-[#23303E]">
               COMMUNITY DAY
@@ -267,7 +282,10 @@ export const Header: React.FC<HeaderProps> = ({
                 href="https://konfhub.com/aws-student-community-day-mysuru-2026"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (onOpenRegister) onOpenRegister();
+                }}
                 className="block w-full text-center bg-[#23303E] text-white px-5 py-3 text-sm font-bold uppercase tracking-wider rounded-none hover:bg-[#23303E]/90 transition-colors"
               >
                 GET TICKETS

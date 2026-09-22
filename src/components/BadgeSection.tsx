@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef } from 'react';
 import { Download, Share2, Sparkles, Upload } from 'lucide-react';
 import confetti from 'canvas-confetti';

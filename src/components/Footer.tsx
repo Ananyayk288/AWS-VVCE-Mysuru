@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 interface FooterProps {
   onNavigateHome?: (hash?: string) => void;
@@ -13,28 +16,38 @@ export const Footer: React.FC<FooterProps> = ({
   onNavigateTeam,
   onNavigateBadge,
 }) => {
+  const router = useRouter();
+
   const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
     if (href === '/badge') {
-      if (onNavigateBadge) {
-        e.preventDefault();
-        onNavigateBadge();
-      }
+      if (onNavigateBadge) onNavigateBadge();
+      else router.push('/badge');
     } else if (href === '/schedule') {
-      if (onNavigateSchedule) {
-        e.preventDefault();
-        onNavigateSchedule();
-      }
+      if (onNavigateSchedule) onNavigateSchedule();
+      else router.push('/schedule');
     } else if (href === '/team') {
-      if (onNavigateTeam) {
-        e.preventDefault();
-        onNavigateTeam();
-      }
+      if (onNavigateTeam) onNavigateTeam();
+      else router.push('/team');
     } else if (href.startsWith('/#') || href.startsWith('#')) {
       const hash = href.replace(/^\//, '');
       if (onNavigateHome) {
-        e.preventDefault();
         onNavigateHome(hash);
+      } else {
+        const targetId = hash.replace(/^#/, '');
+        const el = document.getElementById(targetId);
+        if (el) {
+          const yOffset = -80;
+          const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+          window.history.pushState({}, '', `#${targetId}`);
+        } else {
+          router.push(`/${hash}`);
+        }
       }
+    } else if (href === '/') {
+      if (onNavigateHome) onNavigateHome();
+      else router.push('/');
     }
   };
 
@@ -46,17 +59,14 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="flex w-full max-w-sm flex-col items-start justify-start gap-5">
           <a
             href="/"
-            onClick={(e) => handleNav(e, '/#')}
+            onClick={(e) => handleNav(e, '/')}
             className="flex items-center gap-3 group cursor-pointer"
           >
-            <div className="h-10 w-10 rounded-full overflow-hidden shrink-0 flex items-center justify-center">
-              <img
-                src="/club_logo.png"
-                alt="AWS Student Builder Group VVCE"
-                className="w-[145%] h-[145%] object-cover scale-100"
-                style={{ objectPosition: 'center center', marginTop: '-2%' }}
-              />
-            </div>
+            <img
+              src="/aws_logo.svg"
+              alt="AWS"
+              className="h-8 w-auto object-contain shrink-0 brightness-0 invert"
+            />
             <span className="flex flex-col leading-none">
               <span className="text-base font-bold tracking-tight text-[#FAFAFA]">
                 COMMUNITY DAY

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { GraduationCap, Terminal, Users, Briefcase, Heart, Gift } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';

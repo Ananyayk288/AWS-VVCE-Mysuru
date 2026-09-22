@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { X, Cpu, Database, Bot, Box, Network, Shield, Zap } from 'lucide-react';
 

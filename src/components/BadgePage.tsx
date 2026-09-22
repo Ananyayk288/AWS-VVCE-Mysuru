@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import {
   ZoomIn, ZoomOut, Download, Share2, Upload, RotateCcw, ImageIcon, Trash2
@@ -31,9 +33,20 @@ export const BadgePage: React.FC<BadgePageProps> = () => {
   const fileRef = useRef<HTMLInputElement>(null);
   const userImgRef = useRef<HTMLImageElement | null>(null);
   const sampleImgRef = useRef<HTMLImageElement | null>(null);
+  const awsLogoRef = useRef<HTMLImageElement | null>(null);
 
   // User must enter Name, Email, and upload their own Photo to enable download/share
   const isComplete = name.trim() !== '' && email.trim() !== '' && photo !== null;
+
+  // ─── Load AWS logo on initial render ───────────────────────────
+  useEffect(() => {
+    const logo = new Image();
+    logo.onload = () => {
+      awsLogoRef.current = logo;
+      redraw();
+    };
+    logo.src = '/aws_logo.svg';
+  }, []);
 
   // ─── Load sample portrait on initial render ────────────────────
   useEffect(() => {
@@ -74,7 +87,7 @@ export const BadgePage: React.FC<BadgePageProps> = () => {
     // Active image: user's photo if uploaded, otherwise fallback to sample portrait
     const activeImg = userImgRef.current || sampleImgRef.current;
 
-    drawBadgeTemplate(ctx, cw, ch, activeImg, name, zoom, offset, format);
+    drawBadgeTemplate(ctx, cw, ch, activeImg, name, zoom, offset, format, awsLogoRef.current);
   }, [name, zoom, offset, format]);
 
   // ─── Redraw on state change ────────────────────────────────────
@@ -439,6 +452,7 @@ function drawBadgeTemplate(
   zoom: number,
   offset: { x: number; y: number },
   format: BadgeFormat,
+  awsLogo?: HTMLImageElement | null,
 ) {
   // Clear canvas
   ctx.clearRect(0, 0, W, H);
@@ -483,43 +497,35 @@ function drawBadgeTemplate(
   ctx.fillStyle = topGrad;
   ctx.fillRect(0, 0, W, H * 0.16);
 
-  // Top-Left: AWS User Groups Logo (Hexagon + Text)
-  const hx = W * 0.08;
-  const hy = H * 0.055;
-  const hr = W * 0.026;
+  // Top-Left: Official AWS Logo
+  const logoW = W * 0.22;       // logo width: ~22% of canvas width
+  const logoH = logoW * (182 / 304); // preserve SVG aspect ratio (304×182)
+  const logoX = W * 0.05;
+  const logoY = H * 0.028;
 
   ctx.save();
-  ctx.strokeStyle = '#FFFFFF';
-  ctx.lineWidth = Math.max(2.5, W * 0.0028);
-  ctx.beginPath();
-  for (let i = 0; i < 6; i++) {
-    const angle = (Math.PI / 3) * i - Math.PI / 6;
-    const px = hx + hr * Math.cos(angle);
-    const py = hy + hr * Math.sin(angle);
-    if (i === 0) ctx.moveTo(px, py);
-    else ctx.lineTo(px, py);
+  if (awsLogo && awsLogo.complete && awsLogo.naturalWidth > 0) {
+    // Draw official AWS logo — tint white via composite trick
+    ctx.globalCompositeOperation = 'source-over';
+    // Draw a white-tinted version: draw to temp canvas, colorize, then draw here
+    const tmp = document.createElement('canvas');
+    tmp.width = Math.round(logoW);
+    tmp.height = Math.round(logoH);
+    const tctx = tmp.getContext('2d')!;
+    tctx.drawImage(awsLogo, 0, 0, tmp.width, tmp.height);
+    // Colorize to white (keep alpha, set RGB to white)
+    tctx.globalCompositeOperation = 'source-in';
+    tctx.fillStyle = '#FFFFFF';
+    tctx.fillRect(0, 0, tmp.width, tmp.height);
+    ctx.drawImage(tmp, logoX, logoY, logoW, logoH);
+  } else {
+    // Fallback: plain text if logo not loaded
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = `bold ${Math.round(W * 0.04)}px "Inter", sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText('aws', logoX, logoY);
   }
-  ctx.closePath();
-  ctx.stroke();
-
-  // Subtle interior node hint in hexagon
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-  ctx.beginPath();
-  ctx.arc(hx, hy, hr * 0.28, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Text next to Hexagon
-  const textX = hx + hr + W * 0.018;
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'middle';
-  ctx.fillStyle = '#FFFFFF';
-  ctx.font = `600 ${Math.round(W * 0.015)}px "Inter", sans-serif`;
-  ctx.fillText('AWS', textX, hy - H * 0.013);
-  ctx.font = `bold ${Math.round(W * 0.022)}px "Inter", sans-serif`;
-  ctx.fillText('User Groups', textX, hy + H * 0.001);
-  ctx.font = `500 ${Math.round(W * 0.015)}px "Inter", sans-serif`;
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-  ctx.fillText('Mysuru', textX, hy + H * 0.015);
   ctx.restore();
 
   // Top-Right: AWS Community Day Branding

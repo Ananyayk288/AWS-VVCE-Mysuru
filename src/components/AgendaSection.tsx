@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
 
@@ -14,6 +17,7 @@ interface AgendaSectionProps {
 }
 
 export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) => {
+  const router = useRouter();
   const schedule: ScheduleSession[] = [
     {
       time: '8:30 AM - 9:30 AM (GMT+05:30)',
@@ -99,8 +103,7 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
                   if (onOpenSchedule) {
                     onOpenSchedule();
                   } else {
-                    window.history.pushState({}, '', '/schedule');
-                    window.dispatchEvent(new PopStateEvent('popstate'));
+                    router.push('/schedule');
                   }
                 }}
                 className="cursor-pointer shrink-0 items-center justify-center text-xs font-medium whitespace-nowrap transition-all flex h-11 min-h-11 rounded-none border-none bg-[#23303E] px-5 hover:bg-[#23303E]/80 flex-row gap-2"

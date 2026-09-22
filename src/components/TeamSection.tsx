@@ -1,4 +1,7 @@
+'use client';
+
 import React, { useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { ArrowRight, ChevronLeft, ChevronRight, Linkedin } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
 
@@ -120,6 +123,7 @@ interface TeamSectionProps {
 }
 
 export const TeamSection: React.FC<TeamSectionProps> = ({ onOpenTeam }) => {
+  const router = useRouter();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
@@ -172,8 +176,7 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onOpenTeam }) => {
                   if (onOpenTeam) {
                     onOpenTeam();
                   } else {
-                    window.history.pushState({}, '', '/team');
-                    window.dispatchEvent(new PopStateEvent('popstate'));
+                    router.push('/team');
                   }
                 }}
                 className="group/button cursor-pointer shrink-0 items-center justify-center border border-transparent bg-clip-padding text-xs font-medium whitespace-nowrap transition-all outline-none select-none flex h-11 min-h-11 rounded-none border-none bg-[#FAFAFA] px-5 text-[#23303E] hover:bg-[#FAFAFA]/80 flex-row gap-2"

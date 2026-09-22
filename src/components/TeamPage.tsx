@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { teamMembers, TeamCard } from './TeamSection';

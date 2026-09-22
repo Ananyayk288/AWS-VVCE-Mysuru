@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Linkedin, ArrowRight, Sparkles } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
@@ -26,7 +28,7 @@ export const SpeakersSection: React.FC = () => {
       image: '/speakers/Jessica.jpg',
       topic: 'Keynote: Empowering Global Builders & Community Growth',
       badge: 'AWS Keynote',
-      linkedin: 'https://www.linkedin.com/in/jessicagilmore/',
+      linkedin: 'https://www.linkedin.com/in/jessicagilmore1/',
       isConfirmed: true,
     },
     {

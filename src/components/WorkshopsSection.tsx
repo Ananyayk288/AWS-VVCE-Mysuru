@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Terminal, Clock, Laptop, ArrowRight } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
