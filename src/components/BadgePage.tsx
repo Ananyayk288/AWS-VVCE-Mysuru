@@ -14,7 +14,7 @@ type BadgeFormat = 'post' | 'story';
 // POST  = 1080×1350  (4:5 portrait, matching reference)
 // STORY = 1080×1920  (9:16 portrait story)
 const FORMAT_CONFIG: Record<BadgeFormat, { cw: number; ch: number; label: string; aspect: string }> = {
-  post:  { cw: 1080, ch: 1350, label: 'POST',  aspect: '4/5' },
+  post: { cw: 1080, ch: 1350, label: 'POST', aspect: '4/5' },
   story: { cw: 1080, ch: 1920, label: 'STORY', aspect: '9/16' },
 };
 
@@ -184,7 +184,7 @@ export const BadgePage: React.FC<BadgePageProps> = () => {
           title: 'AWS Student Community Day Mysuru 2026',
           text: `I'm Attending AWS Student Community Day Mysuru 2026! #AWSMysuru2026`,
           files: [file],
-        }).catch(() => {/* cancelled */});
+        }).catch(() => {/* cancelled */ });
       } else {
         try {
           await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
@@ -209,7 +209,7 @@ export const BadgePage: React.FC<BadgePageProps> = () => {
           </p>
           <h1 className="font-sans text-4xl font-semibold leading-[1.05] tracking-tight text-[#23303E] sm:text-5xl">
             Show you're part of AWS<br />
-            Community Day Mysuru.
+            Student Community Day Mysuru.
           </h1>
           <p className="mt-3 max-w-xl font-sans text-sm leading-relaxed text-[#3A8C7E]">
             Generate personalized social cards to let your network know you're attending, speaking, volunteering or supporting the community.
@@ -293,35 +293,37 @@ export const BadgePage: React.FC<BadgePageProps> = () => {
                 <p className="mb-2 font-sans text-xs text-[#3A8C7E]">
                   Your photo keeps its original proportions. Drag to reposition it or use the slider to zoom in.
                 </p>
-                <div className="flex items-center gap-2 border border-[#D0D5DD] bg-white px-3 py-2.5">
-                  <button
-                    type="button"
-                    aria-label="Zoom out"
-                    onClick={() => setZoom((z) => Math.max(1.0, Number((z - 0.1).toFixed(2))))}
-                    className="shrink-0 text-[#6B7280] hover:text-[#23303E] transition-colors"
-                  >
-                    <ZoomOut className="h-4 w-4" />
-                  </button>
-                  <input
-                    type="range"
-                    min={100}
-                    max={300}
-                    value={zoomPct}
-                    onChange={(e) => setZoom(Number(e.target.value) / 100)}
-                    className="h-1 flex-1 cursor-pointer accent-[#23303E]"
-                  />
-                  <button
-                    type="button"
-                    aria-label="Zoom in"
-                    onClick={() => setZoom((z) => Math.min(3.0, Number((z + 0.1).toFixed(2))))}
-                    className="shrink-0 text-[#6B7280] hover:text-[#23303E] transition-colors"
-                  >
-                    <ZoomIn className="h-4 w-4" />
-                  </button>
+                <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 border border-[#D0D5DD] bg-white p-2.5">
+                  <div className="flex items-center gap-2 flex-1 min-w-[140px]">
+                    <button
+                      type="button"
+                      aria-label="Zoom out"
+                      onClick={() => setZoom((z) => Math.max(1.0, Number((z - 0.1).toFixed(2))))}
+                      className="shrink-0 text-[#6B7280] hover:text-[#23303E] transition-colors"
+                    >
+                      <ZoomOut className="h-4 w-4" />
+                    </button>
+                    <input
+                      type="range"
+                      min={100}
+                      max={300}
+                      value={zoomPct}
+                      onChange={(e) => setZoom(Number(e.target.value) / 100)}
+                      className="h-1 flex-1 min-w-0 cursor-pointer accent-[#23303E]"
+                    />
+                    <button
+                      type="button"
+                      aria-label="Zoom in"
+                      onClick={() => setZoom((z) => Math.min(3.0, Number((z + 0.1).toFixed(2))))}
+                      className="shrink-0 text-[#6B7280] hover:text-[#23303E] transition-colors"
+                    >
+                      <ZoomIn className="h-4 w-4" />
+                    </button>
+                  </div>
                   <button
                     type="button"
                     onClick={fitToFrame}
-                    className="ml-1 flex shrink-0 items-center gap-1 border border-[#D0D5DD] px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-widest text-[#23303E] hover:bg-[#F9FAFB] transition-colors"
+                    className="flex shrink-0 items-center justify-center gap-1 border border-[#D0D5DD] px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-widest text-[#23303E] hover:bg-[#F9FAFB] transition-colors whitespace-nowrap"
                   >
                     <RotateCcw className="h-3 w-3" />
                     Fit to Frame
@@ -335,11 +337,10 @@ export const BadgePage: React.FC<BadgePageProps> = () => {
                   type="button"
                   onClick={handleDownload}
                   disabled={!isComplete || isGenerating}
-                  className={`flex items-center justify-center gap-2 border px-4 py-3 font-mono text-[11px] font-bold uppercase tracking-widest transition-all ${
-                    isComplete
+                  className={`flex items-center justify-center gap-2 border px-4 py-3 font-mono text-[11px] font-bold uppercase tracking-widest transition-all ${isComplete
                       ? 'cursor-pointer border-[#23303E] bg-white text-[#23303E] hover:bg-[#F9FAFB]'
                       : 'cursor-not-allowed border-[#E5E7EB] bg-[#F9FAFB] text-[#9CA3AF]'
-                  }`}
+                    }`}
                 >
                   {isGenerating ? 'Generating…' : (
                     <>
@@ -352,11 +353,10 @@ export const BadgePage: React.FC<BadgePageProps> = () => {
                   type="button"
                   onClick={handleShare}
                   disabled={!isComplete}
-                  className={`flex items-center justify-center gap-2 px-4 py-3 font-mono text-[11px] font-bold uppercase tracking-widest transition-all ${
-                    isComplete
+                  className={`flex items-center justify-center gap-2 px-4 py-3 font-mono text-[11px] font-bold uppercase tracking-widest transition-all ${isComplete
                       ? 'cursor-pointer bg-[#23303E] text-white hover:bg-[#1a2530]'
                       : 'cursor-not-allowed bg-[#9CA3AF] text-white'
-                  }`}
+                    }`}
                 >
                   Share on Social
                   <Share2 className="h-3.5 w-3.5 shrink-0" />
@@ -396,11 +396,10 @@ export const BadgePage: React.FC<BadgePageProps> = () => {
                   key={f}
                   type="button"
                   onClick={() => setFormat(f)}
-                  className={`flex-1 py-3 font-mono text-xs font-bold uppercase tracking-widest transition-colors ${
-                    format === f
+                  className={`flex-1 py-3 font-mono text-xs font-bold uppercase tracking-widest transition-colors ${format === f
                       ? 'bg-[#23303E] text-white'
                       : 'bg-white text-[#23303E] hover:bg-[#F9FAFB]'
-                  }`}
+                    }`}
                 >
                   {FORMAT_CONFIG[f].label}
                 </button>
@@ -497,11 +496,11 @@ function drawBadgeTemplate(
   ctx.fillStyle = topGrad;
   ctx.fillRect(0, 0, W, H * 0.16);
 
-  // Top-Left: Official AWS Logo
-  const logoW = W * 0.22;       // logo width: ~22% of canvas width
+  // Top-Left: Official AWS Logo (balanced, shorter size)
+  const logoW = W * 0.13;       // logo width: ~13% of canvas width (shorter and balanced)
   const logoH = logoW * (182 / 304); // preserve SVG aspect ratio (304×182)
   const logoX = W * 0.05;
-  const logoY = H * 0.028;
+  const logoY = H * 0.032;
 
   ctx.save();
   if (awsLogo && awsLogo.complete && awsLogo.naturalWidth > 0) {
@@ -521,25 +520,25 @@ function drawBadgeTemplate(
   } else {
     // Fallback: plain text if logo not loaded
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = `bold ${Math.round(W * 0.04)}px "Inter", sans-serif`;
+    ctx.font = `bold ${Math.round(W * 0.032)}px "Inter", sans-serif`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
     ctx.fillText('aws', logoX, logoY);
   }
   ctx.restore();
 
-  // Top-Right: AWS Community Day Branding
+  // Top-Right: AWS Student Community Day Branding
   ctx.save();
   ctx.textAlign = 'right';
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#FFFFFF';
-  ctx.font = `bold ${Math.round(W * 0.025)}px "Inter", sans-serif`;
+  ctx.font = `bold ${Math.round(W * 0.024)}px "Inter", sans-serif`;
   ctx.fillText('aws', W * 0.94, H * 0.046);
-  ctx.font = `bold ${Math.round(W * 0.018)}px "Inter", sans-serif`;
-  ctx.fillText('COMMUNITY DAY', W * 0.94, H * 0.063);
-  ctx.font = `600 ${Math.round(W * 0.015)}px "Inter", sans-serif`;
+  ctx.font = `bold ${Math.round(W * 0.015)}px "Inter", sans-serif`;
+  ctx.fillText('STUDENT COMMUNITY DAY', W * 0.94, H * 0.063);
+  ctx.font = `600 ${Math.round(W * 0.014)}px "Inter", sans-serif`;
   ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-  ctx.fillText('MYSURU 2026', W * 0.94, H * 0.079);
+  ctx.fillText('MYSURU 2026', W * 0.94, H * 0.078);
   ctx.restore();
 
   // ─── Bottom Curved Wave Gradient Overlay (Magenta → Orange) ───

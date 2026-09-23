@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { DynamicScrollbar } from '../components/DynamicScrollbar';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -13,7 +14,12 @@ export const metadata: Metadata = {
   description:
     'Join 500+ builders at AWS Student Community Day Mysuru 2026. A one-day, community-led event featuring expert talks, hands-on workshops, and networking.',
   icons: {
-    icon: '/aws_user_group_mysuru_cropped.png',
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.png', type: 'image/png' },
+      { url: '/aws_logo.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/favicon.png',
   },
 };
 
@@ -33,6 +39,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-white text-[#222b38] antialiased selection:bg-[#01c1ac]/30 selection:text-[#222b38]`}
       >
+        <DynamicScrollbar />
         {children}
       </body>
     </html>

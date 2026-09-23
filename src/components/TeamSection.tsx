@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, ChevronLeft, ChevronRight, Linkedin } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
@@ -14,28 +14,46 @@ export interface TeamMember {
   twitter?: string;
 }
 
-// 8 blank placeholder cards as requested by the user, ready to be populated when member details are confirmed.
+// 12 official team members in exact specified order
 export const teamMembers: TeamMember[] = [
-  { id: 'team-member-1', name: '', role: '', image: '', linkedin: '', twitter: '' },
-  { id: 'team-member-2', name: '', role: '', image: '', linkedin: '', twitter: '' },
-  { id: 'team-member-3', name: '', role: '', image: '', linkedin: '', twitter: '' },
-  { id: 'team-member-4', name: '', role: '', image: '', linkedin: '', twitter: '' },
-  { id: 'team-member-5', name: '', role: '', image: '', linkedin: '', twitter: '' },
-  { id: 'team-member-6', name: '', role: '', image: '', linkedin: '', twitter: '' },
-  { id: 'team-member-7', name: '', role: '', image: '', linkedin: '', twitter: '' },
-  { id: 'team-member-8', name: '', role: '', image: '', linkedin: '', twitter: '' },
+  { id: 'team-member-1', name: 'Yashwanth R', image: '/team/yashwanth.jpg' },
+  { id: 'team-member-2', name: 'Vibha S', image: '/team/vibha.jpg' },
+  { id: 'team-member-3', name: 'Gagan K M', image: '/team/gagan.jpg' },
+  { id: 'team-member-4', name: 'K Reethu', image: '/team/reethu.jpg' },
+  { id: 'team-member-5', name: 'Yashas M V', image: '/team/yashas_mv.jpg' },
+  { id: 'team-member-6', name: 'Falkia Khan', image: '/team/falkia.jpg' },
+  { id: 'team-member-7', name: 'Yuvika Jain', image: '/team/yuvika.jpg' },
+  { id: 'team-member-8', name: 'Yashas U', image: '/team/yashas_u.jpg' },
+  { id: 'team-member-9', name: 'Varsha N', image: '/team/varsha.jpg' },
+  { id: 'team-member-10', name: 'Vinay V', image: '/team/vinay.jpg' },
+  { id: 'team-member-11', name: 'Shreya Bharadwaj', image: '/team/shreya.jpg' },
+  { id: 'team-member-12', name: 'Ananya', image: '/team/ananya.jpg' },
 ];
 
 export const TeamCard: React.FC<{ member: TeamMember }> = ({ member }) => {
+  const [imgError, setImgError] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (imgRef.current && imgRef.current.complete) {
+      if (imgRef.current.naturalWidth === 0) {
+        setImgError(true);
+      } else {
+        setImgLoaded(true);
+      }
+    }
+  }, [member.image]);
+
   const hasName = Boolean(member.name && member.name.trim().length > 0);
   const hasRole = Boolean(member.role && member.role.trim().length > 0);
-  const hasImage = Boolean(member.image && member.image.trim().length > 0);
+  const hasImage = Boolean(member.image && member.image.trim().length > 0 && !imgError);
   const hasSocial = Boolean(member.linkedin || member.twitter);
 
   return (
-    <div className="group relative aspect-[3/4] w-full bg-[#EFF0F3] p-5 sm:p-6 overflow-hidden rounded-none border border-[#CBD2DC]/30 hover:border-[#23303E]/40 transition-all duration-300 flex flex-col justify-between select-none">
+    <div className="group relative aspect-[3/4] w-full bg-[#EFF0F3] p-5 sm:p-6 overflow-hidden rounded-none border border-[#CBD2DC]/30 hover:border-[#23303E]/40 transition-all duration-300 flex flex-col select-none">
       {/* Top Header: Name and Socials */}
-      <div className="relative z-10 flex items-start justify-between gap-3 w-full">
+      <div className="relative z-10 flex items-start justify-between gap-3 w-full shrink-0">
         {hasName ? (
           <div>
             <h3 className="font-sans text-lg sm:text-xl lg:text-2xl font-bold leading-tight text-[#23303E]">
@@ -91,22 +109,29 @@ export const TeamCard: React.FC<{ member: TeamMember }> = ({ member }) => {
         )}
       </div>
 
-      {/* Center/Bottom Area: Decorative Gradient Blob + Photo / Silhouette */}
-      <div className="relative mt-auto flex h-48 sm:h-56 w-full items-end justify-center overflow-hidden">
+      {/* Image Area: Positioned directly below member name with small intentional gap */}
+      <div className="relative mt-3 sm:mt-4 flex-1 w-full min-h-0 overflow-hidden flex items-end justify-center">
         {/* Colorful Gradient Blob matching reference */}
         <div className="absolute -bottom-6 -right-6 h-40 w-40 sm:h-48 sm:w-48 rounded-full bg-gradient-to-tr from-[#98E223]/35 to-[#00DFC0]/45 blur-sm pointer-events-none transition-transform duration-500 group-hover:scale-105" />
 
-        {hasImage ? (
+        {hasImage && (
           <img
+            ref={imgRef}
             src={member.image}
             alt={member.name || 'Team member'}
-            className="relative z-10 max-h-full w-auto object-contain object-bottom transition-transform duration-300 group-hover:scale-102"
+            onLoad={() => setImgLoaded(true)}
+            onError={() => setImgError(true)}
+            className={`relative z-10 h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-102 ${
+              imgLoaded ? 'block' : 'hidden'
+            }`}
           />
-        ) : (
+        )}
+
+        {(!hasImage || !imgLoaded) && (
           /* Blank Placeholder Silhouette */
           <div className="relative z-10 mb-1 flex flex-col items-center justify-center opacity-25 group-hover:opacity-40 transition-opacity">
             <svg
-              className="h-32 w-32 sm:h-36 sm:w-36 text-[#23303E] fill-current"
+              className="h-28 w-28 sm:h-32 sm:w-32 text-[#23303E] fill-current"
               viewBox="0 0 24 24"
             >
               <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />

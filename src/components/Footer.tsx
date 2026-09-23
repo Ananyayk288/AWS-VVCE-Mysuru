@@ -216,7 +216,7 @@ export const Footer: React.FC<FooterProps> = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="min-h-6 font-sans text-sm leading-[115%] font-light tracking-[-0.01em] text-[#DDECDA] hover:text-[#FAFAFA] hover:underline focus-visible:ring-2 focus-visible:ring-[#DDECDA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#23303E] focus-visible:outline-none sm:text-base sm:leading-[105%]"
-                href="https://linkedin.com/company/awsvvce"
+                href="https://www.linkedin.com/company/aws-student-builder-group/"
               >
                 LinkedIn
               </a>
@@ -224,23 +224,7 @@ export const Footer: React.FC<FooterProps> = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="min-h-6 font-sans text-sm leading-[115%] font-light tracking-[-0.01em] text-[#DDECDA] hover:text-[#FAFAFA] hover:underline focus-visible:ring-2 focus-visible:ring-[#DDECDA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#23303E] focus-visible:outline-none sm:text-base sm:leading-[105%]"
-                href="https://x.com"
-              >
-                X / Twitter
-              </a>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                className="min-h-6 font-sans text-sm leading-[115%] font-light tracking-[-0.01em] text-[#DDECDA] hover:text-[#FAFAFA] hover:underline focus-visible:ring-2 focus-visible:ring-[#DDECDA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#23303E] focus-visible:outline-none sm:text-base sm:leading-[105%]"
-                href="https://instagram.com/awssbg_vvce"
-              >
-                Instagram
-              </a>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                className="min-h-6 font-sans text-sm leading-[115%] font-light tracking-[-0.01em] text-[#DDECDA] hover:text-[#FAFAFA] hover:underline focus-visible:ring-2 focus-visible:ring-[#DDECDA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#23303E] focus-visible:outline-none sm:text-base sm:leading-[105%]"
-                href="https://meetup.com"
+                href="https://www.meetup.com/awsvvce/"
               >
                 Meetup
               </a>
@@ -248,9 +232,9 @@ export const Footer: React.FC<FooterProps> = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="min-h-6 font-sans text-sm leading-[115%] font-light tracking-[-0.01em] text-[#DDECDA] hover:text-[#FAFAFA] hover:underline focus-visible:ring-2 focus-visible:ring-[#DDECDA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#23303E] focus-visible:outline-none sm:text-base sm:leading-[105%]"
-                href="https://youtube.com"
+                href="https://chat.whatsapp.com/GiyK49su1Nb5Q1Q9GoKc91"
               >
-                YouTube
+                WhatsApp
               </a>
             </div>
           </div>
