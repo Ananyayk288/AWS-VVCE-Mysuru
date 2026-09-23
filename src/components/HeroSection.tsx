@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, CalendarDays, MapPin } from 'lucide-react';
+import { openKonfHub, initKonfHub, KONFHUB_BUTTONS } from '../lib/konfhub';
 
 interface HeroSectionProps {
   onOpenRegister: () => void;
@@ -34,6 +35,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
     }, intervalTime);
 
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    initKonfHub();
   }, []);
 
   useEffect(() => {
@@ -119,17 +124,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenRegister }) => {
             </p>
           </div>
 
-          <a
-            href="https://konfhub.com/aws-student-community-day-mysuru-2026"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
+            onClick={() => openKonfHub(KONFHUB_BUTTONS.GET_TICKETS)}
             className="cursor-pointer shrink-0 items-center justify-center flex h-11 min-w-40 rounded-none border-none bg-[#23303E] px-5 hover:bg-[#23303E]/80 flex-row gap-2 transition-colors"
           >
             <span className="font-mono text-sm tracking-[-0.02em] text-[#fafafa] uppercase sm:text-base">
               GET TICKETS
             </span>
             <ArrowRight className="h-4 w-4 text-[#fafafa]" />
-          </a>
+          </button>
         </div>
       </div>
     </section>

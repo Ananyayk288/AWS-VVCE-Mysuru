@@ -20,63 +20,44 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
   const router = useRouter();
   const schedule: ScheduleSession[] = [
     {
-      time: '8:30 AM - 9:30 AM (GMT+05:30)',
-      title: 'Registration and Welcome',
-      subtitle: 'Check-in and Networking',
+      time: '8:00am – 9:00am',
+      title: 'Check-in & Registrations',
     },
     {
-      time: '9:30 AM - 9:50 AM (GMT+05:30)',
+      time: '9:00am – 9:30am',
       title: 'Opening Ceremony',
-      subtitle: 'Welcome and Introduction',
     },
     {
-      time: '9:50 AM - 10:05 AM (GMT+05:30)',
+      time: '9:30am – 11:00am',
       title: 'Keynote',
-      subtitle: 'Jessica Gilmore',
     },
     {
-      time: '10:10 AM - 11:00 AM (GMT+05:30)',
-      title: 'Session 1: Discover AWS',
-      subtitle: '3 Parallel Talks',
-      extra: 'Will be announced soon!!!',
+      time: '11:00am – 11:30am',
+      title: 'TEA BREAK',
     },
     {
-      time: '11:00 AM - 11:15 AM (GMT+05:30)',
-      title: 'Tea and Networking Break',
+      time: '11:30am – 1:30pm',
+      title: 'Session 1',
     },
     {
-      time: '11:15 AM - 12:05 PM (GMT+05:30)',
-      title: 'Session 2: Build with AWS',
-      subtitle: '3 Parallel Talks',
-      extra: 'Will be announced soon!!!',
+      time: '1:30pm – 2:30pm',
+      title: 'LUNCH BREAK',
     },
     {
-      time: '12:05 PM - 1:00 PM (GMT+05:30)',
-      title: 'Lunch and Networking',
-      subtitle: 'Food and Community Networking',
+      time: '2:30pm – 4:30pm',
+      title: 'Session 2',
     },
     {
-      time: '1:10 PM - 3:30 PM (GMT+05:30)',
-      title: 'Hands-on Workshop',
-      subtitle: '3 Parallel Workshops',
-      extra: 'Will be Announced Soon!!!...',
+      time: '4:30pm – 5:00pm',
+      title: 'BREAK',
     },
     {
-      time: '3:30 PM - 3:45 PM (GMT+05:30)',
-      title: 'Break',
-    },
-    {
-      time: '3:50 PM - 4:30 PM (GMT+05:30)',
+      time: '5:00pm – 5:30pm',
       title: 'Panel Discussion',
     },
     {
-      time: '4:30 PM - 5:00 PM (GMT+05:30)',
-      title: 'Guest Felicitation & Closing Ceremony',
-      subtitle: 'Vote of thanks and Closing',
-    },
-    {
-      time: '5:00 PM - 5:30 PM (GMT+05:30)',
-      title: 'Swag Distribution',
+      time: '5:30pm – 6:00pm',
+      title: 'Guest Felicitation and Closing Ceremony',
     },
   ];
 

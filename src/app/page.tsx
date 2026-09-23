@@ -83,10 +83,6 @@ export default function HomePage() {
         <SponsorsSection />
         <AgendaSection onOpenSchedule={navigateToSchedule} />
         <TeamSection onOpenTeam={navigateToTeam} />
-
-        {/* Clean spacing gap between Team and Venue */}
-        <div className="w-full bg-[#EFF0F3] py-6 sm:py-10" aria-hidden="true" />
-
         <RegisterSection onOpenRegister={handleOpenRegister} />
         <FaqSection />
         <FooterCtaSection onOpenRegister={handleOpenRegister} />
