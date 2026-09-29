@@ -194,7 +194,7 @@ export const Header: React.FC<HeaderProps> = ({
           className="flex items-center gap-3 group cursor-pointer shrink-0"
         >
           <img
-            src="/aws_logo.svg"
+            src="/aws_logo_dark.svg"
             alt="AWS"
             className="h-9 w-auto object-contain shrink-0"
           />
