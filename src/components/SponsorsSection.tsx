@@ -59,12 +59,24 @@ export const SponsorsSection: React.FC = () => {
         {
           name: 'AWS User Groups Mysuru',
           logo: '/aws_user_group_mysuru_logo.png',
-          logoClassName: 'max-w-[180px] sm:max-w-[240px] max-h-24 sm:max-h-32',
+          logoClassName: 'max-w-[170px] sm:max-w-[210px] max-h-24 sm:max-h-32',
         },
         {
           name: 'Cloud Native Mysore',
           logo: '/cloud_native_mysore.png',
-          logoClassName: 'max-w-[180px] sm:max-w-[220px] max-h-52 sm:max-h-60',
+          logoClassName: 'max-w-[170px] sm:max-w-[210px] max-h-52 sm:max-h-60',
+        },
+        {
+          name: 'AWS User Group Bengaluru',
+          logo: '/awsugblr-logo.png',
+          url: 'https://www.awsugblr.in/',
+          logoClassName: 'max-w-[190px] sm:max-w-[230px] max-h-52 sm:max-h-60',
+        },
+        {
+          name: 'AWS User Group Madurai',
+          logo: '/logo-Tx1zCSPp.png',
+          url: 'https://www.awsugmdu.in/',
+          logoClassName: 'max-w-[170px] sm:max-w-[210px] max-h-24 sm:max-h-32',
         },
       ],
     },
@@ -116,7 +128,7 @@ export const SponsorsSection: React.FC = () => {
                 const isFullWidth = tier.layout === 'full';
                 const colClass = isFullWidth
                   ? 'basis-full flex min-h-24 grow items-center justify-center border-r border-b border-[#D1E5CD] sm:min-h-28'
-                  : 'basis-1/2 sm:basis-1/2 lg:basis-1/4 flex min-h-20 grow items-center justify-center border-r border-b border-[#D1E5CD] sm:min-h-25';
+                  : 'basis-1/2 sm:basis-1/2 lg:basis-1/4 flex min-h-20 min-w-0 grow items-center justify-center border-r border-b border-[#D1E5CD] sm:min-h-25';
 
                 return (
                   <div key={idx} className={colClass}>
