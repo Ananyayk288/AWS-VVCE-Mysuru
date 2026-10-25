@@ -32,26 +32,22 @@ export const SpeakersSection: React.FC = () => {
       isConfirmed: true,
     },
     {
-      id: 'speaker-2',
-      name: '',
+      id: 'ravi-kompelle',
+      name: 'Ravi Kompelle',
       role: '',
       company: '',
-      image: '',
-      topic: '',
-      badge: '',
-      linkedin: '',
-      isConfirmed: false,
+      image: '/speakers/ravi-kompelle.jpg',
+      linkedin: 'https://www.linkedin.com/in/ravikompella',
+      isConfirmed: true,
     },
     {
-      id: 'speaker-3',
-      name: '',
+      id: 'vivek-raja',
+      name: 'Vivek Raja P S',
       role: '',
       company: '',
-      image: '',
-      topic: '',
-      badge: '',
-      linkedin: '',
-      isConfirmed: false,
+      image: '/speakers/vivek-raja.jpg',
+      linkedin: 'https://www.linkedin.com/in/meetvivekraja',
+      isConfirmed: true,
     },
     {
       id: 'speaker-4',
@@ -178,11 +174,13 @@ export const SpeakersSection: React.FC = () => {
                       </div>
 
                       {/* Active Speaker Details */}
-                      {isActive && (
+                      {isActive && (speaker.role || speaker.company || speaker.topic) && (
                         <div className="mt-2 flex flex-col gap-1">
-                          <p className="font-mono text-xs uppercase tracking-wider text-[#D1E5CD]">
-                            {speaker.role} <span className="text-[#a2e048]">@{speaker.company}</span>
-                          </p>
+                          {(speaker.role || speaker.company) && (
+                            <p className="font-mono text-xs uppercase tracking-wider text-[#D1E5CD]">
+                              {speaker.role} {speaker.company && <span className="text-[#a2e048]">@{speaker.company}</span>}
+                            </p>
+                          )}
                           {speaker.topic && (
                             <p className="font-sans text-xs sm:text-sm text-[#FAFAFA]/80 mt-1 leading-snug">
                               {speaker.topic}
@@ -220,9 +218,11 @@ export const SpeakersSection: React.FC = () => {
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#23303E] via-transparent to-transparent opacity-80" />
                 <div className="absolute bottom-6 left-6 right-6 z-10">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#23303E] bg-[#D1E5CD] px-2.5 py-1 font-bold inline-block">
-                      {activeSpeaker.badge}
-                    </span>
+                    {activeSpeaker.badge ? (
+                      <span className="font-mono text-[10px] uppercase tracking-widest text-[#23303E] bg-[#D1E5CD] px-2.5 py-1 font-bold inline-block">
+                        {activeSpeaker.badge}
+                      </span>
+                    ) : <span />}
                     {activeSpeaker.linkedin && (
                       <a
                         href={activeSpeaker.linkedin}
@@ -237,7 +237,9 @@ export const SpeakersSection: React.FC = () => {
                     )}
                   </div>
                   <p className="font-sans text-2xl font-bold text-white">{activeSpeaker.name}</p>
-                  <p className="font-mono text-xs text-[#a2e048]">{activeSpeaker.role} @{activeSpeaker.company}</p>
+                  {(activeSpeaker.role || activeSpeaker.company) && (
+                    <p className="font-mono text-xs text-[#a2e048]">{activeSpeaker.role} {activeSpeaker.company && `@${activeSpeaker.company}`}</p>
+                  )}
                   {activeSpeaker.topic && (
                     <p className="mt-2 font-sans text-xs text-[#FAFAFA]/85 leading-snug">
                       {activeSpeaker.topic}
@@ -304,9 +306,11 @@ export const SpeakersSection: React.FC = () => {
                           </a>
                         )}
                       </div>
-                      <p className="font-mono text-[11px] uppercase tracking-wider text-[#D1E5CD]">
-                        {speaker.role} <span className="text-[#a2e048]">@{speaker.company}</span>
-                      </p>
+                      {(speaker.role || speaker.company) && (
+                        <p className="font-mono text-[11px] uppercase tracking-wider text-[#D1E5CD]">
+                          {speaker.role} {speaker.company && <span className="text-[#a2e048]">@{speaker.company}</span>}
+                        </p>
+                      )}
                       {speaker.topic && (
                         <p className="font-sans text-xs text-[#FAFAFA]/70 mt-1 leading-snug">
                           {speaker.topic}
