@@ -164,11 +164,61 @@ export const BadgeSection: React.FC = () => {
       ctx.fillText(`VERIFIED PASS · AWS-SCD-2026-${Math.floor(1000 + Math.random() * 9000)}`, 552, 726);
 
       // Save image to link
-      const dataUrl = canvas.toDataURL('image/png');
-      const link = document.createElement('a');
-      link.download = `AWS-SCD-Mysuru-2026-Badge-${name.replace(/\s+/g, '-')}.png`;
-      link.href = dataUrl;
-      link.click();
+      const fileName = `AWS-SCD-Mysuru-2026-Badge-${name.replace(/\s+/g, '-')}.png`;
+      const isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent || '') ||
+        (navigator.maxTouchPoints > 1 && window.innerWidth <= 1024) ||
+        window.innerWidth < 768;
+
+      if (!isMobile) {
+        // Desktop: keep existing behavior
+        const dataUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = fileName;
+        link.href = dataUrl;
+        link.click();
+        return;
+      }
+
+      // Mobile devices: convert to blob and download or share
+      try {
+        const dataUrl = canvas.toDataURL('image/png');
+        const parts = dataUrl.split(',');
+        const mime = parts[0].match(/:(.*?);/)?.[1] || 'image/png';
+        const bstr = atob(parts[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+        while (n--) {
+          u8arr[n] = bstr.charCodeAt(n);
+        }
+        const blob = new Blob([u8arr], { type: mime });
+        const file = new File([blob], fileName, { type: 'image/png' });
+
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent || '');
+        if (
+          (isIOS || /FBAN|FBAV|Instagram|LinkedIn|Twitter/i.test(navigator.userAgent || '')) &&
+          navigator.canShare &&
+          navigator.canShare({ files: [file] })
+        ) {
+          navigator.share({ files: [file], title: fileName }).catch(() => {});
+          return;
+        }
+
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = fileName;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(() => {
+          if (document.body.contains(link)) document.body.removeChild(link);
+          URL.revokeObjectURL(blobUrl);
+        }, 3000);
+      } catch (e) {
+        const dataUrl = canvas.toDataURL('image/png');
+        window.open(dataUrl, '_blank');
+      }
     };
 
     // Trigger image loading fallback if fast
