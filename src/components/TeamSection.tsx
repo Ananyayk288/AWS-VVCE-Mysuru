@@ -219,7 +219,7 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onOpenTeam }) => {
         <div className="relative mt-10 w-full sm:mt-12 lg:mt-16">
           <div
             ref={scrollContainerRef}
-            className="flex w-full gap-5 overflow-x-auto pb-4 scroll-smooth"
+            className="flex w-full gap-5 overflow-x-auto pb-4 scroll-smooth no-scrollbar"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {teamMembers.map((member) => (

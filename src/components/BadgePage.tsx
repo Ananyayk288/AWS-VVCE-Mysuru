@@ -152,23 +152,113 @@ export const BadgePage: React.FC<BadgePageProps> = () => {
 
   const onDragEnd = () => setIsDragging(false);
 
+  // ─── Convert dataURL to Blob synchronously ────────────────────
+  const dataURLToBlob = (dataUrl: string): Blob => {
+    const parts = dataUrl.split(',');
+    const mimeMatch = parts[0].match(/:(.*?);/);
+    const mime = mimeMatch ? mimeMatch[1] : 'image/png';
+    const bstr = atob(parts[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
+  };
+
   // ─── Download ─────────────────────────────────────────────────
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!isComplete) return;
-    setIsGenerating(true);
-    setTimeout(() => {
-      const cvs = canvasRef.current;
-      if (!cvs) {
+
+    // Detect if running on mobile device or small touch viewport
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent || '') ||
+      (navigator.maxTouchPoints > 1 && window.innerWidth <= 1024) ||
+      window.innerWidth < 768;
+
+    if (!isMobile) {
+      // DESKTOP: Keep exact existing verified behavior
+      setIsGenerating(true);
+      setTimeout(() => {
+        const cvs = canvasRef.current;
+        if (!cvs) {
+          setIsGenerating(false);
+          return;
+        }
+        const url = cvs.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = `AWS-SCD-Mysuru-2026-${name.trim().replace(/\s+/g, '-')}.png`;
+        link.href = url;
+        link.click();
         setIsGenerating(false);
-        return;
+      }, 50);
+      return;
+    }
+
+    // MOBILE DEVICES ONLY:
+    // Avoid setTimeout to preserve user gesture activation required by mobile browsers (iOS Safari & Chrome Android)
+    const cvs = canvasRef.current;
+    if (!cvs) return;
+
+    setIsGenerating(true);
+    const fileName = `AWS-SCD-Mysuru-2026-${name.trim().replace(/\s+/g, '-')}.png`;
+
+    try {
+      const dataUrl = cvs.toDataURL('image/png');
+      const blob = dataURLToBlob(dataUrl);
+      const file = new File([blob], fileName, { type: 'image/png' });
+
+      const isIOS =
+        /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+      // On iOS devices or in-app webviews (Instagram, LinkedIn, etc.),
+      // Web Share API opens the native sheet allowing direct "Save Image" to Photos / "Save to Files"
+      if (
+        (isIOS || /FBAN|FBAV|Instagram|LinkedIn|Twitter/i.test(navigator.userAgent || '')) &&
+        navigator.canShare &&
+        navigator.canShare({ files: [file] })
+      ) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: 'AWS Student Community Day Mysuru 2026 Badge',
+          });
+          return;
+        } catch (shareErr: any) {
+          if (shareErr?.name === 'AbortError') {
+            return;
+          }
+          // Fall through to direct blob download if share was cancelled or failed
+        }
       }
-      const url = cvs.toDataURL('image/png');
+
+      // Direct Blob URL download with DOM attachment for Android Chrome and iOS Safari 13+
+      const blobUrl = URL.createObjectURL(blob);
       const link = document.createElement('a');
-      link.download = `AWS-SCD-Mysuru-2026-${name.trim().replace(/\s+/g, '-')}.png`;
-      link.href = url;
+      link.href = blobUrl;
+      link.download = fileName;
+      link.style.display = 'none';
+      document.body.appendChild(link);
       link.click();
+
+      setTimeout(() => {
+        if (document.body.contains(link)) {
+          document.body.removeChild(link);
+        }
+        URL.revokeObjectURL(blobUrl);
+      }, 3000);
+    } catch (err) {
+      console.error('Mobile badge download error:', err);
+      try {
+        const dataUrl = cvs.toDataURL('image/png');
+        window.open(dataUrl, '_blank');
+      } catch (fallbackErr) {
+        console.error('Fallback failed:', fallbackErr);
+      }
+    } finally {
       setIsGenerating(false);
-    }, 50);
+    }
   };
 
   // ─── Share ────────────────────────────────────────────────────
