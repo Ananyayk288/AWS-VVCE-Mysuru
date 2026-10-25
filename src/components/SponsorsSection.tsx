@@ -59,24 +59,24 @@ export const SponsorsSection: React.FC = () => {
         {
           name: 'AWS User Groups Mysuru',
           logo: '/aws_user_group_mysuru_logo.png',
-          logoClassName: 'max-w-[170px] sm:max-w-[210px] max-h-24 sm:max-h-32',
+          logoClassName: 'max-w-[90%] sm:max-w-[210px] max-h-16 sm:max-h-32',
         },
         {
           name: 'Cloud Native Mysore',
           logo: '/cloud_native_mysore.png',
-          logoClassName: 'max-w-[170px] sm:max-w-[210px] max-h-52 sm:max-h-60',
+          logoClassName: 'max-w-[90%] sm:max-w-[210px] max-h-16 sm:max-h-60',
         },
         {
           name: 'AWS User Group Bengaluru',
           logo: '/awsugblr-logo.png',
           url: 'https://www.awsugblr.in/',
-          logoClassName: 'max-w-[190px] sm:max-w-[230px] max-h-52 sm:max-h-60',
+          logoClassName: 'max-w-[90%] sm:max-w-[620px] max-h-28 sm:max-h-60',
         },
         {
           name: 'AWS User Group Madurai',
           logo: '/logo-Tx1zCSPp.png',
           url: 'https://www.awsugmdu.in/',
-          logoClassName: 'max-w-[170px] sm:max-w-[210px] max-h-24 sm:max-h-32',
+          logoClassName: 'max-w-[90%] sm:max-w-[210px] max-h-16 sm:max-h-32',
         },
       ],
     },
@@ -138,7 +138,7 @@ export const SponsorsSection: React.FC = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`Visit ${sponsor.name}`}
-                        className="flex h-full w-full items-center justify-center p-4 transition-colors hover:bg-[#D1E5CD]/30"
+                        className="flex h-full w-full items-center justify-center p-2 sm:p-4 transition-colors hover:bg-[#D1E5CD]/30"
                       >
                         {sponsor.logo ? (
                           <img
@@ -158,7 +158,7 @@ export const SponsorsSection: React.FC = () => {
                         )}
                       </a>
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center p-4 transition-colors hover:bg-[#D1E5CD]/30">
+                      <div className="flex h-full w-full items-center justify-center p-2 sm:p-4 transition-colors hover:bg-[#D1E5CD]/30">
                         {sponsor.logo ? (
                           <img
                             src={sponsor.logo}
