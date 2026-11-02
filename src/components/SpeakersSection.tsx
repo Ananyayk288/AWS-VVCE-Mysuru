@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Linkedin, ArrowRight, Sparkles } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Linkedin, ArrowRight } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
 
 export interface Speaker {
@@ -16,83 +17,126 @@ export interface Speaker {
   isConfirmed?: boolean;
 }
 
-export const SpeakersSection: React.FC = () => {
-  // Only the confirmed speaker Jessica Gilmore has full information and image.
-  // Other speaker cards are intentionally empty placeholders ready to be filled when confirmed.
-  const speakers: Speaker[] = [
-    {
-      id: 'jessica-gilmore',
-      name: 'Jessica Gilmore',
-      role: 'Manager, Community Groups',
-      company: 'Amazon',
-      image: '/speakers/Jessica.jpg',
-      topic: 'Keynote: Empowering Global Builders & Community Growth',
-      badge: 'AWS Keynote',
-      linkedin: 'https://www.linkedin.com/in/jessicagilmore1/',
-      isConfirmed: true,
-    },
-    {
-      id: 'ravi-kompelle',
-      name: 'Ravi Kompelle',
-      role: '',
-      company: '',
-      image: '/speakers/ravi-kompelle.jpg',
-      linkedin: 'https://www.linkedin.com/in/ravikompella',
-      isConfirmed: true,
-    },
-    {
-      id: 'vivek-raja',
-      name: 'Vivek Raja P S',
-      role: '',
-      company: '',
-      image: '/speakers/vivek-raja.jpg',
-      linkedin: 'https://www.linkedin.com/in/meetvivekraja',
-      isConfirmed: true,
-    },
-    {
-      id: 'speaker-4',
-      name: '',
-      role: '',
-      company: '',
-      image: '',
-      topic: '',
-      badge: '',
-      linkedin: '',
-      isConfirmed: false,
-    },
-    {
-      id: 'speaker-5',
-      name: '',
-      role: '',
-      company: '',
-      image: '',
-      topic: '',
-      badge: '',
-      linkedin: '',
-      isConfirmed: false,
-    },
-    {
-      id: 'speaker-6',
-      name: '',
-      role: '',
-      company: '',
-      image: '',
-      topic: '',
-      badge: '',
-      linkedin: '',
-      isConfirmed: false,
-    },
-  ];
+// Complete directory of all official speakers for AWS Student Community Day Mysuru 2026
+export const allSpeakers: Speaker[] = [
+  {
+    id: 'jessica-gilmore',
+    name: 'Jessica Gilmore',
+    role: 'Manager, Community Groups',
+    company: 'Amazon',
+    image: '/speakers/Jessica.jpg',
+    topic: 'Keynote: Empowering Global Builders & Community Growth on AWS',
+    badge: 'AWS Keynote',
+    linkedin: 'https://www.linkedin.com/in/jessicagilmore1/',
+    isConfirmed: true,
+  },
+  {
+    id: 'ravi-kompelle',
+    name: 'Ravi Kompelle',
+    role: 'Principal Analytics Specialist - ISVs & Startups India',
+    company: 'AWS',
+    image: '/speakers/ravi-kompelle.jpg',
+    topic: 'Keynote: Cloud Transformation, Career Paths & Enterprise Resiliency',
+    badge: 'AWS Keynote',
+    linkedin: 'https://www.linkedin.com/in/ravikompella',
+    isConfirmed: true,
+  },
+  {
+    id: 'vivek-raja',
+    name: 'Vivek Raja P\u00A0S',
+    role: 'Senior AI Solutions Architect & AWS AI Hero',
+    company: 'Aivar Innovations',
+    image: '/speakers/vivek-raja.jpg',
+    topic: 'Keynote: Architecting Cloud & AI Innovations Across the AWS Ecosystem',
+    badge: 'AWS Keynote',
+    linkedin: 'https://www.linkedin.com/in/meetvivekraja',
+    isConfirmed: true,
+  },
+  {
+    id: 'jones-zachariah-noel',
+    name: 'Jones Zachariah Noel N',
+    role: 'Developer Advocate',
+    company: 'AWS Community',
+    image: '/speakers/jones-zachariah-noel.jpg',
+    topic: 'Technical Session 1: Serverless Architectures, Cloud Patterns & Builder Tooling',
+    badge: 'Session Speaker',
+    linkedin: 'https://www.linkedin.com/in/jones-zachariah-noel-n',
+    isConfirmed: true,
+  },
+  {
+    id: 'ganesh-kumar',
+    name: 'Ganesh Kumar',
+    role: 'Solutions Architect',
+    company: 'AWS Community',
+    image: '/speakers/ganesh-kumar.jpg',
+    topic: 'Technical Session 2: Enterprise Cloud-Native Data Platforms & Modern Lakehouses',
+    badge: 'Session Speaker',
+    linkedin: 'https://www.linkedin.com/in/ganesh-kumar-ponraj',
+    isConfirmed: true,
+  },
+  {
+    id: 'neha-kalbande',
+    name: 'Neha Kalbande',
+    role: 'Software Engineer',
+    company: 'AWS Community',
+    image: '/speakers/neha-kalbande.jpg',
+    topic: 'Technical Session 3: AI Agents, Agentic Architectures & Modern LLM Orchestration',
+    badge: 'Session Speaker',
+    linkedin: 'https://www.linkedin.com/in/neha-kalbande/',
+    isConfirmed: true,
+  },
+  {
+    id: 'dipin-thomas',
+    name: 'Dipin Thomas',
+    role: 'Lead Engineer',
+    company: 'Xero',
+    image: '/speakers/dipin-thomas.jpg',
+    topic: 'Cloud Infrastructure, Kubernetes & Platform Engineering on AWS',
+    badge: 'Session Speaker',
+    linkedin: 'https://www.linkedin.com/in/dipin-thomas/',
+    isConfirmed: true,
+  },
+  {
+    id: 'tejas-gupta',
+    name: 'Tejas Gupta',
+    role: 'Senior DevOps Engineer',
+    company: 'Swiggy',
+    image: '/speakers/tejas-gupta.jpg',
+    topic: 'Cloud & DevOps Architectures, Resilient Systems & Scale on AWS',
+    badge: 'Session Speaker',
+    linkedin: 'https://www.linkedin.com/in/tejasguptaa',
+    isConfirmed: true,
+  },
+];
+
+interface SpeakersSectionProps {
+  onOpenSpeakers?: () => void;
+}
+
+export const SpeakersSection: React.FC<SpeakersSectionProps> = ({ onOpenSpeakers }) => {
+  const router = useRouter();
+
+  // All confirmed speakers displayed in the reference interactive showcase
+  const featuredSpeakers = allSpeakers;
 
   const [activeSpeakerIndex, setActiveSpeakerIndex] = useState<number>(0);
-  const activeSpeaker = speakers[activeSpeakerIndex];
+  const activeSpeaker = featuredSpeakers[activeSpeakerIndex] || featuredSpeakers[0];
+
+  const handleViewAll = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (onOpenSpeakers) {
+      onOpenSpeakers();
+    } else {
+      router.push('/speakers');
+    }
+  };
 
   return (
     <section 
       id="speakers" 
       className="relative flex w-full max-w-full flex-col items-center justify-center overflow-hidden bg-[#23303E] py-16 sm:py-20 lg:py-24 scroll-mt-20"
     >
-      {/* Subtle architectural wavy vector lines in background like reference */}
+      {/* Subtle architectural wavy vector lines in background matching reference */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-10">
         <svg 
           className="absolute -right-24 -top-24 h-[800px] w-[800px] stroke-white/40 fill-none" 
@@ -108,97 +152,84 @@ export const SpeakersSection: React.FC = () => {
       </div>
 
       <div className="relative z-10 w-full px-5 sm:px-8 md:px-10 lg:px-20">
-        {/* Section Header Matching Reference */}
+        {/* Section Header Matching Reference Website */}
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <ScrollReveal variant="fade-left">
             <h2 className="font-sans flex flex-col text-4xl sm:text-5xl lg:text-6xl leading-[105%] font-medium tracking-[-0.03em] text-[#FAFAFA]">
               <span>Meet the Speakers</span>
-              <span>Shaping What's Next</span>
+              <span>Shaping What&apos;s Next</span>
             </h2>
           </ScrollReveal>
 
           <ScrollReveal variant="fade-right">
             <a
-              href="#agenda"
+              href="/speakers"
+              onClick={handleViewAll}
               className="flex h-11 min-h-11 rounded-none border-none bg-[#D1E5CD] px-6 hover:bg-[#D1E5CD]/90 flex-row items-center gap-2 font-mono text-xs sm:text-sm uppercase tracking-wider text-[#23303E] font-bold transition-all duration-200 cursor-pointer self-start md:self-end"
             >
-              VIEW ALL SESSIONS <ArrowRight className="h-4 w-4" />
+              VIEW ALL SPEAKERS <ArrowRight className="h-4 w-4" />
             </a>
           </ScrollReveal>
         </div>
 
-        {/* Desktop & Tablet Interactive Speaker Component (Matches Reference) */}
+        {/* Desktop & Tablet: Interactive 2-Column Showcase (Matches Reference 1:1) */}
         <div className="mt-12 hidden md:grid md:grid-cols-[1.25fr_1fr] border-2 border-[#2D3C4E] bg-[#23303E] overflow-hidden">
           {/* Left Column: Speaker Rows */}
           <div className="flex flex-col divide-y-2 divide-[#2D3C4E]">
-            {speakers.map((speaker, index) => {
+            {featuredSpeakers.map((speaker, index) => {
               const isActive = index === activeSpeakerIndex;
-              const isConfirmed = speaker.isConfirmed && Boolean(speaker.name);
 
               return (
                 <div
                   key={speaker.id}
                   onMouseEnter={() => setActiveSpeakerIndex(index)}
                   onClick={() => setActiveSpeakerIndex(index)}
-                  className={`group relative flex cursor-pointer flex-col justify-center px-8 transition-all duration-200 min-h-[96px] ${
+                  className={`group relative flex cursor-pointer flex-col justify-center px-6 lg:px-8 transition-all duration-200 select-none ${
                     isActive 
-                      ? 'bg-[#2D3C4E] py-7' 
-                      : 'bg-[#23303E] hover:bg-[#2D3C4E]/40 py-6'
+                      ? 'bg-[#2D3C4E] py-4 lg:py-5' 
+                      : 'bg-[#23303E] hover:bg-[#2D3C4E]/40 py-3.5 lg:py-4'
                   }`}
                 >
-                  {isConfirmed ? (
-                    <>
-                      <div className="flex items-center justify-between">
-                        <h3 
-                          className={`font-sans tracking-tight transition-colors duration-200 ${
-                            isActive 
-                              ? 'text-3xl lg:text-4xl font-medium text-[#FAFAFA]' 
-                              : 'text-2xl lg:text-3xl font-normal text-[#FAFAFA]/70 group-hover:text-[#FAFAFA]'
-                          }`}
-                        >
-                          {speaker.name}
-                        </h3>
+                  <div className="flex items-center justify-between">
+                    <h3 
+                      className={`font-sans tracking-tight transition-colors duration-200 whitespace-nowrap ${
+                        isActive 
+                          ? 'text-2xl lg:text-3xl font-medium text-[#FAFAFA]' 
+                          : 'text-xl lg:text-2xl font-normal text-[#FAFAFA]/75 group-hover:text-[#FAFAFA]'
+                      }`}
+                    >
+                      {speaker.name}
+                    </h3>
 
-                        {speaker.linkedin && (
-                          <a
-                            href={speaker.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="text-[#FAFAFA]/80 hover:text-[#D1E5CD] transition-colors p-1"
-                            aria-label={`${speaker.name} LinkedIn Profile`}
-                          >
-                            <Linkedin className="h-5 w-5 fill-current" />
-                          </a>
+                    {/* LinkedIn icon displayed on active row matching reference */}
+                    {isActive && speaker.linkedin && (
+                      <a
+                        href={speaker.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-[#FAFAFA]/90 hover:text-[#07C2AC] transition-colors p-1"
+                        aria-label={`${speaker.name} LinkedIn Profile`}
+                      >
+                        <Linkedin className="h-4 w-4 lg:h-5 lg:w-5 fill-current" />
+                      </a>
+                    )}
+                  </div>
+
+                  {/* Active Speaker Details */}
+                  {isActive && (
+                    <div className="mt-1 flex flex-col gap-0.5">
+                      <p className="font-mono text-[11px] lg:text-xs uppercase tracking-wider text-[#D1E5CD]">
+                        {speaker.role}{' '}
+                        {speaker.company && (
+                          <span className="text-[#07C2AC] font-bold">@{speaker.company}</span>
                         )}
-                      </div>
-
-                      {/* Active Speaker Details */}
-                      {isActive && (speaker.role || speaker.company || speaker.topic) && (
-                        <div className="mt-2 flex flex-col gap-1">
-                          {(speaker.role || speaker.company) && (
-                            <p className="font-mono text-xs uppercase tracking-wider text-[#D1E5CD]">
-                              {speaker.role} {speaker.company && <span className="text-[#a2e048]">@{speaker.company}</span>}
-                            </p>
-                          )}
-                          {speaker.topic && (
-                            <p className="font-sans text-xs sm:text-sm text-[#FAFAFA]/80 mt-1 leading-snug">
-                              {speaker.topic}
-                            </p>
-                          )}
-                        </div>
+                      </p>
+                      {speaker.topic && (
+                        <p className="font-sans text-xs text-[#FAFAFA]/80 mt-0.5 leading-snug line-clamp-2">
+                          {speaker.topic}
+                        </p>
                       )}
-                    </>
-                  ) : (
-                    /* Intentionally blank placeholder card maintaining exact same dimensions and style */
-                    <div className="flex items-center justify-between w-full">
-                      <div className="flex flex-col gap-2">
-                        <div className="h-6 w-48 sm:w-64 rounded-none bg-[#29384A]/60 transition-colors group-hover:bg-[#29384A]" />
-                        <div className="h-3.5 w-32 rounded-none bg-[#29384A]/40 transition-colors group-hover:bg-[#29384A]/70" />
-                      </div>
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-[#5A6C86] opacity-60 group-hover:opacity-100 transition-opacity">
-                        To Be Announced
-                      </span>
                     </div>
                   )}
                 </div>
@@ -206,23 +237,24 @@ export const SpeakersSection: React.FC = () => {
             })}
           </div>
 
-          {/* Right Column: Featured Portrait Image of Active Speaker */}
-          <div className="relative border-l-2 border-[#2D3C4E] bg-[#1a232f] flex items-end justify-center overflow-hidden min-h-[520px]">
-            {activeSpeaker && activeSpeaker.isConfirmed && activeSpeaker.image ? (
+          {/* Right Column: Featured High-Resolution Portrait Image of Active Speaker */}
+          <div className="relative border-l-2 border-[#2D3C4E] bg-[#1a232f] flex items-end justify-center overflow-hidden min-h-[580px] lg:min-h-[640px]">
+            {activeSpeaker && activeSpeaker.image ? (
               <>
                 <img
                   src={activeSpeaker.image}
                   alt={activeSpeaker.name}
-                  className="h-full w-full object-cover object-center grayscale-[15%] transition-all duration-300"
+                  className="h-full w-full object-cover object-top transition-all duration-300"
                 />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#23303E] via-transparent to-transparent opacity-80" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#23303E] via-[#23303E]/20 to-transparent opacity-90" />
+                
                 <div className="absolute bottom-6 left-6 right-6 z-10">
                   <div className="flex items-center justify-between mb-2">
-                    {activeSpeaker.badge ? (
+                    {activeSpeaker.badge && (
                       <span className="font-mono text-[10px] uppercase tracking-widest text-[#23303E] bg-[#D1E5CD] px-2.5 py-1 font-bold inline-block">
                         {activeSpeaker.badge}
                       </span>
-                    ) : <span />}
+                    )}
                     {activeSpeaker.linkedin && (
                       <a
                         href={activeSpeaker.linkedin}
@@ -237,9 +269,12 @@ export const SpeakersSection: React.FC = () => {
                     )}
                   </div>
                   <p className="font-sans text-2xl font-bold text-white">{activeSpeaker.name}</p>
-                  {(activeSpeaker.role || activeSpeaker.company) && (
-                    <p className="font-mono text-xs text-[#a2e048]">{activeSpeaker.role} {activeSpeaker.company && `@${activeSpeaker.company}`}</p>
-                  )}
+                  <p className="font-mono text-xs text-[#A3A7AA] uppercase tracking-wider mt-0.5">
+                    {activeSpeaker.role}{' '}
+                    {activeSpeaker.company && (
+                      <span className="text-[#07C2AC] font-semibold">@{activeSpeaker.company}</span>
+                    )}
+                  </p>
                   {activeSpeaker.topic && (
                     <p className="mt-2 font-sans text-xs text-[#FAFAFA]/85 leading-snug">
                       {activeSpeaker.topic}
@@ -247,97 +282,71 @@ export const SpeakersSection: React.FC = () => {
                   )}
                 </div>
               </>
-            ) : (
-              /* Ready placeholder state when hovering an empty card */
-              <div className="flex h-full w-full flex-col items-center justify-center p-8 text-center bg-[#29384A]/30">
-                <div className="flex flex-col items-center justify-center border-2 border-dashed border-[#2D3C4E] p-10 w-4/5">
-                  <div className="h-12 w-12 rounded-none bg-[#2D3C4E] flex items-center justify-center text-[#5A6C86]">
-                    <span className="font-mono text-lg font-bold">AWS</span>
-                  </div>
-                  <p className="mt-4 font-mono text-xs uppercase tracking-widest text-[#D1E5CD]/80">
-                    Speaker Slot Available
-                  </p>
-                  <p className="mt-1 font-sans text-xs text-[#FAFAFA]/50">
-                    More exciting speakers to be announced soon
-                  </p>
-                </div>
-              </div>
-            )}
+            ) : null}
           </div>
         </div>
 
-        {/* Mobile View: 2-Column Grid Matching Reference Mobile Layout */}
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 border-t-2 border-l-2 border-[#2D3C4E] md:hidden">
-          {speakers.map((speaker) => {
-            const isConfirmed = speaker.isConfirmed && Boolean(speaker.name);
-
-            return (
-              <div
-                key={speaker.id}
-                className="flex flex-col border-r-2 border-b-2 border-[#2D3C4E] bg-[#23303E] overflow-hidden"
-              >
-                {isConfirmed ? (
-                  <>
-                    <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#1a232f]">
-                      <img
-                        src={speaker.image}
-                        alt={speaker.name}
-                        className="h-full w-full object-cover object-top grayscale-[15%]"
-                      />
-                      {speaker.badge && (
-                        <span className="absolute top-3 left-3 font-mono text-[9px] uppercase tracking-widest text-[#23303E] bg-[#D1E5CD] px-2 py-0.5 font-bold">
-                          {speaker.badge}
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="p-4 flex flex-col gap-1">
-                      <div className="flex items-center justify-between">
-                        <h3 className="font-sans text-lg font-bold text-[#FAFAFA]">{speaker.name}</h3>
-                        {speaker.linkedin && (
-                          <a
-                            href={speaker.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[#FAFAFA] hover:text-[#a2e048] p-1"
-                            aria-label={`${speaker.name} LinkedIn Profile`}
-                          >
-                            <Linkedin className="h-4 w-4 fill-current" />
-                          </a>
-                        )}
-                      </div>
-                      {(speaker.role || speaker.company) && (
-                        <p className="font-mono text-[11px] uppercase tracking-wider text-[#D1E5CD]">
-                          {speaker.role} {speaker.company && <span className="text-[#a2e048]">@{speaker.company}</span>}
-                        </p>
-                      )}
-                      {speaker.topic && (
-                        <p className="font-sans text-xs text-[#FAFAFA]/70 mt-1 leading-snug">
-                          {speaker.topic}
-                        </p>
-                      )}
-                    </div>
-                  </>
-                ) : (
-                  /* Empty mobile card maintaining exact same dimensions, borders and layout */
-                  <>
-                    <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#29384A]/30 flex flex-col items-center justify-center p-4">
-                      <div className="w-full h-full border border-dashed border-[#2D3C4E] flex flex-col items-center justify-center text-center p-3">
-                        <span className="font-mono text-[10px] uppercase tracking-widest text-[#5A6C86]">
-                          Speaker TBA
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="p-4 flex flex-col gap-2 min-h-[96px] justify-center">
-                      <div className="h-4 w-3/4 bg-[#29384A]/50" />
-                      <div className="h-3 w-1/2 bg-[#29384A]/30" />
-                    </div>
-                  </>
+        {/* Mobile View: 2x2 Featured Grid Matching Reference Mobile Layout */}
+        <div className="mt-8 grid grid-cols-2 border border-[#2D3C4E] md:hidden">
+          {featuredSpeakers.map((speaker) => (
+            <div
+              key={speaker.id}
+              className="flex flex-col border border-[#2D3C4E] bg-[#23303E] overflow-hidden"
+            >
+              {/* Photo */}
+              <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#1a232f]">
+                <img
+                  src={speaker.image}
+                  alt={speaker.name}
+                  className="h-full w-full object-cover object-top"
+                />
+                {speaker.badge && (
+                  <span className="absolute top-2 left-2 font-mono text-[8px] uppercase tracking-widest text-[#23303E] bg-[#D1E5CD] px-1.5 py-0.5 font-bold">
+                    {speaker.badge}
+                  </span>
                 )}
               </div>
-            );
-          })}
+
+              {/* Bottom Info Bar matching Reference Mobile */}
+              <div className="p-3.5 flex flex-col justify-between flex-1 bg-[#23303E]">
+                <div className="flex items-center justify-between gap-1 mb-1">
+                  <h3 className="font-sans text-xs sm:text-sm font-bold text-[#FAFAFA] uppercase tracking-tight whitespace-nowrap line-clamp-1">
+                    {speaker.name}
+                  </h3>
+                  {speaker.linkedin && (
+                    <a
+                      href={speaker.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#FAFAFA]/80 hover:text-[#07C2AC] p-0.5 shrink-0"
+                      aria-label={`${speaker.name} LinkedIn Profile`}
+                    >
+                      <Linkedin className="h-3.5 w-3.5 fill-current" />
+                    </a>
+                  )}
+                </div>
+
+                <p className="font-mono text-[10px] uppercase tracking-wider text-[#A3A7AA] line-clamp-1">
+                  {speaker.role}{' '}
+                  {speaker.company && (
+                    <span className="text-[#07C2AC] font-semibold">@{speaker.company}</span>
+                  )}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Mobile View All Speakers Button */}
+        <div className="mt-6 flex justify-center md:hidden">
+          <a
+            href="/speakers"
+            onClick={handleViewAll}
+            className="w-full flex h-11 items-center justify-center gap-2 bg-[#D1E5CD] font-mono text-xs uppercase tracking-wider text-[#23303E] font-bold hover:bg-[#D1E5CD]/90 transition-colors"
+          >
+            <span>VIEW ALL 8 SPEAKERS</span>
+            <ArrowRight className="h-4 w-4" />
+          </a>
         </div>
       </div>
     </section>

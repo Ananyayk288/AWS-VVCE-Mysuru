@@ -35,67 +35,199 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
   const scheduleData: ScheduleRow[] = [
     {
       id: 'item-1',
-      time: '8:00am – 9:00am',
+      time: '8.00 am - 9.00 am',
       title: 'Check-in & Registrations',
       isBreak: true,
       tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      description: 'Check-in, badge collection, morning refreshments, and networking with fellow student builders, community leads, and sponsors.',
+      extra: 'Check-in & Welcome',
     },
     {
       id: 'item-2',
-      time: '9:00am – 9:30am',
-      title: 'Opening Ceremony',
+      time: '9.00 am - 9.30 am',
+      title: 'Inauguration Ceremony',
       tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      description: 'Official inauguration ceremony and lighting of the lamp by dignitaries, faculty coordinators, and AWS Student Builder Group VVCE community leads.',
+      extra: 'Inauguration',
     },
     {
       id: 'item-3',
-      time: '9:30am – 11:00am',
-      title: 'Keynote',
+      time: '9.30 am - 10.00 am',
+      title: 'Keynote Speech by Ravi Kompella',
       tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      description: 'Opening keynote by Ravi Kompella exploring cloud transformation, career opportunities on AWS, and architecting resilient enterprise systems.',
+      extra: 'AWS Keynote',
+      speakers: [
+        {
+          name: 'Ravi Kompelle',
+          role: 'Principal Analytics Specialist - ISVs & Startups India',
+          company: 'AWS',
+          image: '/speakers/ravi-kompelle.jpg',
+          linkedin: 'https://www.linkedin.com/in/ravikompella',
+        },
+      ],
     },
     {
       id: 'item-4',
-      time: '11:00am – 11:30am',
-      title: 'TEA BREAK',
-      isBreak: true,
+      time: '10.00 am - 10.30 am',
+      title: 'Keynote Speech by Vivek\u00A0Raja\u00A0P\u00A0S',
       tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      description: 'Keynote session by Vivek Raja P S sharing deep insights on cloud architecture, AI innovations, and community building across the AWS ecosystem.',
+      extra: 'AWS Keynote',
+      speakers: [
+        {
+          name: 'Vivek\u00A0Raja\u00A0P\u00A0S',
+          role: 'Senior AI Solutions Architect & AWS AI Hero',
+          company: 'Aivar Innovations',
+          image: '/speakers/vivek-raja.jpg',
+          linkedin: 'https://www.linkedin.com/in/meetvivekraja',
+        },
+      ],
     },
     {
       id: 'item-5',
-      time: '11:30am – 1:30pm',
-      title: 'Session 1',
+      time: '10.30 am - 10.45 am',
+      title: 'Keynote Speech by Jessica Gilmore',
       tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      description: 'Keynote address by Jessica Gilmore: Empowering Global Builders & Community Growth on AWS.',
+      extra: 'AWS Keynote',
+      speakers: [
+        {
+          name: 'Jessica Gilmore',
+          role: 'Manager, Community Groups',
+          company: '@Amazon',
+          image: '/speakers/Jessica.jpg',
+          linkedin: 'https://www.linkedin.com/in/jessicagilmore1/',
+        },
+      ],
     },
     {
       id: 'item-6',
-      time: '1:30pm – 2:30pm',
-      title: 'LUNCH BREAK',
+      time: '10.45 am - 11.15 am',
+      title: 'Tea Break',
       isBreak: true,
       tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      description: 'Morning tea break, refreshments, and hallway track networking with speakers, mentors, and fellow student builders.',
+      extra: 'Tea & Networking',
     },
     {
       id: 'item-7',
-      time: '2:30pm – 4:30pm',
-      title: 'Session 2',
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      time: '11.15 am - 12.00 pm',
+      title: 'Session 1',
+      tracks: ['MAIN STAGE', 'TRACK 1'],
+      description: 'Technical Session 1 by Jones Zachariah Noel N exploring serverless architectures, cloud development patterns, and AWS builder tooling.',
+      extra: 'Technical Session',
+      speakers: [
+        {
+          name: 'Jones Zachariah Noel N',
+          role: 'Community Speaker',
+          company: 'AWS Community',
+          image: '/speakers/jones-zachariah-noel.jpg',
+          linkedin: 'https://www.linkedin.com/in/jones-zachariah-noel-n',
+        },
+      ],
     },
     {
       id: 'item-8',
-      time: '4:30pm – 5:00pm',
-      title: 'BREAK',
-      isBreak: true,
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      time: '12.00 pm - 12.45 pm',
+      title: 'Session 2',
+      tracks: ['MAIN STAGE', 'TRACK 2'],
+      description: 'Technical Session 2 by Ganesh Kumar on enterprise cloud-native data platforms, lakehouse architectures, and modern cloud patterns.',
+      extra: 'Technical Session',
+      speakers: [
+        {
+          name: 'Ganesh Kumar',
+          role: 'Solutions Architect',
+          company: 'AWS Community',
+          image: '/speakers/ganesh-kumar.jpg',
+          linkedin: 'https://www.linkedin.com/in/ganesh-kumar-ponraj',
+        },
+      ],
     },
     {
       id: 'item-9',
-      time: '5:00pm – 5:30pm',
-      title: 'Panel Discussion',
+      time: '12.45 pm - 2.00 pm',
+      title: 'Lunch Break',
+      isBreak: true,
       tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      description: 'Complimentary buffet lunch for attendees, speakers, and volunteers. Sponsor booth visits, product demos, and community networking.',
+      extra: 'Buffet Lunch & Booths',
     },
     {
       id: 'item-10',
-      time: '5:30pm – 6:00pm',
-      title: 'Guest Felicitation and Closing Ceremony',
+      time: '2.00 pm - 2.45 pm',
+      title: 'Session 3',
+      tracks: ['MAIN STAGE', 'TRACK 1'],
+      description: 'Technical Session 3 by Neha Kalbande on AI Agents, Agentic Architectures, LLM orchestration, and modern cloud software engineering.',
+      extra: 'Technical Session',
+      speakers: [
+        {
+          name: 'Neha Kalbande',
+          role: 'Software Engineer',
+          company: 'AWS Community',
+          image: '/speakers/neha-kalbande.jpg',
+          linkedin: 'https://www.linkedin.com/in/neha-kalbande/',
+        },
+      ],
+    },
+    {
+      id: 'item-11',
+      time: '2.45 pm - 3.30 pm',
+      title: 'Session 4',
+      tracks: ['MAIN STAGE', 'TRACK 2'],
+      description: 'Deep-dive technical session covering practical cloud implementations, cloud security, and developer productivity on AWS.',
+      extra: 'Technical Session',
+    },
+    {
+      id: 'item-12',
+      time: '3.30 pm - 4.00 pm',
+      title: 'High Tea',
+      isBreak: true,
       tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      description: 'High tea and refreshments break with community conversations and hands-on discussions.',
+      extra: 'Tea & Refreshments',
+    },
+    {
+      id: 'item-13',
+      time: '4.00 pm - 4.15 pm',
+      title: 'Networking Break',
+      isBreak: true,
+      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      description: 'Connect directly with speakers, mentors, community organizers, and sponsor booth representatives.',
+      extra: 'Community Connect',
+    },
+    {
+      id: 'item-14',
+      time: '4.15 pm - 4.45 pm',
+      title: 'Panel Discussion',
+      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      description: 'Interactive panel discussion featuring community leaders and AWS experts on Career Paths in Cloud & AI, Community Impact, and Building Scalable Systems.',
+      extra: 'Expert Panel',
+    },
+    {
+      id: 'item-15',
+      time: '4.45 pm - 5.00 pm',
+      title: 'Closing Keynote',
+      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      description: 'Closing keynote reflecting on the day of learning, community accomplishments, and future initiatives for student cloud builders in Mysuru.',
+      extra: 'Closing Address',
+    },
+    {
+      id: 'item-16',
+      time: '5.00 pm - 5.30 pm',
+      title: 'Valedictory',
+      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      description: 'Valedictory ceremony: felicitation of speakers, organizers, and volunteers, award presentations, and closing remarks.',
+      extra: 'Awards & Felicitation',
+    },
+    {
+      id: 'item-17',
+      time: '5.30 pm - 6.00 pm',
+      title: 'Swag Distribution',
+      isBreak: true,
+      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      description: 'Exclusive AWS Community Day swag distribution, certificates, stickers, and group photo session.',
+      extra: 'Exclusive AWS Swags',
     },
   ];
 
@@ -209,7 +341,7 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
                             <img
                               src={sp.image}
                               alt={sp.name}
-                              className="h-full w-full object-cover"
+                              className="h-full w-full object-cover object-top"
                             />
                           </div>
                         ))
@@ -257,7 +389,7 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
                                   <img
                                     src={speaker.image}
                                     alt={speaker.name}
-                                    className="h-full w-full object-cover"
+                                    className="h-full w-full object-cover object-top"
                                   />
                                 </div>
                               ) : null}
