@@ -56,12 +56,12 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
       title: 'Keynote Speech by Ravi Kompella',
       tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
       description: 'Opening keynote by Ravi Kompella exploring cloud transformation, career opportunities on AWS, and architecting resilient enterprise systems.',
-      extra: 'Keynote Speaker',
+      extra: 'AWS Keynote',
       speakers: [
         {
           name: 'Ravi Kompelle',
-          role: 'Community Speaker',
-          company: 'AWS Community',
+          role: 'Principal Analytics Specialist - ISVs & Startups India',
+          company: 'AWS',
           image: '/speakers/ravi-kompelle.jpg',
           linkedin: 'https://www.linkedin.com/in/ravikompella',
         },
@@ -73,12 +73,12 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
       title: 'Keynote Speech by Vivek\u00A0Raja\u00A0P\u00A0S',
       tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
       description: 'Keynote session by Vivek Raja P S sharing deep insights on cloud architecture, AI innovations, and community building across the AWS ecosystem.',
-      extra: 'Keynote Speaker',
+      extra: 'AWS Keynote',
       speakers: [
         {
           name: 'Vivek\u00A0Raja\u00A0P\u00A0S',
-          role: 'Community Speaker',
-          company: 'AWS Community',
+          role: 'Senior AI Solutions Architect & AWS AI Hero',
+          company: 'Aivar Innovations',
           image: '/speakers/vivek-raja.jpg',
           linkedin: 'https://www.linkedin.com/in/meetvivekraja',
         },
