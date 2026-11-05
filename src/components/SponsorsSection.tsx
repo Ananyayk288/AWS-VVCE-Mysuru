@@ -9,11 +9,12 @@ interface SponsorItem {
   logo?: string | null;
   url?: string;
   logoClassName?: string;
+  label?: string;
 }
 
 interface SponsorTier {
   category: string;
-  layout: 'full' | 'grid-4';
+  layout: 'full' | 'grid-2' | 'grid-4';
   sponsors: SponsorItem[];
 }
 
@@ -42,13 +43,22 @@ export const SponsorsSection: React.FC = () => {
       ],
     },
     {
-      category: 'EVENT PARTNER — TICKETING PARTNER',
-      layout: 'full',
+      category: 'EVENT PARTNERS',
+      layout: 'grid-2',
       sponsors: [
         {
           name: 'KonfHub',
           logo: '/konfhub_logo.png',
           url: 'https://konfhub.com/',
+          label: 'TICKETING PARTNER',
+          logoClassName: 'max-w-[180px] sm:max-w-[220px] max-h-11 sm:max-h-14',
+        },
+        {
+          name: 'Vastram',
+          logo: '/vastram_logo.png',
+          url: 'https://vastram.net/',
+          label: 'EVENT SPONSOR',
+          logoClassName: 'max-w-[150px] sm:max-w-[180px] max-h-16 sm:max-h-20',
         },
       ],
     },
@@ -126,9 +136,42 @@ export const SponsorsSection: React.FC = () => {
             <div className="flex w-full flex-wrap border-t border-l border-[#D1E5CD]">
               {tier.sponsors.map((sponsor, idx) => {
                 const isFullWidth = tier.layout === 'full';
+                const isTwoCol = tier.layout === 'grid-2';
                 const colClass = isFullWidth
                   ? 'basis-full flex min-h-24 grow items-center justify-center border-r border-b border-[#D1E5CD] sm:min-h-28'
+                  : isTwoCol
+                  ? 'basis-full sm:basis-1/2 flex min-h-32 sm:min-h-36 min-w-0 grow items-center justify-center border-r border-b border-[#D1E5CD]'
                   : 'basis-1/2 sm:basis-1/2 lg:basis-1/4 flex min-h-20 min-w-0 grow items-center justify-center border-r border-b border-[#D1E5CD] sm:min-h-25';
+
+                const content = (
+                  <>
+                    <div className={sponsor.label ? 'flex h-16 sm:h-20 items-center justify-center' : 'flex items-center justify-center'}>
+                      {sponsor.logo ? (
+                        <img
+                          src={sponsor.logo}
+                          alt={sponsor.name}
+                          loading="lazy"
+                          className={`h-auto w-auto object-contain select-none ${
+                            sponsor.logoClassName
+                              ? sponsor.logoClassName
+                              : isFullWidth
+                              ? 'max-w-64 sm:max-w-80 max-h-16 sm:max-h-20'
+                              : 'max-w-44 sm:max-w-56 max-h-12'
+                          }`}
+                        />
+                      ) : (
+                        <span className="font-mono text-xs uppercase tracking-wider text-[#5A6C86]/60">
+                          {sponsor.name}
+                        </span>
+                      )}
+                    </div>
+                    {sponsor.label && (
+                      <span className="font-mono text-xs sm:text-sm uppercase tracking-wider text-[#5A6C86] text-center">
+                        {sponsor.label}
+                      </span>
+                    )}
+                  </>
+                );
 
                 return (
                   <div key={idx} className={colClass}>
@@ -138,43 +181,13 @@ export const SponsorsSection: React.FC = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`Visit ${sponsor.name}`}
-                        className="flex h-full w-full items-center justify-center p-2 sm:p-4 transition-colors hover:bg-[#D1E5CD]/30"
+                        className="flex h-full w-full flex-col items-center justify-center gap-2.5 p-4 sm:p-5 transition-colors hover:bg-[#D1E5CD]/30"
                       >
-                        {sponsor.logo ? (
-                          <img
-                            src={sponsor.logo}
-                            alt={sponsor.name}
-                            loading="lazy"
-                            className={`h-auto w-auto object-contain select-none ${
-                              sponsor.logoClassName
-                                ? sponsor.logoClassName
-                                : isFullWidth ? 'max-w-64 sm:max-w-80 max-h-16 sm:max-h-20' : 'max-w-44 sm:max-w-56 max-h-12'
-                            }`}
-                          />
-                        ) : (
-                          <span className="font-mono text-xs uppercase tracking-wider text-[#5A6C86]/60">
-                            {sponsor.name}
-                          </span>
-                        )}
+                        {content}
                       </a>
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center p-2 sm:p-4 transition-colors hover:bg-[#D1E5CD]/30">
-                        {sponsor.logo ? (
-                          <img
-                            src={sponsor.logo}
-                            alt={sponsor.name}
-                            loading="lazy"
-                            className={`h-auto w-auto object-contain select-none ${
-                              sponsor.logoClassName
-                                ? sponsor.logoClassName
-                                : isFullWidth ? 'max-w-64 sm:max-w-80 max-h-16 sm:max-h-20' : 'max-w-44 sm:max-w-56 max-h-12'
-                            }`}
-                          />
-                        ) : (
-                          <span className="font-mono text-xs uppercase tracking-wider text-[#5A6C86]/60">
-                            {sponsor.name}
-                          </span>
-                        )}
+                      <div className="flex h-full w-full flex-col items-center justify-center gap-2.5 p-4 sm:p-5 transition-colors hover:bg-[#D1E5CD]/30">
+                        {content}
                       </div>
                     )}
                   </div>
