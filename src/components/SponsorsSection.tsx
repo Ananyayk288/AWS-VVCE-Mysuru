@@ -44,21 +44,35 @@ export const SponsorsSection: React.FC = () => {
     },
     {
       category: 'EVENT PARTNERS',
-      layout: 'grid-2',
+      layout: 'grid-4',
       sponsors: [
         {
           name: 'KonfHub',
           logo: '/konfhub_logo.png',
           url: 'https://konfhub.com/',
           label: 'TICKETING PARTNER',
-          logoClassName: 'max-w-[180px] sm:max-w-[220px] max-h-11 sm:max-h-14',
+          logoClassName: 'max-w-[150px] sm:max-w-[180px] max-h-10 sm:max-h-12',
         },
         {
           name: 'Vastram',
           logo: '/vastram_logo.png',
           url: 'https://vastram.net/',
           label: 'EVENT SPONSOR',
-          logoClassName: 'max-w-[150px] sm:max-w-[180px] max-h-16 sm:max-h-20',
+          logoClassName: 'max-w-[120px] sm:max-w-[140px] max-h-14 sm:max-h-16',
+        },
+        {
+          name: 'Malabar Gold & Diamonds',
+          logo: '/malabar_logo.svg',
+          url: 'https://www.malabargoldanddiamonds.com/',
+          label: 'EVENT SPONSOR',
+          logoClassName: 'max-w-[180px] sm:max-w-[210px] max-h-10 sm:max-h-12',
+        },
+        {
+          name: 'Interactive Solution',
+          logo: '/interactive_solution_logo.png',
+          url: 'https://interactivesolution.co.in/',
+          label: 'EVENT SPONSOR',
+          logoClassName: 'max-w-[170px] sm:max-w-[200px] max-h-10 sm:max-h-12',
         },
       ],
     },
@@ -141,6 +155,8 @@ export const SponsorsSection: React.FC = () => {
                   ? 'basis-full flex min-h-24 grow items-center justify-center border-r border-b border-[#D1E5CD] sm:min-h-28'
                   : isTwoCol
                   ? 'basis-full sm:basis-1/2 flex min-h-32 sm:min-h-36 min-w-0 grow items-center justify-center border-r border-b border-[#D1E5CD]'
+                  : sponsor.label
+                  ? 'basis-full sm:basis-1/2 lg:basis-1/4 flex min-h-32 sm:min-h-36 min-w-0 grow items-center justify-center border-r border-b border-[#D1E5CD]'
                   : 'basis-1/2 sm:basis-1/2 lg:basis-1/4 flex min-h-20 min-w-0 grow items-center justify-center border-r border-b border-[#D1E5CD] sm:min-h-25';
 
                 const content = (
