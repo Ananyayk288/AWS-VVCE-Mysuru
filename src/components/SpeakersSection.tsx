@@ -173,6 +173,17 @@ export const allSpeakers: Speaker[] = [
     linkedin: 'https://www.linkedin.com/in/ppradyoth/',
     isConfirmed: true,
   },
+  {
+    id: 'saksham-dhull',
+    name: 'Saksham Dhull',
+    role: 'Software Engineer (Tech Lead), AI Agents',
+    company: 'WisdomAI',
+    image: '/speakers/saksham-dhull.jpg',
+    topic: 'Distributed Systems, Agentic AI Architectures & Large Language Models',
+    badge: 'Session Speaker',
+    linkedin: 'https://www.linkedin.com/in/dhull442/',
+    isConfirmed: true,
+  },
 ];
 
 interface SpeakersSectionProps {
