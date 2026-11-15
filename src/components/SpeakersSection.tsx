@@ -184,6 +184,17 @@ export const allSpeakers: Speaker[] = [
     linkedin: 'https://www.linkedin.com/in/dhull442/',
     isConfirmed: true,
   },
+  {
+    id: 'yeshwanth-lm',
+    name: 'Yeshwanth L M',
+    role: 'Solutions Engineer',
+    company: 'Confluent',
+    image: '/speakers/yeshwanth-lm.jpg',
+    topic: 'Cloud, DevOps, Real-Time Data Streaming & AI Architectures on AWS',
+    badge: 'AWS Community Builder',
+    linkedin: 'https://www.linkedin.com/in/yeshwanth-l-m/',
+    isConfirmed: true,
+  },
 ];
 
 interface SpeakersSectionProps {
