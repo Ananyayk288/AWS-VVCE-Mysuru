@@ -78,7 +78,7 @@ export const allSpeakers: Speaker[] = [
     id: 'neha-kalbande',
     name: 'Neha Kalbande',
     role: 'Software Engineer',
-    company: 'AWS Community',
+    company: 'Allminds',
     image: '/speakers/neha-kalbande.jpg',
     topic: 'Technical Session 3: AI Agents, Agentic Architectures & Modern LLM Orchestration',
     badge: 'Session Speaker',
