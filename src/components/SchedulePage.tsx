@@ -3,6 +3,10 @@
 import React, { useState } from 'react';
 import { ChevronDown, Linkedin, ArrowLeft } from 'lucide-react';
 
+/* ─── Interfaces & Types ─────────────────────────────────────────────────── */
+
+type TrackType = 'AI/ML' | 'DevOps' | 'Security';
+
 interface SpeakerInfo {
   name: string;
   role?: string;
@@ -11,56 +15,89 @@ interface SpeakerInfo {
   linkedin?: string;
 }
 
-interface ScheduleRow {
+interface SimpleRow {
+  kind: 'simple';
   id: string;
   time: string;
   title: string;
   isBreak?: boolean;
-  tracks: string[]; // ['MAIN STAGE', 'TRACK 1', etc.]
   description?: string;
-  extra?: string;
   speakers?: SpeakerInfo[];
 }
+
+interface SessionSlot {
+  id: string;
+  track: TrackType;
+  speakers: SpeakerInfo[];
+  isJoint?: boolean;
+  description?: string;
+}
+
+interface AccordionSlotRow {
+  kind: 'accordion';
+  id: string;
+  time: string;
+  sessions: SessionSlot[];
+}
+
+type ScheduleItem = SimpleRow | AccordionSlotRow;
 
 interface SchedulePageProps {
   onNavigateHome: () => void;
 }
 
+/* ─── SchedulePage Component ─────────────────────────────────────────────── */
+
 export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) => {
-  const [activeTab, setActiveTab] = useState<string>('MAIN STAGE');
-  const [expandedRowId, setExpandedRowId] = useState<string | null>(null);
+  // Independent accordion state — all four time slots collapsed initially
+  const [openSlots, setOpenSlots] = useState<Record<string, boolean>>({
+    'slot-1115': false,
+    'slot-1200': false,
+    'slot-1400': false,
+    'slot-1445': false,
+  });
 
-  const tabs = ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'];
+  // State for simple rows (keynotes, breaks) details toggle
+  const [expandedSimpleId, setExpandedSimpleId] = useState<string | null>(null);
 
-  const scheduleData: ScheduleRow[] = [
+  const toggleSlot = (id: string) => {
+    setOpenSlots((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  const toggleSimple = (id: string) => {
+    setExpandedSimpleId((prev) => (prev === id ? null : id));
+  };
+
+  const scheduleItems: ScheduleItem[] = [
     {
-      id: 'item-1',
-      time: '8.00 am - 9.00 am',
+      kind: 'simple',
+      id: 'checkin',
+      time: '8:00 AM – 9:00 AM',
       title: 'Check-in & Registrations',
       isBreak: true,
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
       description: 'Check-in, badge collection, morning refreshments, and networking with fellow student builders, community leads, and sponsors.',
-      extra: 'Check-in & Welcome',
     },
     {
-      id: 'item-2',
-      time: '9.00 am - 9.30 am',
+      kind: 'simple',
+      id: 'inauguration',
+      time: '9:00 AM – 9:30 AM',
       title: 'Inauguration Ceremony',
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      isBreak: true,
       description: 'Official inauguration ceremony and lighting of the lamp by dignitaries, faculty coordinators, and AWS Student Builder Group VVCE community leads.',
-      extra: 'Inauguration',
     },
     {
-      id: 'item-3',
-      time: '9.30 am - 10.00 am',
-      title: 'Keynote Speech by Ravi Kompella',
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
-      description: 'Opening keynote by Ravi Kompella exploring cloud transformation, career opportunities on AWS, and architecting resilient enterprise systems.',
-      extra: 'AWS Keynote',
+      kind: 'simple',
+      id: 'keynote-ravi',
+      time: '9:30 AM – 10:00 AM',
+      title: 'Keynote by Ravi Kompelle',
+      description: 'Opening keynote by Ravi Kompelle exploring cloud transformation, career opportunities on AWS, and architecting resilient enterprise systems.',
       speakers: [
         {
           name: 'Ravi Kompelle',
-          role: 'Principal Analytics Specialist - ISVs & Startups India',
+          role: 'Principal Analytics Specialist — ISVs & Startups India',
           company: 'AWS',
           image: '/speakers/ravi-kompelle.jpg',
           linkedin: 'https://www.linkedin.com/in/ravikompella',
@@ -68,176 +105,562 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
       ],
     },
     {
-      id: 'item-4',
-      time: '10.00 am - 10.30 am',
-      title: 'Keynote Speech by Vivek\u00A0Raja\u00A0P\u00A0S',
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      kind: 'simple',
+      id: 'keynote-vivek',
+      time: '10:00 AM – 10:30 AM',
+      title: 'Keynote by Vivek\u00A0Raja\u00A0P\u00A0S',
       description: 'Keynote session by Vivek Raja P S sharing deep insights on cloud architecture, AI innovations, and community building across the AWS ecosystem.',
-      extra: 'AWS Keynote',
       speakers: [
         {
           name: 'Vivek\u00A0Raja\u00A0P\u00A0S',
           role: 'Senior AI Solutions Architect & AWS AI Hero',
           company: 'Aivar Innovations',
-          image: '/speakers/vivek-raja.jpg',
+          image: '/speakers/vivek-raja-hd.jpg',
           linkedin: 'https://www.linkedin.com/in/meetvivekraja',
         },
       ],
     },
     {
-      id: 'item-5',
-      time: '10.30 am - 10.45 am',
-      title: 'Keynote Speech by Jessica Gilmore',
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
+      kind: 'simple',
+      id: 'keynote-jessica',
+      time: '10:30 AM – 10:45 AM',
+      title: 'Keynote by Jessica Gilmore',
       description: 'Keynote address by Jessica Gilmore: Empowering Global Builders & Community Growth on AWS.',
-      extra: 'AWS Keynote',
       speakers: [
         {
           name: 'Jessica Gilmore',
           role: 'Manager, Community Groups',
-          company: '@Amazon',
+          company: 'Amazon',
           image: '/speakers/Jessica.jpg',
           linkedin: 'https://www.linkedin.com/in/jessicagilmore1/',
         },
       ],
     },
     {
-      id: 'item-6',
-      time: '10.45 am - 11.15 am',
+      kind: 'simple',
+      id: 'tea',
+      time: '10:45 AM – 11:15 AM',
       title: 'Tea Break',
       isBreak: true,
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
-      description: 'Morning tea break, refreshments, and hallway track networking with speakers, mentors, and fellow student builders.',
-      extra: 'Tea & Networking',
+      description: 'Morning tea break, refreshments, and hallway networking with speakers, mentors, and fellow student builders.',
     },
+    // ── Four interactive accordion time-slot rows with track identification ─
     {
-      id: 'item-7',
-      time: '11.15 am - 12.00 pm',
-      title: 'Session 1',
-      tracks: ['MAIN STAGE', 'TRACK 1'],
-      description: 'Technical Session 1 by Jones Zachariah Noel N exploring serverless architectures, cloud development patterns, and AWS builder tooling.',
-      extra: 'Technical Session',
-      speakers: [
+      kind: 'accordion',
+      id: 'slot-1115',
+      time: '11:15 AM – 12:00 PM',
+      sessions: [
         {
-          name: 'Jones Zachariah Noel N',
-          role: 'Community Speaker',
-          company: 'AWS Community',
-          image: '/speakers/jones-zachariah-noel.jpg',
-          linkedin: 'https://www.linkedin.com/in/jones-zachariah-noel-n',
+          id: 'jones',
+          track: 'AI/ML',
+          speakers: [
+            {
+              name: 'Jones Zachariah Noel N',
+              image: '/speakers/jones-zachariah-noel.jpg',
+              linkedin: 'https://www.linkedin.com/in/jones-zachariah-noel-n',
+            },
+          ],
+        },
+        {
+          id: 'dipin',
+          track: 'DevOps',
+          speakers: [
+            {
+              name: 'Dipin Thomas',
+              image: '/speakers/dipin-thomas.jpg',
+              linkedin: 'https://www.linkedin.com/in/dipin-thomas',
+            },
+          ],
+        },
+        {
+          id: 'tejas',
+          track: 'Security',
+          speakers: [
+            {
+              name: 'Tejas Gupta',
+              image: '/speakers/tejas-gupta.jpg',
+              linkedin: 'https://www.linkedin.com/in/tejas-gupta',
+            },
+          ],
         },
       ],
     },
     {
-      id: 'item-8',
-      time: '12.00 pm - 12.45 pm',
-      title: 'Session 2',
-      tracks: ['MAIN STAGE', 'TRACK 2'],
-      description: 'Technical Session 2 by Ganesh Kumar on enterprise cloud-native data platforms, lakehouse architectures, and modern cloud patterns.',
-      extra: 'Technical Session',
-      speakers: [
+      kind: 'accordion',
+      id: 'slot-1200',
+      time: '12:00 PM – 12:45 PM',
+      sessions: [
         {
-          name: 'Ganesh Kumar',
-          role: 'Solutions Architect',
-          company: 'AWS Community',
-          image: '/speakers/ganesh-kumar.jpg',
-          linkedin: 'https://www.linkedin.com/in/ganesh-kumar-ponraj',
+          id: 'ganesh',
+          track: 'AI/ML',
+          speakers: [
+            {
+              name: 'Ganesh Kumar',
+              image: '/speakers/ganesh-kumar.jpg',
+              linkedin: 'https://www.linkedin.com/in/ganesh-kumar-ponraj',
+            },
+          ],
+        },
+        {
+          id: 'keerthivasan',
+          track: 'DevOps',
+          speakers: [
+            {
+              name: 'Keerthivasan',
+              image: '/speakers/keerthivasan-kannan.jpg',
+              linkedin: 'https://www.linkedin.com/in/keerthivasan-kannan',
+            },
+          ],
+        },
+        {
+          id: 'yeshwanth',
+          track: 'Security',
+          speakers: [
+            {
+              name: 'Yeshwanth L M',
+              image: '/speakers/yeshwanth-lm.jpg',
+              linkedin: 'https://www.linkedin.com/in/yeshwanth-l-m/',
+            },
+          ],
         },
       ],
     },
     {
-      id: 'item-9',
-      time: '12.45 pm - 2.00 pm',
+      kind: 'simple',
+      id: 'lunch',
+      time: '12:45 PM – 2:00 PM',
       title: 'Lunch Break',
       isBreak: true,
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
       description: 'Complimentary buffet lunch for attendees, speakers, and volunteers. Sponsor booth visits, product demos, and community networking.',
-      extra: 'Buffet Lunch & Booths',
     },
     {
-      id: 'item-10',
-      time: '2.00 pm - 2.45 pm',
-      title: 'Session 3',
-      tracks: ['MAIN STAGE', 'TRACK 1'],
-      description: 'Technical Session 3 by Neha Kalbande on AI Agents, Agentic Architectures, LLM orchestration, and modern cloud software engineering.',
-      extra: 'Technical Session',
-      speakers: [
+      kind: 'accordion',
+      id: 'slot-1400',
+      time: '2:00 PM – 2:45 PM',
+      sessions: [
         {
-          name: 'Neha Kalbande',
-          role: 'Software Engineer',
-          company: 'AWS Community',
-          image: '/speakers/neha-kalbande.jpg',
-          linkedin: 'https://www.linkedin.com/in/neha-kalbande/',
+          id: 'saksham',
+          track: 'AI/ML',
+          speakers: [
+            {
+              name: 'Saksham Dhull',
+              image: '/speakers/saksham-dhull.jpg',
+              linkedin: 'https://www.linkedin.com/in/saksham-dhull',
+            },
+          ],
+        },
+        {
+          id: 'rashi',
+          track: 'DevOps',
+          speakers: [
+            {
+              name: 'Rashi Dashore',
+              image: '/speakers/rashi-dashore.jpg',
+              linkedin: 'https://www.linkedin.com/in/rashi-dashore',
+            },
+          ],
+        },
+        {
+          id: 'midhun',
+          track: 'Security',
+          speakers: [
+            {
+              name: 'Midhun N S',
+              image: '/speakers/midhun-ns.jpg',
+              linkedin: 'https://www.linkedin.com/in/midhun-ns',
+            },
+          ],
         },
       ],
     },
     {
-      id: 'item-11',
-      time: '2.45 pm - 3.30 pm',
-      title: 'Session 4',
-      tracks: ['MAIN STAGE', 'TRACK 2'],
-      description: 'Deep-dive technical session covering practical cloud implementations, cloud security, and developer productivity on AWS.',
-      extra: 'Technical Session',
+      kind: 'accordion',
+      id: 'slot-1445',
+      time: '2:45 PM – 3:30 PM',
+      sessions: [
+        {
+          id: 'neha',
+          track: 'AI/ML',
+          speakers: [
+            {
+              name: 'Neha Kalbande',
+              image: '/speakers/neha-kalbande.jpg',
+              linkedin: 'https://www.linkedin.com/in/neha-kalbande/',
+            },
+          ],
+        },
+        {
+          id: 'vishnu',
+          track: 'DevOps',
+          speakers: [
+            {
+              name: 'Vishnu Rachapudi',
+              image: '/speakers/vishnu-rachapudi.jpg',
+              linkedin: 'https://www.linkedin.com/in/vishnu-rachapudi',
+            },
+          ],
+        },
+        {
+          id: 'joint',
+          track: 'Security',
+          isJoint: true,
+          speakers: [
+            {
+              name: 'P Pradyoth',
+              image: '/speakers/pradyoth-prashanth.jpg',
+              linkedin: 'https://www.linkedin.com/in/pradyoth-prashanth',
+            },
+            {
+              name: 'Subramanya Navada',
+              image: '/speakers/subramanya-navada.jpg',
+              linkedin: 'https://www.linkedin.com/in/subramanya-navada',
+            },
+          ],
+        },
+      ],
     },
     {
-      id: 'item-12',
-      time: '3.30 pm - 4.00 pm',
+      kind: 'simple',
+      id: 'high-tea',
+      time: '3:30 PM – 4:00 PM',
       title: 'High Tea',
       isBreak: true,
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
       description: 'High tea and refreshments break with community conversations and hands-on discussions.',
-      extra: 'Tea & Refreshments',
     },
     {
-      id: 'item-13',
-      time: '4.00 pm - 4.15 pm',
+      kind: 'simple',
+      id: 'networking',
+      time: '4:00 PM – 4:15 PM',
       title: 'Networking Break',
       isBreak: true,
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
       description: 'Connect directly with speakers, mentors, community organizers, and sponsor booth representatives.',
-      extra: 'Community Connect',
     },
     {
-      id: 'item-14',
-      time: '4.15 pm - 4.45 pm',
+      kind: 'simple',
+      id: 'panel',
+      time: '4:15 PM – 4:45 PM',
       title: 'Panel Discussion',
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
       description: 'Interactive panel discussion featuring community leaders and AWS experts on Career Paths in Cloud & AI, Community Impact, and Building Scalable Systems.',
-      extra: 'Expert Panel',
     },
     {
-      id: 'item-15',
-      time: '4.45 pm - 5.00 pm',
+      kind: 'simple',
+      id: 'closing',
+      time: '4:45 PM – 5:00 PM',
       title: 'Closing Keynote',
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
       description: 'Closing keynote reflecting on the day of learning, community accomplishments, and future initiatives for student cloud builders in Mysuru.',
-      extra: 'Closing Address',
     },
     {
-      id: 'item-16',
-      time: '5.00 pm - 5.30 pm',
+      kind: 'simple',
+      id: 'valedictory',
+      time: '5:00 PM – 5:30 PM',
       title: 'Valedictory',
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
       description: 'Valedictory ceremony: felicitation of speakers, organizers, and volunteers, award presentations, and closing remarks.',
-      extra: 'Awards & Felicitation',
     },
     {
-      id: 'item-17',
-      time: '5.30 pm - 6.00 pm',
+      kind: 'simple',
+      id: 'swag',
+      time: '5:30 PM – 6:00 PM',
       title: 'Swag Distribution',
       isBreak: true,
-      tracks: ['MAIN STAGE', 'TRACK 1', 'TRACK 2', 'WORKSHOPS'],
       description: 'Exclusive AWS Community Day swag distribution, certificates, stickers, and group photo session.',
-      extra: 'Exclusive AWS Swags',
     },
   ];
 
-  const filteredSchedule = scheduleData.filter((item) =>
-    item.tracks.includes(activeTab)
-  );
+  /* ── Render Helpers ──────────────────────────────────────────────────── */
 
-  const toggleRow = (id: string) => {
-    setExpandedRowId((prev) => (prev === id ? null : id));
+  const renderSimpleRow = (row: SimpleRow, isLast: boolean) => {
+    const isExpanded = expandedSimpleId === row.id;
+    return (
+      <div
+        key={row.id}
+        className={`w-full ${!isLast ? 'border-b border-[#A3A7AA]' : ''} ${
+          row.isBreak ? 'bg-[#A3A7AA]' : 'bg-[#EFF0F3]'
+        }`}
+      >
+        {/* Desktop Header Row (md and up) - Existing desktop presentation preserved */}
+        <div
+          onClick={() => toggleSimple(row.id)}
+          role="button"
+          tabIndex={0}
+          aria-expanded={isExpanded}
+          onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleSimple(row.id)}
+          className={`hidden md:grid w-full grid-cols-12 items-center gap-2 p-0 transition-colors select-none cursor-pointer ${
+            row.isBreak ? 'hover:bg-[#979ba0]' : 'hover:bg-[#23303E]/5'
+          }`}
+        >
+          <div className="col-span-3 px-4 py-5 font-mono text-base text-[#5A6C86]">
+            {row.time}
+          </div>
+          <div className="col-span-5 px-4 py-5 font-mono text-base font-medium text-[#23303E] uppercase">
+            {row.title}
+          </div>
+          <div className="col-span-4 px-4 py-5 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-1.5">
+              {row.speakers && row.speakers.length > 0 ? (
+                row.speakers.map((sp, idx) => (
+                  <div
+                    key={idx}
+                    className="aspect-square size-12 shrink-0 overflow-hidden bg-[#23303E]/10 border border-[#23303E]/20 rounded-full"
+                    title={sp.name}
+                  >
+                    <img src={sp.image} alt={sp.name} width={96} height={96} className="h-full w-full object-cover object-center" />
+                  </div>
+                ))
+              ) : !row.isBreak ? (
+                <span className="font-mono text-xs text-[#23303E]/50 uppercase">General Session</span>
+              ) : null}
+            </div>
+            <div className="flex items-center text-[#23303E] pr-2">
+              <ChevronDown
+                className={`size-5 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Header Row (< md): Title, Time, then Speaker Name FIRST and Photograph IMMEDIATELY AFTER on same horizontal line */}
+        <div
+          onClick={() => toggleSimple(row.id)}
+          role="button"
+          tabIndex={0}
+          aria-expanded={isExpanded}
+          onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleSimple(row.id)}
+          className={`flex md:hidden w-full flex-col p-4 transition-colors select-none cursor-pointer ${
+            row.isBreak ? 'hover:bg-[#979ba0]' : 'hover:bg-[#23303E]/5'
+          }`}
+        >
+          <div className="flex items-center justify-between gap-2">
+            <span className="font-mono text-xs text-[#5A6C86] uppercase tracking-wider">{row.time}</span>
+            <ChevronDown
+              className={`size-4 text-[#23303E] transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+            />
+          </div>
+          <h3 className="font-mono text-sm font-medium text-[#23303E] uppercase mt-1">
+            {row.title}
+          </h3>
+          {row.speakers && row.speakers.length > 0 && (
+            <div className="flex items-center gap-3 mt-2 pt-1">
+              {row.speakers.map((sp, idx) => (
+                <div key={idx} className="flex flex-row items-center gap-2.5 flex-nowrap">
+                  <span className="font-sans text-sm font-medium text-[#23303E] leading-snug">{sp.name}</span>
+                  <div className="aspect-square size-12 shrink-0 overflow-hidden bg-[#23303E]/10 border border-[#23303E]/20 rounded-full shadow-sm">
+                    <img src={sp.image} alt={sp.name} width={96} height={96} className="h-full w-full object-cover object-center" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {isExpanded && row.description && (
+          <div className="grid grid-cols-1 md:grid-cols-12 md:gap-2 p-4 pt-0 md:p-0 border-t border-[#A3A7AA]/50 pb-5">
+            <div className="hidden md:block md:col-span-3" />
+            <div className="md:col-span-5 md:px-4 md:py-4 font-mono text-sm text-[#23303E] leading-relaxed">
+              <p>{row.description}</p>
+            </div>
+            <div className="md:col-span-4 md:px-4 md:py-4 flex flex-col gap-4">
+              {row.speakers && row.speakers.length > 0 ? (
+                row.speakers.map((sp, sIdx) => (
+                  <div key={sIdx} className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="aspect-square size-14 shrink-0 overflow-hidden bg-[#23303E]/10 border border-[#23303E]/20 rounded-full">
+                        <img src={sp.image} alt={sp.name} width={112} height={112} className="h-full w-full object-cover object-center" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="font-mono text-sm tracking-[0.02em] text-[#23303E] uppercase font-medium">
+                          {sp.name}
+                        </span>
+                        {sp.company && (
+                          <span className="font-mono text-xs tracking-[0.02em] text-[#5A6C86] uppercase">
+                            {sp.company}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    {sp.linkedin && (
+                      <a
+                        href={sp.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`LinkedIn for ${sp.name}`}
+                        className="bg-[#EEF0F3] border border-[#23303E]/20 size-8 flex items-center justify-center text-[#23303E] hover:bg-[#23303E] hover:text-[#FAFAFA] transition-colors shrink-0"
+                      >
+                        <Linkedin className="size-4" />
+                      </a>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <div className="font-mono text-xs text-[#5A6C86] uppercase">
+                  {row.isBreak ? 'General Session' : 'Details'}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    );
   };
+
+  const renderAccordionRow = (row: AccordionSlotRow, isLast: boolean) => {
+    const isOpen = !!openSlots[row.id];
+    return (
+      <div
+        key={row.id}
+        className={`w-full ${!isLast ? 'border-b border-[#A3A7AA]' : ''} bg-[#EFF0F3]`}
+        data-testid={`accordion-row-${row.id}`}
+      >
+        {/* Accordion Row Header: Time Range + Chevron */}
+        <button
+          type="button"
+          onClick={() => toggleSlot(row.id)}
+          aria-expanded={isOpen}
+          aria-controls={`panel-${row.id}`}
+          className="flex w-full items-center justify-between p-4 md:px-4 md:py-5 transition-colors cursor-pointer hover:bg-[#23303E]/5 text-left focus:outline-none select-none group"
+        >
+          <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+            <span className="font-mono text-base md:text-lg font-medium text-[#23303E] tracking-tight">
+              {row.time}
+            </span>
+          </div>
+
+          <div className="shrink-0 size-8 sm:size-9 flex items-center justify-center border border-[#23303E]/30 rounded-none transition-colors group-hover:bg-[#23303E]/10 bg-transparent pr-0">
+            <ChevronDown
+              className={`size-5 text-[#23303E] transition-transform duration-300 ${
+                isOpen ? 'rotate-180' : ''
+              }`}
+            />
+          </div>
+        </button>
+
+        {/* Smoothly Animated Expandable Speaker List */}
+        <div
+          id={`panel-${row.id}`}
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${
+            isOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="border-t border-[#A3A7AA]/50 bg-[#EFF0F3]">
+            {row.sessions.map((sess, sIdx) => {
+              const isJoint = sess.isJoint;
+              return (
+                <React.Fragment key={sess.id}>
+                  {/* Desktop Layout (md and up) - Existing desktop presentation preserved */}
+                  <div
+                    className={`hidden md:flex items-center justify-between gap-6 px-6 py-4 ${
+                      sIdx < row.sessions.length - 1 ? 'border-b border-[#A3A7AA]/30' : ''
+                    }`}
+                  >
+                    <div className="flex items-center gap-4 flex-1 min-w-0">
+                      {isJoint ? (
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          {sess.speakers.map((sp, pIdx) => (
+                            <div
+                              key={pIdx}
+                              className="aspect-square size-11 md:size-12 shrink-0 overflow-hidden bg-[#23303E]/10 border border-[#23303E]/20 rounded-full shadow-sm"
+                              title={sp.name}
+                            >
+                              <img
+                                src={sp.image}
+                                alt={sp.name}
+                                className="size-full object-cover object-top"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div
+                          className="aspect-square size-13 md:size-14 shrink-0 overflow-hidden bg-[#23303E]/10 border border-[#23303E]/20 rounded-full shadow-sm"
+                          title={sess.speakers[0].name}
+                        >
+                          <img
+                            src={sess.speakers[0].image}
+                            alt={sess.speakers[0].name}
+                            className="size-full object-cover object-top"
+                          />
+                        </div>
+                      )}
+
+                      <div className="flex flex-col min-w-0 flex-1">
+                        <span className="font-sans text-base md:text-lg font-medium text-[#23303E] leading-snug">
+                          {sess.speakers.map((sp) => sp.name).join(' & ')}
+                        </span>
+                        <span className="text-xs md:text-sm font-medium tracking-wide text-[#5A6C86] mt-0.5">
+                          {sess.track} Track
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 shrink-0 text-right">
+                      <span className="font-mono text-xs md:text-sm uppercase tracking-wider text-[#5A6C86] whitespace-nowrap">
+                        {row.time}
+                      </span>
+                      {sess.speakers.map((sp) =>
+                        sp.linkedin ? (
+                          <a
+                            key={sp.name}
+                            href={sp.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`LinkedIn for ${sp.name}`}
+                            className="hidden sm:flex bg-[#EEF0F3] border border-[#23303E]/20 size-8 items-center justify-center text-[#23303E] hover:bg-[#23303E] hover:text-[#FAFAFA] transition-colors shrink-0"
+                          >
+                            <Linkedin className="size-4" />
+                          </a>
+                        ) : null
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Mobile Layout (< md): Speaker Name FIRST and Photograph(s) IMMEDIATELY AFTER on same horizontal line */}
+                  <div
+                    className={`flex md:hidden flex-col gap-1.5 p-4 ${
+                      sIdx < row.sessions.length - 1 ? 'border-b border-[#A3A7AA]/30' : ''
+                    }`}
+                  >
+                    <div className="flex flex-row items-center gap-2 min-w-0 flex-nowrap">
+                      <span
+                        className={`font-sans ${
+                          isJoint ? 'text-xs md:text-base' : 'text-sm md:text-base'
+                        } font-medium text-[#23303E] leading-snug whitespace-nowrap`}
+                      >
+                        {sess.speakers.map((sp) => sp.name).join(' & ')}
+                      </span>
+                      {/* Circular photograph(s) immediately after the speaker name */}
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {sess.speakers.map((sp, pIdx) => (
+                          <div
+                            key={pIdx}
+                            className={`aspect-square ${
+                              isJoint ? 'size-9 md:size-11' : 'size-11'
+                            } shrink-0 overflow-hidden bg-[#23303E]/10 border border-[#23303E]/20 rounded-full shadow-sm`}
+                            title={sp.name}
+                          >
+                            <img
+                              src={sp.image}
+                              alt={sp.name}
+                              className="size-full object-cover object-top"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between text-xs text-[#5A6C86] font-medium tracking-wide mt-0.5">
+                      <span>{sess.track} Track</span>
+                      <span className="font-mono text-xs uppercase tracking-wider">{row.time}</span>
+                    </div>
+                  </div>
+                </React.Fragment>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  /* ── Main Render ─────────────────────────────────────────────────────── */
 
   return (
     <div className="min-h-screen bg-[#EFF0F3] text-[#23303E]">
@@ -252,7 +675,7 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
           <span>Back to Home</span>
         </button>
 
-        {/* Page Title & Subtitle Matching Reference */}
+        {/* Page Title & Subtitle */}
         <h1 className="font-sans text-4xl sm:text-5xl lg:text-6xl text-[#23303E] leading-[0.98] tracking-[-0.045em] font-normal">
           Schedule
         </h1>
@@ -260,174 +683,28 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
           From inspiring keynotes and technical deep dives to hands-on discussions and networking, explore everything happening at AWS Student Community Day Mysuru 2026.
         </p>
 
-        {/* Track Selection Tabs Bar */}
-        <div className="flex w-full items-center justify-start gap-0 py-6 overflow-x-auto mt-6">
-          {tabs.map((tab) => {
-            const isActive = activeTab === tab;
-            return (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => setActiveTab(tab)}
-                className={`cursor-pointer shrink-0 items-center justify-center text-xs font-mono uppercase tracking-[-0.02em] whitespace-nowrap transition-all flex h-11 px-5 rounded-none border border-[#23303E] sm:text-base ${
-                  isActive
-                    ? 'bg-[#23303E] text-[#FAFAFA]'
-                    : 'bg-transparent text-[#23303E] hover:bg-[#23303E]/20'
-                }`}
-              >
-                {tab}
-              </button>
-            );
-          })}
-        </div>
-
         {/* Schedule Table Container */}
-        <div className="w-full border border-[#A3A7AA] bg-[#EFF0F3] mt-2">
-          {/* Table Header Row (Desktop) */}
+        <div className="w-full border border-[#A3A7AA] bg-[#EFF0F3] mt-8">
+          {/* Table Header (Desktop) */}
           <div className="hidden md:grid grid-cols-12 gap-2 w-full border-b border-[#A3A7AA]">
-            <div className="col-span-2 px-4 py-5 font-mono text-xs tracking-[1.5px] text-[#5A6C86] uppercase">
+            <div className="col-span-3 px-4 py-5 font-mono text-xs tracking-[1.5px] text-[#5A6C86] uppercase">
               TIME
             </div>
-            <div className="col-span-6 px-4 py-5 font-mono text-xs tracking-[1.5px] text-[#5A6C86] uppercase">
-              SESSION
+            <div className="col-span-5 px-4 py-5 font-mono text-xs tracking-[1.5px] text-[#5A6C86] uppercase">
+              SESSION / PROGRAM
             </div>
             <div className="col-span-4 px-4 py-5 font-mono text-xs tracking-[1.5px] text-[#5A6C86] uppercase">
-              SPEAKERS
+              DETAILS / SPEAKERS
             </div>
           </div>
 
-          {/* Session Rows */}
-          {filteredSchedule.map((row, index) => {
-            const isExpanded = expandedRowId === row.id;
-            const isLast = index === filteredSchedule.length - 1;
-            const hasDetails = !row.isBreak;
-
-            return (
-              <div
-                key={row.id}
-                className={`w-full ${!isLast ? 'border-b border-[#A3A7AA]' : ''} ${
-                  row.isBreak ? 'bg-[#A3A7AA]' : 'bg-[#EFF0F3]'
-                }`}
-              >
-                {/* Row Header */}
-                <div
-                  onClick={() => toggleRow(row.id)}
-                  className={`grid w-full grid-cols-1 md:grid-cols-12 md:items-center md:gap-2 p-4 md:p-0 transition-colors select-none ${
-                    row.isBreak
-                      ? 'cursor-pointer hover:bg-[#979ba0]'
-                      : 'cursor-pointer hover:bg-[#23303E]/5'
-                  }`}
-                >
-                  {/* Time Column */}
-                  <div className="md:col-span-2 md:px-4 md:py-5 font-mono text-sm md:text-base text-[#23303E] md:text-[#5A6C86]">
-                    {row.time}
-                  </div>
-
-                  {/* Title Column */}
-                  <div className="md:col-span-6 md:px-4 md:py-5 font-mono text-base font-medium text-[#23303E] uppercase mt-1 md:mt-0">
-                    {row.title}
-                  </div>
-
-                  {/* Speakers / Chevron Column */}
-                  <div className="md:col-span-4 md:px-4 md:py-5 flex items-center justify-between md:justify-between gap-3 mt-3 md:mt-0">
-                    {/* Avatars Preview */}
-                    <div className="flex items-center gap-1.5">
-                      {row.speakers && row.speakers.length > 0 ? (
-                        row.speakers.map((sp, idx) => (
-                          <div
-                            key={idx}
-                            className="aspect-square size-10 shrink-0 overflow-hidden bg-[#23303E]/10 border border-[#23303E]/20"
-                          >
-                            <img
-                              src={sp.image}
-                              alt={sp.name}
-                              className="h-full w-full object-cover object-top"
-                            />
-                          </div>
-                        ))
-                      ) : row.extra ? (
-                        <span className="font-mono text-xs text-[#23303E]/70 uppercase">
-                          {row.extra}
-                        </span>
-                      ) : !row.isBreak ? (
-                        <span className="font-mono text-xs text-[#23303E]/50 uppercase">
-                          Speaker TBA
-                        </span>
-                      ) : null}
-                    </div>
-
-                    {/* Chevron Toggle Icon */}
-                    <div className="flex items-center text-[#23303E] pr-2">
-                      <ChevronDown
-                        className={`size-5 transition-transform duration-200 ${
-                          isExpanded ? 'rotate-180' : ''
-                        }`}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Expanded Accordion Content */}
-                {isExpanded && (
-                  <div className="grid grid-cols-1 md:grid-cols-12 md:gap-2 p-4 pt-0 md:p-0 border-t border-[#A3A7AA]/50 pb-5">
-                    {/* Time Offset Column */}
-                    <div className="hidden md:block md:col-span-2" />
-
-                    {/* Description Column */}
-                    <div className="md:col-span-6 md:px-4 md:py-4 font-mono text-sm text-[#23303E] whitespace-pre-line leading-relaxed">
-                      <p>{row.description}</p>
-                    </div>
-
-                    {/* Speaker Profiles Column */}
-                    <div className="md:col-span-4 md:px-4 md:py-4 flex flex-col gap-4">
-                      {row.speakers && row.speakers.length > 0 ? (
-                        row.speakers.map((speaker, sIdx) => (
-                          <div key={sIdx} className="flex items-center justify-between gap-3">
-                            <div className="flex items-center gap-3">
-                              {speaker.image ? (
-                                <div className="aspect-square size-10 shrink-0 overflow-hidden bg-[#23303E]/10 border border-[#23303E]/20">
-                                  <img
-                                    src={speaker.image}
-                                    alt={speaker.name}
-                                    className="h-full w-full object-cover object-top"
-                                  />
-                                </div>
-                              ) : null}
-                              <div className="flex flex-col">
-                                <span className="font-mono text-sm tracking-[0.02em] text-[#23303E] uppercase font-medium">
-                                  {speaker.name}
-                                </span>
-                                {speaker.company && (
-                                  <span className="font-mono text-xs tracking-[0.02em] text-[#5A6C86] uppercase">
-                                    {speaker.company}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-
-                            {speaker.linkedin && (
-                              <a
-                                href={speaker.linkedin}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label={`LinkedIn for ${speaker.name}`}
-                                className="bg-[#EEF0F3] border border-[#23303E]/20 size-8 flex items-center justify-center text-[#23303E] hover:bg-[#23303E] hover:text-[#FAFAFA] transition-colors shrink-0"
-                              >
-                                <Linkedin className="size-4" />
-                              </a>
-                            )}
-                          </div>
-                        ))
-                      ) : (
-                        <div className="font-mono text-xs text-[#5A6C86] uppercase">
-                          {row.isBreak ? 'General Session' : 'Speakers / Mentors TBA'}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
+          {/* Schedule Rows */}
+          {scheduleItems.map((item, idx) => {
+            const isLast = idx === scheduleItems.length - 1;
+            if (item.kind === 'simple') {
+              return renderSimpleRow(item, isLast);
+            }
+            return renderAccordionRow(item, isLast);
           })}
         </div>
       </main>
