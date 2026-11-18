@@ -160,9 +160,8 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
     { time: '3:30 PM – 4:00 PM', title: 'High Tea', isBreak: true },
     { time: '4:00 PM – 4:15 PM', title: 'Networking Break', isBreak: true },
     { time: '4:15 PM – 4:45 PM', title: 'Panel Discussion' },
-    { time: '4:45 PM – 5:00 PM', title: 'Closing Keynote' },
-    { time: '5:00 PM – 5:30 PM', title: 'Valedictory' },
-    { time: '5:30 PM – 6:00 PM', title: 'Swag Distribution', isBreak: true },
+    { time: '4:45 PM – 5:15 PM', title: 'Valedictory' },
+    { time: '5:15 PM – 5:30 PM', title: 'Swag Distribution', isBreak: true },
   ];
 
   const renderRegularItem = (item: RegularItem, key: string | number) => (
