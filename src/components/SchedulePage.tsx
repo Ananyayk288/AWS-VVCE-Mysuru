@@ -213,13 +213,13 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
           ],
         },
         {
-          id: 'yeshwanth',
+          id: 'midhun',
           track: 'Security',
           speakers: [
             {
-              name: 'Yeshwanth L M',
-              image: '/speakers/yeshwanth-lm.jpg',
-              linkedin: 'https://www.linkedin.com/in/yeshwanth-l-m/',
+              name: 'Midhun N S',
+              image: '/speakers/midhun-ns.jpg',
+              linkedin: 'https://www.linkedin.com/in/nsmidhun/',
             },
           ],
         },
@@ -239,13 +239,13 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
       time: '2:00 PM – 2:45 PM',
       sessions: [
         {
-          id: 'saksham',
+          id: 'yeshwanth',
           track: 'AI/ML',
           speakers: [
             {
-              name: 'Saksham Dhull',
-              image: '/speakers/saksham-dhull.jpg',
-              linkedin: 'https://www.linkedin.com/in/saksham-dhull',
+              name: 'Yeshwanth L M',
+              image: '/speakers/yeshwanth-lm.jpg',
+              linkedin: 'https://www.linkedin.com/in/yeshwanth-l-m/',
             },
           ],
         },
@@ -261,13 +261,13 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
           ],
         },
         {
-          id: 'midhun',
+          id: 'neha',
           track: 'Security',
           speakers: [
             {
-              name: 'Midhun N S',
-              image: '/speakers/midhun-ns.jpg',
-              linkedin: 'https://www.linkedin.com/in/midhun-ns',
+              name: 'Neha Kalbande',
+              image: '/speakers/neha-kalbande.jpg',
+              linkedin: 'https://www.linkedin.com/in/neha-kalbande/',
             },
           ],
         },
@@ -279,13 +279,13 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
       time: '2:45 PM – 3:30 PM',
       sessions: [
         {
-          id: 'neha',
+          id: 'saksham',
           track: 'AI/ML',
           speakers: [
             {
-              name: 'Neha Kalbande',
-              image: '/speakers/neha-kalbande.jpg',
-              linkedin: 'https://www.linkedin.com/in/neha-kalbande/',
+              name: 'Saksham Dhull',
+              image: '/speakers/saksham-dhull.jpg',
+              linkedin: 'https://www.linkedin.com/in/saksham-dhull',
             },
           ],
         },

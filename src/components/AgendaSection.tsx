@@ -87,7 +87,7 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
         },
         {
           track: 'Security',
-          speakers: [{ name: 'Yeshwanth L M', image: '/speakers/yeshwanth-lm.jpg' }],
+          speakers: [{ name: 'Midhun N S', image: '/speakers/midhun-ns.jpg' }],
         },
       ],
     },
@@ -97,7 +97,7 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
       sessions: [
         {
           track: 'AI/ML',
-          speakers: [{ name: 'Saksham Dhull', image: '/speakers/saksham-dhull.jpg' }],
+          speakers: [{ name: 'Yeshwanth L M', image: '/speakers/yeshwanth-lm.jpg' }],
         },
         {
           track: 'DevOps',
@@ -105,7 +105,7 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
         },
         {
           track: 'Security',
-          speakers: [{ name: 'Midhun N S', image: '/speakers/midhun-ns.jpg' }],
+          speakers: [{ name: 'Neha Kalbande', image: '/speakers/neha-kalbande.jpg' }],
         },
       ],
     },
@@ -115,7 +115,7 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
       sessions: [
         {
           track: 'AI/ML',
-          speakers: [{ name: 'Neha Kalbande', image: '/speakers/neha-kalbande.jpg' }],
+          speakers: [{ name: 'Saksham Dhull', image: '/speakers/saksham-dhull.jpg' }],
         },
         {
           track: 'DevOps',
