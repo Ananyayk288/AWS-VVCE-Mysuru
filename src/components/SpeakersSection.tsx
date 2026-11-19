@@ -21,17 +21,6 @@ export interface Speaker {
 // Complete directory of all official speakers for AWS Student Community Day Mysuru 2026
 export const allSpeakers: Speaker[] = [
   {
-    id: 'jessica-gilmore',
-    name: 'Jessica Gilmore',
-    role: 'Manager, Community Groups',
-    company: 'Amazon',
-    image: '/speakers/Jessica.jpg',
-    topic: 'Keynote: Empowering Global Builders & Community Growth on AWS',
-    badge: 'AWS Keynote',
-    linkedin: 'https://www.linkedin.com/in/jessicagilmore1/',
-    isConfirmed: true,
-  },
-  {
     id: 'ravi-kompelle',
     name: 'Ravi Kompelle',
     role: 'Principal Analytics Specialist - ISVs & Startups India',
@@ -62,6 +51,16 @@ export const allSpeakers: Speaker[] = [
     badge: 'AWS Keynote',
     linkedin: 'https://www.linkedin.com/in/vijayrajagopal/',
     bio: 'Vijay Rajagopal is a business and technology leader with over 22 years of experience across AI, Banking, Financial Services, Insurance (BFSI), and Fintech. His expertise spans business strategy, enterprise sales, partnerships, operations, and building and scaling businesses. He currently leads the business and growth for Nugget by Zomato (Eternal Group), where he is driving enterprise adoption of conversational and agentic AI solutions, helping organizations move from AI experimentation to real-world deployment at scale. Prior to this, Vijay headed Go-to-Market (GTM) for BFSI and Fintech at Amazon Web Services (AWS) India, driving cloud and AI-led transformation across banks, insurers, NBFCs, and capital market firms. Over his career, Vijay has held senior leadership and entrepreneurial roles at Amazon Pay, PayPal, Zeta, Quess Corp, and Zolve. He has built businesses from the ground up, scaled technology platforms, and led large enterprise growth initiatives. He has also served on the Boards of five companies. Vijay holds an MBA from IIM Ahmedabad and an engineering degree from BITS Pilani, where he graduated as a batch topper. He is also a CFA charterholder and an AWS-certified Generative AI and Agentic AI practitioner. He is passionate about the transformative potential of AI, building technology-led businesses, and helping the next generation of professionals navigate an increasingly AI-driven world.',
+    isConfirmed: true,
+  },
+  {
+    id: 'jessica-gilmore',
+    name: 'Jessica Gilmore',
+    role: 'Manager, Community Groups',
+    company: 'Amazon',
+    image: '/speakers/Jessica.jpg',
+    badge: 'Session Speaker',
+    linkedin: 'https://www.linkedin.com/in/jessicagilmore1/',
     isConfirmed: true,
   },
   {

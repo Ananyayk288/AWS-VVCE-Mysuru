@@ -75,10 +75,10 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'checkin',
-      time: '8:00 AM – 9:00 AM',
+      time: '8:00 AM – 8:45 AM',
       title: 'Check-in & Registrations',
       isBreak: true,
-      description: 'Check-in, badge collection, morning refreshments, and networking with fellow student builders, community leads, and sponsors.',
+      description: 'Check-in, badge collection, morning refreshments, and networking with fellow student builders, community leads, and sponsors. Registrations close promptly at 8:45 AM.',
     },
     {
       kind: 'simple',
@@ -91,7 +91,7 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'keynote-ravi',
-      time: '9:30 AM – 10:00 AM',
+      time: '9:30 AM – 9:55 AM',
       title: 'Keynote by Ravi Kompelle',
       description: 'Opening keynote by Ravi Kompelle exploring cloud transformation, career opportunities on AWS, and architecting resilient enterprise systems.',
       speakers: [
@@ -107,7 +107,7 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'keynote-vivek',
-      time: '10:00 AM – 10:30 AM',
+      time: '9:55 AM – 10:20 AM',
       title: 'Keynote by Vivek\u00A0Raja\u00A0P\u00A0S',
       description: 'Keynote session by Vivek Raja P S sharing deep insights on cloud architecture, AI innovations, and community building across the AWS ecosystem.',
       speakers: [
@@ -122,17 +122,17 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     },
     {
       kind: 'simple',
-      id: 'keynote-jessica',
-      time: '10:30 AM – 10:45 AM',
-      title: 'Keynote by Jessica Gilmore',
-      description: 'Keynote address by Jessica Gilmore: Empowering Global Builders & Community Growth on AWS.',
+      id: 'keynote-vijay',
+      time: '10:20 AM – 10:45 AM',
+      title: 'Keynote by Vijay Rajagopal',
+      description: 'Keynote address by Vijay Rajagopal exploring enterprise conversational and agentic AI adoption, cloud transformation, and real-world deployment at scale.',
       speakers: [
         {
-          name: 'Jessica Gilmore',
-          role: 'Manager, Community Groups',
-          company: 'Amazon',
-          image: '/speakers/Jessica.jpg',
-          linkedin: 'https://www.linkedin.com/in/jessicagilmore1/',
+          name: 'Vijay Rajagopal',
+          role: 'Country Leader & Head of Business',
+          company: 'Nugget AI by Zomato (Eternal Group)',
+          image: '/speakers/vijay-rajagopal.jpg',
+          linkedin: 'https://www.linkedin.com/in/vijayrajagopal/',
         },
       ],
     },

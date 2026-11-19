@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowUpRight, ChevronDown } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, Gift } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
+import { SwagPopup } from './SwagPopup';
 
 type TrackType = 'AI/ML' | 'DevOps' | 'Security';
 
@@ -37,6 +38,9 @@ interface AgendaSectionProps {
 
 export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) => {
   const router = useRouter();
+
+  // Swag announcement popup state
+  const [isSwagPopupOpen, setIsSwagPopupOpen] = useState(false);
 
   // Each accordion time slot expands/collapses independently; all collapsed initially
   const [openSlots, setOpenSlots] = useState<Record<string, boolean>>({
@@ -135,22 +139,22 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
 
   // Schedule items before the accordion sessions
   const morningItems: RegularItem[] = [
-    { time: '8:00 AM – 9:00 AM', title: 'Check-in & Registrations', isBreak: true },
+    { time: '8:00 AM – 8:45 AM', title: 'Check-in & Registrations', isBreak: true },
     { time: '9:00 AM – 9:30 AM', title: 'Inauguration Ceremony', isBreak: true },
     {
-      time: '9:30 AM – 10:00 AM',
+      time: '9:30 AM – 9:55 AM',
       title: 'Keynote by Ravi Kompelle',
       speaker: { name: 'Ravi Kompelle', image: '/speakers/ravi-kompelle.jpg' },
     },
     {
-      time: '10:00 AM – 10:30 AM',
+      time: '9:55 AM – 10:20 AM',
       title: 'Keynote by Vivek\u00A0Raja\u00A0P\u00A0S',
       speaker: { name: 'Vivek\u00A0Raja\u00A0P\u00A0S', image: '/speakers/vivek-raja-hd.jpg' },
     },
     {
-      time: '10:30 AM – 10:45 AM',
-      title: 'Keynote by Jessica Gilmore',
-      speaker: { name: 'Jessica Gilmore', image: '/speakers/Jessica.jpg' },
+      time: '10:20 AM – 10:45 AM',
+      title: 'Keynote by Vijay Rajagopal',
+      speaker: { name: 'Vijay Rajagopal', image: '/speakers/vijay-rajagopal.jpg' },
     },
     { time: '10:45 AM – 11:15 AM', title: 'Tea Break', isBreak: true },
   ];
@@ -169,9 +173,22 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
       {/* Desktop Layout (sm and up) - Existing desktop presentation preserved */}
       <div className="hidden sm:flex w-full sm:flex-row sm:items-center sm:justify-between gap-6 py-1">
         <div className="flex flex-col gap-1.5 flex-1 min-w-0">
-          <h3 className="font-sans text-xl sm:text-2xl lg:text-[26px] font-medium text-[#23303E] tracking-tight leading-snug">
-            {item.title}
-          </h3>
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h3 className="font-sans text-xl sm:text-2xl lg:text-[26px] font-medium text-[#23303E] tracking-tight leading-snug">
+              {item.title}
+            </h3>
+            {item.title === 'Swag Distribution' && (
+              <button
+                type="button"
+                onClick={() => setIsSwagPopupOpen(true)}
+                className="inline-flex items-center gap-1.5 bg-[#23303E] hover:bg-[#23303E]/85 text-[#D1E5CD] font-mono text-xs uppercase font-bold px-2.5 py-1 cursor-pointer transition-colors"
+                aria-label="View Swag Distribution Alert"
+              >
+                <Gift className="size-3.5 text-[#07C2AC]" />
+                <span>SWAG ALERT</span>
+              </button>
+            )}
+          </div>
           <p className="font-mono text-sm uppercase tracking-wider text-[#5A6C86]">{item.time}</p>
         </div>
         {item.speaker && (
@@ -192,9 +209,22 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
 
       {/* Mobile Layout (< sm): Title, Time, then Speaker Name FIRST and Photograph IMMEDIATELY AFTER on same horizontal line */}
       <div className="flex sm:hidden w-full flex-col gap-1.5 py-1">
-        <h3 className="font-sans text-xl font-medium text-[#23303E] tracking-tight leading-snug">
-          {item.title}
-        </h3>
+        <div className="flex items-center gap-2 flex-wrap">
+          <h3 className="font-sans text-xl font-medium text-[#23303E] tracking-tight leading-snug">
+            {item.title}
+          </h3>
+          {item.title === 'Swag Distribution' && (
+            <button
+              type="button"
+              onClick={() => setIsSwagPopupOpen(true)}
+              className="inline-flex items-center gap-1 bg-[#23303E] hover:bg-[#23303E]/85 text-[#D1E5CD] font-mono text-[10px] uppercase font-bold px-2 py-0.5 cursor-pointer transition-colors"
+              aria-label="View Swag Distribution Alert"
+            >
+              <Gift className="size-3 text-[#07C2AC]" />
+              <span>SWAG ALERT</span>
+            </button>
+          )}
+        </div>
         <p className="font-mono text-sm uppercase tracking-wider text-[#5A6C86]">{item.time}</p>
         {item.speaker && (
           <div className="flex flex-row items-center gap-3 pt-1 flex-nowrap">
@@ -372,7 +402,7 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
             <p className="mt-4 w-full font-sans text-base leading-[115%] font-light text-[#23303E] sm:text-xl sm:leading-[105%]">
               A full day of keynotes, technical deep dives, hands-on knowledge, and community conversations designed for builders at every stage.
             </p>
-            <div className="mt-8 flex">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="/schedule"
                 onClick={(e) => {
@@ -390,6 +420,22 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
                 </span>
                 <ArrowUpRight className="h-5 w-5 text-[#fafafa] shrink-0" />
               </a>
+
+              {/* Swag Distribution Announcement Trigger */}
+              <button
+                type="button"
+                onClick={() => setIsSwagPopupOpen(true)}
+                className="group cursor-pointer shrink-0 items-center justify-center text-xs font-medium whitespace-nowrap transition-all flex h-11 min-h-11 rounded-none border-2 border-[#23303E] bg-[#D1E5CD] hover:bg-[#23303E] px-4 flex-row gap-2 shadow-xs"
+                aria-label="View Swag Distribution Announcement"
+              >
+                <Gift className="size-4 text-[#23303E] group-hover:text-[#07C2AC] transition-colors" />
+                <span className="font-mono text-xs sm:text-sm tracking-wider uppercase font-bold text-[#23303E] group-hover:text-[#FAFAFA] transition-colors">
+                  SWAG ALERT
+                </span>
+                <span className="font-mono text-[10px] bg-[#23303E] text-[#D1E5CD] group-hover:bg-[#07C2AC] group-hover:text-[#23303E] px-1.5 py-0.5 font-bold transition-colors">
+                  5:15 PM
+                </span>
+              </button>
             </div>
           </ScrollReveal>
         </div>
@@ -425,6 +471,12 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
           ))}
         </div>
       </div>
+
+      {/* Swag Distribution Announcement Popup */}
+      <SwagPopup
+        isOpen={isSwagPopupOpen}
+        onClose={() => setIsSwagPopupOpen(false)}
+      />
     </section>
   );
 };
