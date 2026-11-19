@@ -313,11 +313,6 @@ export const SpeakersSection: React.FC<SpeakersSectionProps> = ({ onOpenSpeakers
                           <span className="text-[#07C2AC] font-bold">@{speaker.company}</span>
                         )}
                       </p>
-                      {speaker.topic && (
-                        <p className="font-sans text-xs lg:text-sm text-[#FAFAFA]/80 mt-1 leading-snug line-clamp-2">
-                          {speaker.topic}
-                        </p>
-                      )}
                     </div>
                   )}
                 </div>
@@ -363,11 +358,6 @@ export const SpeakersSection: React.FC<SpeakersSectionProps> = ({ onOpenSpeakers
                       <span className="text-[#07C2AC] font-semibold">@{activeSpeaker.company}</span>
                     )}
                   </p>
-                  {activeSpeaker.topic && (
-                    <p className="mt-2 font-sans text-xs text-[#FAFAFA]/85 leading-snug">
-                      {activeSpeaker.topic}
-                    </p>
-                  )}
                 </div>
               </>
             ) : null}
@@ -417,11 +407,6 @@ export const SpeakersSection: React.FC<SpeakersSectionProps> = ({ onOpenSpeakers
                     {speaker.company && (
                       <span className="text-[#07C2AC] font-semibold">@{speaker.company}</span>
                     )}
-                  </p>
-                )}
-                {speaker.topic && (
-                  <p className="font-sans text-xs text-[#FAFAFA]/70 mt-1 leading-snug">
-                    {speaker.topic}
                   </p>
                 )}
               </div>
