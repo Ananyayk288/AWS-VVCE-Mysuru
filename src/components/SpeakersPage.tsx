@@ -98,13 +98,6 @@ export const SpeakersPage: React.FC<SpeakersPageProps> = ({ onNavigateHome }) =>
                     )}
                   </p>
                 </div>
-
-                {/* Topic / Session */}
-                {speaker.topic && (
-                  <p className="font-sans text-xs text-[#FAFAFA]/75 mt-3 pt-3 border-t border-[#2D3C4E]/60 leading-relaxed">
-                    {speaker.topic}
-                  </p>
-                )}
               </div>
             </div>
           ))}
