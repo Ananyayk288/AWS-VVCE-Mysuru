@@ -81,6 +81,12 @@ export const SponsorsSection: React.FC = () => {
           label: 'EVENT SPONSOR',
           logoClassName: 'max-w-[56px] sm:max-w-[64px] max-h-14 sm:max-h-16',
         },
+        {
+          name: 'Café Nestaa',
+          logo: '/cafe_nestaa_logo.jpg',
+          label: 'EVENT SPONSOR',
+          logoClassName: 'max-w-[56px] sm:max-w-[64px] max-h-14 sm:max-h-16 rounded-full shadow-sm',
+        },
       ],
     },
     {
@@ -210,11 +216,11 @@ export const SponsorsSection: React.FC = () => {
                     </div>
                   ))}
 
-                  {/* Row 2: All four Event Sponsors displayed together in consistent layout */}
+                  {/* Row 2: All five Event Sponsors displayed together in consistent layout */}
                   {eventSponsors.map((sponsor, idx) => (
                     <div
                       key={`sponsor-${idx}`}
-                      className="basis-1/2 sm:basis-1/2 lg:basis-1/4 flex min-h-28 sm:min-h-32 min-w-0 grow items-center justify-center border-r border-b border-[#D1E5CD]"
+                      className="basis-1/2 sm:basis-1/3 lg:basis-1/5 flex min-h-28 sm:min-h-32 min-w-0 grow items-center justify-center border-r border-b border-[#D1E5CD]"
                     >
                       {sponsor.url ? (
                         <a
