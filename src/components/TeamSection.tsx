@@ -14,20 +14,28 @@ export interface TeamMember {
   twitter?: string;
 }
 
-// 12 official team members in exact specified order
+// Standalone Captain definition
+export const captainMember: TeamMember = {
+  id: 'team-captain',
+  name: 'Yashwanth R',
+  role: 'Captain',
+  image: '/team/yashwanth.jpg',
+};
+
+// 12 official AWS Cloud Club VVCE Core Team members in exact hierarchy and order
 export const teamMembers: TeamMember[] = [
-  { id: 'team-member-1', name: 'Yashwanth R', image: '/team/yashwanth.jpg' },
-  { id: 'team-member-2', name: 'Vibha S', image: '/team/vibha.jpg' },
-  { id: 'team-member-3', name: 'Gagan K M', image: '/team/gagan.jpg' },
-  { id: 'team-member-4', name: 'K Reethu', image: '/team/reethu.jpg' },
-  { id: 'team-member-5', name: 'Yashas M V', image: '/team/yashas_mv.jpg' },
-  { id: 'team-member-6', name: 'Falkia Khan', image: '/team/falkia.jpg' },
-  { id: 'team-member-7', name: 'Yuvika Jain', image: '/team/yuvika.jpg' },
-  { id: 'team-member-8', name: 'Yashas U', image: '/team/yashas_u.jpg' },
-  { id: 'team-member-9', name: 'Varsha N', image: '/team/varsha.jpg' },
-  { id: 'team-member-10', name: 'Vinay V', image: '/team/vinay.jpg' },
-  { id: 'team-member-11', name: 'Shreya Bharadwaj', image: '/team/shreya.jpg' },
-  { id: 'team-member-12', name: 'Ananya', image: '/team/ananya.jpg' },
+  { id: 'team-member-1', name: 'Vibha S', role: 'Secretary', image: '/team/vibha.jpg' },
+  { id: 'team-member-2', name: 'Gagan K M', role: 'Technical Lead', image: '/team/gagan.jpg', linkedin: 'https://www.linkedin.com/in/gagankm' },
+  { id: 'team-member-3', name: 'Yashas M V', role: 'Tech Lead', image: '/team/yashas_mv.jpg', linkedin: 'https://www.linkedin.com/in/yashas-mv-94a534291' },
+  { id: 'team-member-4', name: 'Ananya Chetan', role: 'Event Management Lead', image: '/team/ananya.jpg', linkedin: 'https://www.linkedin.com/in/ananya-chatra-73a86b386' },
+  { id: 'team-member-5', name: 'Samrudh BN', role: 'Social Media Lead', image: '/team/samrudh.jpg', linkedin: 'https://www.linkedin.com/in/samrudh-b-n-469b75312' },
+  { id: 'team-member-6', name: 'Vinay V', role: 'Chief Editor', image: '/team/vinay.jpg', linkedin: 'https://www.linkedin.com/in/vinayvdesignerdeveloper' },
+  { id: 'team-member-7', name: 'Shreya S Bharadwaj', role: 'Co-Editor', image: '/team/shreya.jpg', linkedin: 'https://www.linkedin.com/in/shreya-bharadwaj-b8323532b' },
+  { id: 'team-member-8', name: 'K Reethu', role: 'IT Support and Management Lead', image: '/team/reethu.jpg', linkedin: 'https://www.linkedin.com/in/reethu-reddy-93b957331' },
+  { id: 'team-member-9', name: 'Yashas U', role: 'Logistics Lead', image: '/team/yashas_u.jpg', linkedin: 'https://www.linkedin.com/in/yashas-u-317074340' },
+  { id: 'team-member-10', name: 'Falkia Khan', role: 'Communication Lead', image: '/team/falkia.jpg', linkedin: 'https://www.linkedin.com/in/falkia-khan-2064112b3' },
+  { id: 'team-member-11', name: 'Yuvika A Jain', role: 'Treasurer', image: '/team/yuvika.jpg', linkedin: 'https://www.linkedin.com/in/yuvika-a-jain-23161b385' },
+  { id: 'team-member-12', name: 'Varsha N', role: 'Documentation Lead', image: '/team/varsha.jpg' },
 ];
 
 export const TeamCard: React.FC<{ member: TeamMember }> = ({ member }) => {
@@ -48,19 +56,18 @@ export const TeamCard: React.FC<{ member: TeamMember }> = ({ member }) => {
   const hasName = Boolean(member.name && member.name.trim().length > 0);
   const hasRole = Boolean(member.role && member.role.trim().length > 0);
   const hasImage = Boolean(member.image && member.image.trim().length > 0 && !imgError);
-  const hasSocial = Boolean(member.linkedin || member.twitter);
 
   return (
     <div className="group relative aspect-[3/4] w-full bg-[#EFF0F3] p-5 sm:p-6 overflow-hidden rounded-none border border-[#CBD2DC]/30 hover:border-[#23303E]/40 transition-all duration-300 flex flex-col select-none">
       {/* Top Header: Name and Socials */}
       <div className="relative z-10 flex items-start justify-between gap-3 w-full shrink-0">
         {hasName ? (
-          <div>
+          <div className="min-w-0 pr-1">
             <h3 className="font-sans text-lg sm:text-xl lg:text-2xl font-bold leading-tight text-[#23303E]">
               {member.name}
             </h3>
             {hasRole && (
-              <p className="mt-1 font-mono text-xs text-[#5A6C86] uppercase tracking-wider">
+              <p className="mt-1 font-sans text-xs sm:text-sm font-bold text-[#5A6C86] leading-snug">
                 {member.role}
               </p>
             )}
@@ -73,40 +80,18 @@ export const TeamCard: React.FC<{ member: TeamMember }> = ({ member }) => {
           </div>
         )}
 
-        {/* Social Link / Placeholder */}
-        {hasSocial ? (
-          <div className="flex items-center gap-1.5 shrink-0">
-            {member.twitter && (
-              <a
-                href={member.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#23303E] hover:text-[#00aa93] transition-colors p-1"
-                aria-label="X Profile"
-              >
-                <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </a>
-            )}
-            {member.linkedin && (
-              <a
-                href={member.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#23303E] hover:text-[#00aa93] transition-colors p-1"
-                aria-label="LinkedIn Profile"
-              >
-                <Linkedin className="h-4 w-4 fill-current" />
-              </a>
-            )}
-          </div>
-        ) : (
-          /* Blank Placeholder Social Icon */
-          <div className="flex items-center gap-1.5 shrink-0 pt-1">
-            <div className="h-4 w-4 rounded-none bg-[#D4D8DF]/60" />
-          </div>
-        )}
+        {/* LinkedIn Icon in neat dark-grey square */}
+        {member.linkedin ? (
+          <a
+            href={member.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View ${member.name}'s LinkedIn profile`}
+            className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center bg-[#23303E] text-white hover:bg-[#0077B5] transition-colors duration-200 shrink-0 mt-0.5 rounded-none"
+          >
+            <Linkedin className="h-3 w-3 sm:h-3.5 sm:w-3.5 fill-current" />
+          </a>
+        ) : null}
       </div>
 
       {/* Image Area: Positioned directly below member name with small intentional gap */}
@@ -129,6 +114,81 @@ export const TeamCard: React.FC<{ member: TeamMember }> = ({ member }) => {
 
         {(!hasImage || !imgLoaded) && (
           /* Blank Placeholder Silhouette */
+          <div className="relative z-10 mb-1 flex flex-col items-center justify-center opacity-25 group-hover:opacity-40 transition-opacity">
+            <svg
+              className="h-28 w-28 sm:h-32 sm:w-32 text-[#23303E] fill-current"
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+            </svg>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export const CaptainCard: React.FC<{ member: TeamMember }> = ({ member }) => {
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgError, setImgError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (imgRef.current && imgRef.current.complete) {
+      if (imgRef.current.naturalWidth === 0) {
+        setImgError(true);
+      } else {
+        setImgLoaded(true);
+      }
+    }
+  }, [member.image]);
+
+  return (
+    <div className="group relative aspect-[3/4] w-full max-w-[280px] sm:max-w-[320px] bg-[#EFF0F3] p-5 sm:p-6 overflow-hidden rounded-none border-2 border-[#00DFC0]/50 hover:border-[#00DFC0] shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col select-none">
+      {/* Top Header: Name, Role and LinkedIn Icon */}
+      <div className="relative z-10 flex items-start justify-between gap-3 w-full shrink-0">
+        <div className="min-w-0 pr-1">
+          <h3 className="font-sans text-xl sm:text-2xl font-bold leading-tight text-[#23303E]">
+            {member.name}
+          </h3>
+          {member.role && (
+            <p className="mt-1 font-sans text-xs sm:text-sm font-bold text-[#5A6C86] leading-snug">
+              {member.role}
+            </p>
+          )}
+        </div>
+        {member.linkedin ? (
+          <a
+            href={member.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View ${member.name}'s LinkedIn profile`}
+            className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center bg-[#23303E] text-white hover:bg-[#0077B5] transition-colors duration-200 shrink-0 mt-0.5 rounded-none"
+          >
+            <Linkedin className="h-3 w-3 sm:h-3.5 sm:w-3.5 fill-current" />
+          </a>
+        ) : null}
+      </div>
+
+      {/* Image Area */}
+      <div className="relative mt-3 sm:mt-4 flex-1 w-full min-h-0 overflow-hidden flex items-end justify-center">
+        {/* Colorful Gradient Blob matching reference */}
+        <div className="absolute -bottom-6 -right-6 h-44 w-44 sm:h-52 sm:w-52 rounded-full bg-gradient-to-tr from-[#98E223]/40 to-[#00DFC0]/55 blur-sm pointer-events-none transition-transform duration-500 group-hover:scale-105" />
+
+        {member.image && !imgError && (
+          <img
+            ref={imgRef}
+            src={member.image}
+            alt={member.name || 'Captain'}
+            onLoad={() => setImgLoaded(true)}
+            onError={() => setImgError(true)}
+            className={`relative z-10 h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-102 ${
+              imgLoaded ? 'block' : 'hidden'
+            }`}
+          />
+        )}
+
+        {(!member.image || imgError || !imgLoaded) && (
           <div className="relative z-10 mb-1 flex flex-col items-center justify-center opacity-25 group-hover:opacity-40 transition-opacity">
             <svg
               className="h-28 w-28 sm:h-32 sm:w-32 text-[#23303E] fill-current"
@@ -215,8 +275,28 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onOpenTeam }) => {
           </ScrollReveal>
         </div>
 
-        {/* Carousel & Card Area with Blank Placeholder Cards */}
-        <div className="relative mt-10 w-full sm:mt-12 lg:mt-16">
+        {/* Standalone Captain Section — First */}
+        <div className="mt-10 sm:mt-12 lg:mt-16 flex flex-col items-center">
+          <div className="w-full flex items-center gap-3 mb-6">
+            <span className="font-mono text-xs sm:text-sm font-bold tracking-widest text-[#00DFC0] uppercase">
+              CAPTAIN
+            </span>
+            <div className="h-[1px] flex-1 bg-[#2D3C4E]" />
+          </div>
+          <div className="w-full flex justify-center">
+            <CaptainCard member={captainMember} />
+          </div>
+        </div>
+
+        {/* Core Committee Section — Below the Captain */}
+        <div className="relative mt-12 sm:mt-16 w-full">
+          <div className="w-full flex items-center gap-3 mb-6">
+            <h3 className="font-mono text-xs sm:text-sm font-bold tracking-widest text-[#FAFAFA] uppercase">
+              CORE COMMITTEE
+            </h3>
+            <div className="h-[1px] flex-1 bg-[#2D3C4E]" />
+          </div>
+
           <div
             ref={scrollContainerRef}
             className="flex w-full gap-5 overflow-x-auto pb-4 scroll-smooth no-scrollbar"

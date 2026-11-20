@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
-import { teamMembers, TeamCard } from './TeamSection';
+import { teamMembers, TeamCard, captainMember, CaptainCard } from './TeamSection';
 
 interface TeamPageProps {
   onNavigateHome: () => void;
@@ -38,13 +38,36 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onNavigateHome }) => {
           </p>
         </div>
 
-        {/* Team Grid with Blank Placeholder Cards */}
-        <div className="mt-12 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {teamMembers.map((member) => (
-            <div key={member.id} className="w-full">
-              <TeamCard member={member} />
-            </div>
-          ))}
+        {/* Standalone Captain Section — First */}
+        <div className="mt-12 sm:mt-16 flex flex-col items-center">
+          <div className="w-full flex items-center gap-3 mb-6">
+            <span className="font-mono text-xs sm:text-sm font-bold tracking-widest text-[#00A4B4] uppercase">
+              CAPTAIN
+            </span>
+            <div className="h-[1px] flex-1 bg-[#CBD2DC]" />
+          </div>
+          <div className="w-full flex justify-center">
+            <CaptainCard member={captainMember} />
+          </div>
+        </div>
+
+        {/* Core Committee Section — Below the Captain */}
+        <div className="mt-12 sm:mt-16 w-full">
+          <div className="w-full flex items-center gap-3 mb-6">
+            <h2 className="font-mono text-xs sm:text-sm font-bold tracking-widest text-[#23303E] uppercase">
+              CORE COMMITTEE
+            </h2>
+            <div className="h-[1px] flex-1 bg-[#CBD2DC]" />
+          </div>
+
+          {/* Team Grid with 12 Core Committee members */}
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {teamMembers.map((member) => (
+              <div key={member.id} className="w-full">
+                <TeamCard member={member} />
+              </div>
+            ))}
+          </div>
         </div>
       </main>
     </div>
