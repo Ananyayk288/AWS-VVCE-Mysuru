@@ -246,7 +246,7 @@ export const SwagPopup: React.FC<SwagPopupProps> = ({ isOpen: controlledIsOpen, 
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle className="size-3.5 text-[#07C2AC] shrink-0" />
-                <span>Bottle Holder</span>
+                <span>Coozies</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle className="size-3.5 text-[#07C2AC] shrink-0" />
