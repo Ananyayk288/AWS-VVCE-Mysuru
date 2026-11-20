@@ -14,29 +14,10 @@ export interface TeamMember {
   twitter?: string;
 }
 
-// Standalone Captain definition
-export const captainMember: TeamMember = {
-  id: 'team-captain',
-  name: 'Yashwanth R',
-  role: 'Captain',
-  image: '/team/yashwanth.jpg',
-};
-
-// 12 official AWS Cloud Club VVCE Core Team members in exact hierarchy and order
-export const teamMembers: TeamMember[] = [
-  { id: 'team-member-1', name: 'Vibha S', role: 'Secretary', image: '/team/vibha.jpg' },
-  { id: 'team-member-2', name: 'Gagan K M', role: 'Technical Lead', image: '/team/gagan.jpg', linkedin: 'https://www.linkedin.com/in/gagankm' },
-  { id: 'team-member-3', name: 'Yashas M V', role: 'Tech Lead', image: '/team/yashas_mv.jpg', linkedin: 'https://www.linkedin.com/in/yashas-mv-94a534291' },
-  { id: 'team-member-4', name: 'Ananya Chetan', role: 'Event Management Lead', image: '/team/ananya.jpg', linkedin: 'https://www.linkedin.com/in/ananya-chatra-73a86b386' },
-  { id: 'team-member-5', name: 'Samrudh BN', role: 'Social Media Lead', image: '/team/samrudh.jpg', linkedin: 'https://www.linkedin.com/in/samrudh-b-n-469b75312' },
-  { id: 'team-member-6', name: 'Vinay V', role: 'Chief Editor', image: '/team/vinay.jpg', linkedin: 'https://www.linkedin.com/in/vinayvdesignerdeveloper' },
-  { id: 'team-member-7', name: 'Shreya S Bharadwaj', role: 'Co-Editor', image: '/team/shreya.jpg', linkedin: 'https://www.linkedin.com/in/shreya-bharadwaj-b8323532b' },
-  { id: 'team-member-8', name: 'K Reethu', role: 'IT Support and Management Lead', image: '/team/reethu.jpg', linkedin: 'https://www.linkedin.com/in/reethu-reddy-93b957331' },
-  { id: 'team-member-9', name: 'Yashas U', role: 'Logistics Lead', image: '/team/yashas_u.jpg', linkedin: 'https://www.linkedin.com/in/yashas-u-317074340' },
-  { id: 'team-member-10', name: 'Falkia Khan', role: 'Communication Lead', image: '/team/falkia.jpg', linkedin: 'https://www.linkedin.com/in/falkia-khan-2064112b3' },
-  { id: 'team-member-11', name: 'Yuvika A Jain', role: 'Treasurer', image: '/team/yuvika.jpg', linkedin: 'https://www.linkedin.com/in/yuvika-a-jain-23161b385' },
-  { id: 'team-member-12', name: 'Varsha N', role: 'Documentation Lead', image: '/team/varsha.jpg' },
-];
+// ============================================================================
+// 1. SHARED MEMBER CARD COMPONENT
+// Displays: Name, bold grey role below name, and clickable LinkedIn icon
+// ============================================================================
 
 export const TeamCard: React.FC<{ member: TeamMember }> = ({ member }) => {
   const [imgError, setImgError] = useState(false);
@@ -59,7 +40,7 @@ export const TeamCard: React.FC<{ member: TeamMember }> = ({ member }) => {
 
   return (
     <div className="group relative aspect-[3/4] w-full bg-[#EFF0F3] p-5 sm:p-6 overflow-hidden rounded-none border border-[#CBD2DC]/30 hover:border-[#23303E]/40 transition-all duration-300 flex flex-col select-none">
-      {/* Top Header: Name and Socials */}
+      {/* Top Header: Name, Role and LinkedIn Icon */}
       <div className="relative z-10 flex items-start justify-between gap-3 w-full shrink-0">
         {hasName ? (
           <div className="min-w-0 pr-1">
@@ -127,6 +108,10 @@ export const TeamCard: React.FC<{ member: TeamMember }> = ({ member }) => {
     </div>
   );
 };
+
+// ============================================================================
+// 2. STANDALONE CAPTAIN CARD (For View All Team Page)
+// ============================================================================
 
 export const CaptainCard: React.FC<{ member: TeamMember }> = ({ member }) => {
   const [imgLoaded, setImgLoaded] = useState(false);
@@ -203,6 +188,59 @@ export const CaptainCard: React.FC<{ member: TeamMember }> = ({ member }) => {
   );
 };
 
+// ============================================================================
+// 3. HOMEPAGE TEAM MEMBERS (Original Sequence + Roles + LinkedIn)
+// ============================================================================
+
+export const homeTeamMembers: TeamMember[] = [
+  { id: 'home-member-1', name: 'Yashwanth R', role: 'Captain', image: '/team/yashwanth.jpg', linkedin: 'https://www.linkedin.com/in/ryashu' },
+  { id: 'home-member-2', name: 'Vibha S', role: 'Secretary', image: '/team/vibha.jpg', linkedin: 'https://www.linkedin.com/in/vibha-s-359538331' },
+  { id: 'home-member-3', name: 'Gagan K M', role: 'Technical Lead', image: '/team/gagan.jpg', linkedin: 'https://www.linkedin.com/in/gagankm' },
+  { id: 'home-member-4', name: 'K Reethu', role: 'IT Support and Management Lead', image: '/team/reethu.jpg', linkedin: 'https://www.linkedin.com/in/reethu-reddy-93b957331' },
+  { id: 'home-member-5', name: 'Yashas M V', role: 'Tech Lead', image: '/team/yashas_mv.jpg', linkedin: 'https://www.linkedin.com/in/yashas-mv-94a534291' },
+  { id: 'home-member-6', name: 'Falkia Khan', role: 'Communication Lead', image: '/team/falkia.jpg', linkedin: 'https://www.linkedin.com/in/falkia-khan-2064112b3' },
+  { id: 'home-member-7', name: 'Yuvika A Jain', role: 'Treasurer', image: '/team/yuvika.jpg', linkedin: 'https://www.linkedin.com/in/yuvika-a-jain-23161b385' },
+  { id: 'home-member-8', name: 'Yashas U', role: 'Logistics Lead', image: '/team/yashas_u.jpg', linkedin: 'https://www.linkedin.com/in/yashas-u-317074340' },
+  { id: 'home-member-9', name: 'Varsha N', role: 'Documentation Lead', image: '/team/varsha.jpg', linkedin: 'https://www.linkedin.com/in/varsha-naidu-91b581413' },
+  { id: 'home-member-10', name: 'Vinay V', role: 'Chief Editor', image: '/team/vinay.jpg', linkedin: 'https://www.linkedin.com/in/vinayvdesignerdeveloper' },
+  { id: 'home-member-11', name: 'Shreya S Bharadwaj', role: 'Co-Editor', image: '/team/shreya.jpg', linkedin: 'https://www.linkedin.com/in/shreya-bharadwaj-b8323532b' },
+  { id: 'home-member-12', name: 'Ananya Chetan', role: 'Event Management Lead', image: '/team/ananya.jpg', linkedin: 'https://www.linkedin.com/in/ananya-chatra-73a86b386' },
+  { id: 'home-member-13', name: 'Samrudh BN', role: 'Social Media Lead', image: '/team/samrudh.jpg', linkedin: 'https://www.linkedin.com/in/samrudh-b-n-469b75312' },
+];
+
+// ============================================================================
+// 4. VIEW ALL TEAM PAGE MEMBERS (Role-wise Hierarchy + Captain Separate)
+// ============================================================================
+
+// Standalone Captain definition
+export const captainMember: TeamMember = {
+  id: 'team-captain',
+  name: 'Yashwanth R',
+  role: 'Captain',
+  image: '/team/yashwanth.jpg',
+  linkedin: 'https://www.linkedin.com/in/ryashu',
+};
+
+// 12 official Core Committee members in approved role-wise order
+export const teamMembers: TeamMember[] = [
+  { id: 'team-member-1', name: 'Vibha S', role: 'Secretary', image: '/team/vibha.jpg', linkedin: 'https://www.linkedin.com/in/vibha-s-359538331' },
+  { id: 'team-member-2', name: 'Gagan K M', role: 'Technical Lead', image: '/team/gagan.jpg', linkedin: 'https://www.linkedin.com/in/gagankm' },
+  { id: 'team-member-3', name: 'Yashas M V', role: 'Tech Lead', image: '/team/yashas_mv.jpg', linkedin: 'https://www.linkedin.com/in/yashas-mv-94a534291' },
+  { id: 'team-member-4', name: 'Ananya Chetan', role: 'Event Management Lead', image: '/team/ananya.jpg', linkedin: 'https://www.linkedin.com/in/ananya-chatra-73a86b386' },
+  { id: 'team-member-5', name: 'Samrudh BN', role: 'Social Media Lead', image: '/team/samrudh.jpg', linkedin: 'https://www.linkedin.com/in/samrudh-b-n-469b75312' },
+  { id: 'team-member-6', name: 'Vinay V', role: 'Chief Editor', image: '/team/vinay.jpg', linkedin: 'https://www.linkedin.com/in/vinayvdesignerdeveloper' },
+  { id: 'team-member-7', name: 'Shreya S Bharadwaj', role: 'Co-Editor', image: '/team/shreya.jpg', linkedin: 'https://www.linkedin.com/in/shreya-bharadwaj-b8323532b' },
+  { id: 'team-member-8', name: 'K Reethu', role: 'IT Support and Management Lead', image: '/team/reethu.jpg', linkedin: 'https://www.linkedin.com/in/reethu-reddy-93b957331' },
+  { id: 'team-member-9', name: 'Yashas U', role: 'Logistics Lead', image: '/team/yashas_u.jpg', linkedin: 'https://www.linkedin.com/in/yashas-u-317074340' },
+  { id: 'team-member-10', name: 'Falkia Khan', role: 'Communication Lead', image: '/team/falkia.jpg', linkedin: 'https://www.linkedin.com/in/falkia-khan-2064112b3' },
+  { id: 'team-member-11', name: 'Yuvika A Jain', role: 'Treasurer', image: '/team/yuvika.jpg', linkedin: 'https://www.linkedin.com/in/yuvika-a-jain-23161b385' },
+  { id: 'team-member-12', name: 'Varsha N', role: 'Documentation Lead', image: '/team/varsha.jpg', linkedin: 'https://www.linkedin.com/in/varsha-naidu-91b581413' },
+];
+
+// ============================================================================
+// 5. HOMEPAGE TEAM SECTION COMPONENT (Original Carousel Layout)
+// ============================================================================
+
 interface TeamSectionProps {
   onOpenTeam?: () => void;
 }
@@ -275,34 +313,14 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onOpenTeam }) => {
           </ScrollReveal>
         </div>
 
-        {/* Standalone Captain Section — First */}
-        <div className="mt-10 sm:mt-12 lg:mt-16 flex flex-col items-center">
-          <div className="w-full flex items-center gap-3 mb-6">
-            <span className="font-mono text-xs sm:text-sm font-bold tracking-widest text-[#00DFC0] uppercase">
-              CAPTAIN
-            </span>
-            <div className="h-[1px] flex-1 bg-[#2D3C4E]" />
-          </div>
-          <div className="w-full flex justify-center">
-            <CaptainCard member={captainMember} />
-          </div>
-        </div>
-
-        {/* Core Committee Section — Below the Captain */}
-        <div className="relative mt-12 sm:mt-16 w-full">
-          <div className="w-full flex items-center gap-3 mb-6">
-            <h3 className="font-mono text-xs sm:text-sm font-bold tracking-widest text-[#FAFAFA] uppercase">
-              CORE COMMITTEE
-            </h3>
-            <div className="h-[1px] flex-1 bg-[#2D3C4E]" />
-          </div>
-
+        {/* Carousel & Card Area (Original Homepage Carousel Layout with updated roles and LinkedIn icons) */}
+        <div className="relative mt-10 w-full sm:mt-12 lg:mt-16">
           <div
             ref={scrollContainerRef}
             className="flex w-full gap-5 overflow-x-auto pb-4 scroll-smooth no-scrollbar"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {teamMembers.map((member) => (
+            {homeTeamMembers.map((member) => (
               <div
                 key={member.id}
                 className="basis-[80%] sm:basis-[45%] md:basis-[31%] lg:basis-[23.5%] shrink-0"
