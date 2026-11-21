@@ -51,10 +51,10 @@ interface SchedulePageProps {
 export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) => {
   // Independent accordion state — all four time slots collapsed initially
   const [openSlots, setOpenSlots] = useState<Record<string, boolean>>({
-    'slot-1145': false,
+    'slot-1200': false,
     'slot-1230': false,
-    'slot-1430': false,
-    'slot-1515': false,
+    'slot-1400': false,
+    'slot-1445': false,
   });
 
   // State for simple rows (keynotes, breaks) details toggle
@@ -75,15 +75,15 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'checkin',
-      time: '8:30 AM – 9:15 AM',
+      time: '8:30 AM – 9:30 AM',
       title: 'Check-in & Registrations',
       isBreak: true,
-      description: 'Check-in, badge collection, morning refreshments, and networking with fellow student builders, community leads, and sponsors. Registrations close promptly at 9:15 AM.',
+      description: 'Check-in, badge collection, morning refreshments, and networking with fellow student builders, community leads, and sponsors. Registrations close promptly at 9:30 AM.',
     },
     {
       kind: 'simple',
       id: 'inauguration',
-      time: '9:30 AM – 10:00 AM',
+      time: '9:30 AM – 10:15 AM',
       title: 'Inauguration Ceremony',
       isBreak: true,
       description: 'Official inauguration ceremony and lighting of the lamp by dignitaries, faculty coordinators, and AWS Student Builder Group VVCE community leads.',
@@ -91,12 +91,12 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'keynote-ravi',
-      time: '10:00 AM – 10:25 AM',
-      title: 'Keynote by Ravi Kompelle',
-      description: 'Opening keynote by Ravi Kompelle exploring cloud transformation, career opportunities on AWS, and architecting resilient enterprise systems.',
+      time: '10:30 AM – 10:50 AM',
+      title: 'Keynote Speech by Ravi Kompella',
+      description: 'Opening keynote by Ravi Kompella exploring cloud transformation, career opportunities on AWS, and architecting resilient enterprise systems.',
       speakers: [
         {
-          name: 'Ravi Kompelle',
+          name: 'Ravi Kompella',
           role: 'Principal Analytics Specialist — ISVs & Startups India',
           company: 'AWS',
           image: '/speakers/ravi-kompelle.jpg',
@@ -107,8 +107,8 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'keynote-vivek',
-      time: '10:25 AM – 10:50 AM',
-      title: 'Keynote by Vivek\u00A0Raja\u00A0P\u00A0S',
+      time: '10:50 AM – 11:10 AM',
+      title: 'Keynote Speech by Vivek\u00A0Raja\u00A0P\u00A0S',
       description: 'Keynote session by Vivek Raja P S sharing deep insights on cloud architecture, AI innovations, and community building across the AWS ecosystem.',
       speakers: [
         {
@@ -122,24 +122,24 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     },
     {
       kind: 'simple',
-      id: 'keynote-vijay',
-      time: '10:50 AM – 11:15 AM',
-      title: 'Keynote by Vijay Rajagopal',
-      description: 'Keynote address by Vijay Rajagopal exploring enterprise conversational and agentic AI adoption, cloud transformation, and real-world deployment at scale.',
+      id: 'keynote-jessica',
+      time: '11:10 AM – 11:30 AM',
+      title: 'Keynote Speech by Jessica Gilmore',
+      description: 'Keynote address by Jessica Gilmore on developer communities, global cloud ecosystems, and empowering builder communities.',
       speakers: [
         {
-          name: 'Vijay Rajagopal',
-          role: 'Growth Leader | GTM, Revenue & Partnerships | Agentic AI',
-          company: 'Nugget (Nugget by Zomato)',
-          image: '/speakers/vijay-rajagopal.jpg',
-          linkedin: 'https://www.linkedin.com/in/vijayrajagopal/',
+          name: 'Jessica Gilmore',
+          role: 'Manager, Community Groups',
+          company: 'Amazon',
+          image: '/speakers/Jessica.jpg',
+          linkedin: 'https://www.linkedin.com/in/jessicagilmore1/',
         },
       ],
     },
     {
       kind: 'simple',
       id: 'tea',
-      time: '11:15 AM – 11:45 AM',
+      time: '11:30 AM – 12:00 PM',
       title: 'Tea Break',
       isBreak: true,
       description: 'Morning tea break, refreshments, and hallway networking with speakers, mentors, and fellow student builders.',
@@ -147,8 +147,8 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     // ── Four interactive accordion time-slot rows with track identification ─
     {
       kind: 'accordion',
-      id: 'slot-1145',
-      time: '11:45 AM – 12:30 PM',
+      id: 'slot-1200',
+      time: '12:00 PM – 12:30 PM',
       sessions: [
         {
           id: 'jones',
@@ -188,7 +188,7 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'accordion',
       id: 'slot-1230',
-      time: '12:30 PM – 1:15 PM',
+      time: '12:30 PM – 1:00 PM',
       sessions: [
         {
           id: 'ganesh',
@@ -228,15 +228,15 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'lunch',
-      time: '1:15 PM – 2:30 PM',
+      time: '1:00 PM – 2:00 PM',
       title: 'Lunch Break',
       isBreak: true,
       description: 'Complimentary buffet lunch for attendees, speakers, and volunteers. Sponsor booth visits, product demos, and community networking.',
     },
     {
       kind: 'accordion',
-      id: 'slot-1430',
-      time: '2:30 PM – 3:15 PM',
+      id: 'slot-1400',
+      time: '2:00 PM – 2:45 PM',
       sessions: [
         {
           id: 'yeshwanth',
@@ -275,8 +275,8 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     },
     {
       kind: 'accordion',
-      id: 'slot-1515',
-      time: '3:15 PM – 4:00 PM',
+      id: 'slot-1445',
+      time: '2:45 PM – 3:30 PM',
       sessions: [
         {
           id: 'saksham',
@@ -322,7 +322,7 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'high-tea',
-      time: '4:00 PM – 4:30 PM',
+      time: '3:30 PM – 4:00 PM',
       title: 'High Tea',
       isBreak: true,
       description: 'High tea and refreshments break with community conversations and hands-on discussions.',
@@ -330,7 +330,7 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'networking',
-      time: '4:30 PM – 4:45 PM',
+      time: '4:00 PM – 4:15 PM',
       title: 'Networking Break',
       isBreak: true,
       description: 'Connect directly with speakers, mentors, community organizers, and sponsor booth representatives.',
@@ -338,21 +338,28 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'panel',
-      time: '4:45 PM – 5:15 PM',
+      time: '4:15 PM – 4:45 PM',
       title: 'Panel Discussion',
       description: 'Interactive panel discussion featuring community leaders and AWS experts on Career Paths in Cloud & AI, Community Impact, and Building Scalable Systems.',
     },
     {
       kind: 'simple',
+      id: 'closing-keynote',
+      time: '4:45 PM – 5:00 PM',
+      title: 'Closing Keynote',
+      description: 'Inspiring closing keynote reflecting on community achievements, upcoming AWS initiatives, and empowering student builders.',
+    },
+    {
+      kind: 'simple',
       id: 'valedictory',
-      time: '5:15 PM – 5:45 PM',
+      time: '5:00 PM – 5:30 PM',
       title: 'Valedictory',
       description: 'Valedictory ceremony: felicitation of speakers, organizers, and volunteers, award presentations, and closing remarks.',
     },
     {
       kind: 'simple',
       id: 'swag',
-      time: '5:45 PM – 6:00 PM',
+      time: '5:30 PM – 6:00 PM',
       title: 'Swag Distribution',
       isBreak: true,
       description: 'Exclusive AWS Community Day swag distribution, certificates, stickers, and group photo session.',

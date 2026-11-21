@@ -220,7 +220,7 @@ export const SwagPopup: React.FC<SwagPopupProps> = ({ isOpen: controlledIsOpen, 
               <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
                 <span className="font-mono text-xs uppercase tracking-wider text-[#A3A7AA]">Time:</span>
                 <span className="font-mono text-sm sm:text-base md:text-lg font-bold text-[#D1E5CD] tracking-tight">
-                  5:45 PM – 6:00 PM
+                  5:30 PM – 6:00 PM
                 </span>
               </div>
             </div>
