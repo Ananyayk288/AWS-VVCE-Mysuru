@@ -153,8 +153,8 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
     },
     {
       time: '11:10 AM – 11:30 AM',
-      title: 'Keynote Speech by Jessica Gilmore',
-      speaker: { name: 'Jessica Gilmore', image: '/speakers/Jessica.jpg' },
+      title: 'Keynote Speech by Vijay Rajagopal',
+      speaker: { name: 'Vijay Rajagopal', image: '/speakers/vijay-rajagopal.jpg' },
     },
     { time: '11:30 AM – 12:00 PM', title: 'Tea Break', isBreak: true },
   ];
