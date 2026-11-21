@@ -129,8 +129,8 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
       speakers: [
         {
           name: 'Vijay Rajagopal',
-          role: 'Country Leader & Head of Business',
-          company: 'Nugget AI by Zomato (Eternal Group)',
+          role: 'Growth Leader | GTM, Revenue & Partnerships | Agentic AI',
+          company: 'Nugget (Nugget by Zomato)',
           image: '/speakers/vijay-rajagopal.jpg',
           linkedin: 'https://www.linkedin.com/in/vijayrajagopal/',
         },
