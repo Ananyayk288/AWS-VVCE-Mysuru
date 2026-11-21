@@ -44,10 +44,10 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
 
   // Each accordion time slot expands/collapses independently; all collapsed initially
   const [openSlots, setOpenSlots] = useState<Record<string, boolean>>({
-    'slot-1115': false,
-    'slot-1200': false,
-    'slot-1400': false,
-    'slot-1445': false,
+    'slot-1145': false,
+    'slot-1230': false,
+    'slot-1430': false,
+    'slot-1515': false,
   });
 
   const toggleSlot = (id: string) => {
@@ -60,8 +60,8 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
   // Exact schedule and authoritative speaker-to-track mapping
   const accordionSlots: AccordionSlot[] = [
     {
-      id: 'slot-1115',
-      time: '11:15 AM – 12:00 PM',
+      id: 'slot-1145',
+      time: '11:45 AM – 12:30 PM',
       sessions: [
         {
           track: 'AI/ML',
@@ -78,8 +78,8 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
       ],
     },
     {
-      id: 'slot-1200',
-      time: '12:00 PM – 12:45 PM',
+      id: 'slot-1230',
+      time: '12:30 PM – 1:15 PM',
       sessions: [
         {
           track: 'AI/ML',
@@ -96,8 +96,8 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
       ],
     },
     {
-      id: 'slot-1400',
-      time: '2:00 PM – 2:45 PM',
+      id: 'slot-1430',
+      time: '2:30 PM – 3:15 PM',
       sessions: [
         {
           track: 'AI/ML',
@@ -114,8 +114,8 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
       ],
     },
     {
-      id: 'slot-1445',
-      time: '2:45 PM – 3:30 PM',
+      id: 'slot-1515',
+      time: '3:15 PM – 4:00 PM',
       sessions: [
         {
           track: 'AI/ML',
@@ -139,33 +139,33 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
 
   // Schedule items before the accordion sessions
   const morningItems: RegularItem[] = [
-    { time: '8:00 AM – 8:45 AM', title: 'Check-in & Registrations', isBreak: true },
-    { time: '9:00 AM – 9:30 AM', title: 'Inauguration Ceremony', isBreak: true },
+    { time: '8:30 AM – 9:15 AM', title: 'Check-in & Registrations', isBreak: true },
+    { time: '9:30 AM – 10:00 AM', title: 'Inauguration Ceremony', isBreak: true },
     {
-      time: '9:30 AM – 9:55 AM',
+      time: '10:00 AM – 10:25 AM',
       title: 'Keynote by Ravi Kompelle',
       speaker: { name: 'Ravi Kompelle', image: '/speakers/ravi-kompelle.jpg' },
     },
     {
-      time: '9:55 AM – 10:20 AM',
+      time: '10:25 AM – 10:50 AM',
       title: 'Keynote by Vivek\u00A0Raja\u00A0P\u00A0S',
       speaker: { name: 'Vivek\u00A0Raja\u00A0P\u00A0S', image: '/speakers/vivek-raja-hd.jpg' },
     },
     {
-      time: '10:20 AM – 10:45 AM',
+      time: '10:50 AM – 11:15 AM',
       title: 'Keynote by Vijay Rajagopal',
       speaker: { name: 'Vijay Rajagopal', image: '/speakers/vijay-rajagopal.jpg' },
     },
-    { time: '10:45 AM – 11:15 AM', title: 'Tea Break', isBreak: true },
+    { time: '11:15 AM – 11:45 AM', title: 'Tea Break', isBreak: true },
   ];
 
   // Afternoon & evening items after the accordion sessions
   const eveningItems: RegularItem[] = [
-    { time: '3:30 PM – 4:00 PM', title: 'High Tea', isBreak: true },
-    { time: '4:00 PM – 4:15 PM', title: 'Networking Break', isBreak: true },
-    { time: '4:15 PM – 4:45 PM', title: 'Panel Discussion' },
-    { time: '4:45 PM – 5:15 PM', title: 'Valedictory' },
-    { time: '5:15 PM – 5:30 PM', title: 'Swag Distribution', isBreak: true },
+    { time: '4:00 PM – 4:30 PM', title: 'High Tea', isBreak: true },
+    { time: '4:30 PM – 4:45 PM', title: 'Networking Break', isBreak: true },
+    { time: '4:45 PM – 5:15 PM', title: 'Panel Discussion' },
+    { time: '5:15 PM – 5:45 PM', title: 'Valedictory' },
+    { time: '5:45 PM – 6:00 PM', title: 'Swag Distribution', isBreak: true },
   ];
 
   const renderRegularItem = (item: RegularItem, key: string | number) => (
@@ -433,7 +433,7 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
                   SWAG ALERT
                 </span>
                 <span className="font-mono text-[10px] bg-[#23303E] text-[#D1E5CD] group-hover:bg-[#07C2AC] group-hover:text-[#23303E] px-1.5 py-0.5 font-bold transition-colors">
-                  5:15 PM
+                  5:45 PM
                 </span>
               </button>
             </div>
@@ -449,18 +449,18 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({ onOpenSchedule }) 
             </ScrollReveal>
           ))}
 
-          {/* Slots 1 and 2 (11:15 AM and 12:00 PM) */}
+          {/* Slots 1 and 2 (11:45 AM and 12:30 PM) */}
           {accordionSlots.slice(0, 2).map((slot, idx) => renderAccordionSlot(slot, idx))}
 
-          {/* Preserved Lunch Break (12:45 PM – 2:00 PM) */}
+          {/* Preserved Lunch Break (1:15 PM – 2:30 PM) */}
           <ScrollReveal variant="fade-up" delay={80}>
             {renderRegularItem(
-              { time: '12:45 PM – 2:00 PM', title: 'Lunch Break', isBreak: true },
+              { time: '1:15 PM – 2:30 PM', title: 'Lunch Break', isBreak: true },
               'lunch-break'
             )}
           </ScrollReveal>
 
-          {/* Slots 3 and 4 (2:00 PM and 2:45 PM) */}
+          {/* Slots 3 and 4 (2:30 PM and 3:15 PM) */}
           {accordionSlots.slice(2, 4).map((slot, idx) => renderAccordionSlot(slot, idx + 2))}
 
           {/* Evening regular items */}

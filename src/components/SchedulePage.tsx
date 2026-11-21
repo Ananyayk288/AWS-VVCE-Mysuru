@@ -51,10 +51,10 @@ interface SchedulePageProps {
 export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) => {
   // Independent accordion state — all four time slots collapsed initially
   const [openSlots, setOpenSlots] = useState<Record<string, boolean>>({
-    'slot-1115': false,
-    'slot-1200': false,
-    'slot-1400': false,
-    'slot-1445': false,
+    'slot-1145': false,
+    'slot-1230': false,
+    'slot-1430': false,
+    'slot-1515': false,
   });
 
   // State for simple rows (keynotes, breaks) details toggle
@@ -75,15 +75,15 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'checkin',
-      time: '8:00 AM – 8:45 AM',
+      time: '8:30 AM – 9:15 AM',
       title: 'Check-in & Registrations',
       isBreak: true,
-      description: 'Check-in, badge collection, morning refreshments, and networking with fellow student builders, community leads, and sponsors. Registrations close promptly at 8:45 AM.',
+      description: 'Check-in, badge collection, morning refreshments, and networking with fellow student builders, community leads, and sponsors. Registrations close promptly at 9:15 AM.',
     },
     {
       kind: 'simple',
       id: 'inauguration',
-      time: '9:00 AM – 9:30 AM',
+      time: '9:30 AM – 10:00 AM',
       title: 'Inauguration Ceremony',
       isBreak: true,
       description: 'Official inauguration ceremony and lighting of the lamp by dignitaries, faculty coordinators, and AWS Student Builder Group VVCE community leads.',
@@ -91,7 +91,7 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'keynote-ravi',
-      time: '9:30 AM – 9:55 AM',
+      time: '10:00 AM – 10:25 AM',
       title: 'Keynote by Ravi Kompelle',
       description: 'Opening keynote by Ravi Kompelle exploring cloud transformation, career opportunities on AWS, and architecting resilient enterprise systems.',
       speakers: [
@@ -107,7 +107,7 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'keynote-vivek',
-      time: '9:55 AM – 10:20 AM',
+      time: '10:25 AM – 10:50 AM',
       title: 'Keynote by Vivek\u00A0Raja\u00A0P\u00A0S',
       description: 'Keynote session by Vivek Raja P S sharing deep insights on cloud architecture, AI innovations, and community building across the AWS ecosystem.',
       speakers: [
@@ -123,7 +123,7 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'keynote-vijay',
-      time: '10:20 AM – 10:45 AM',
+      time: '10:50 AM – 11:15 AM',
       title: 'Keynote by Vijay Rajagopal',
       description: 'Keynote address by Vijay Rajagopal exploring enterprise conversational and agentic AI adoption, cloud transformation, and real-world deployment at scale.',
       speakers: [
@@ -139,7 +139,7 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'tea',
-      time: '10:45 AM – 11:15 AM',
+      time: '11:15 AM – 11:45 AM',
       title: 'Tea Break',
       isBreak: true,
       description: 'Morning tea break, refreshments, and hallway networking with speakers, mentors, and fellow student builders.',
@@ -147,8 +147,8 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     // ── Four interactive accordion time-slot rows with track identification ─
     {
       kind: 'accordion',
-      id: 'slot-1115',
-      time: '11:15 AM – 12:00 PM',
+      id: 'slot-1145',
+      time: '11:45 AM – 12:30 PM',
       sessions: [
         {
           id: 'jones',
@@ -187,8 +187,8 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     },
     {
       kind: 'accordion',
-      id: 'slot-1200',
-      time: '12:00 PM – 12:45 PM',
+      id: 'slot-1230',
+      time: '12:30 PM – 1:15 PM',
       sessions: [
         {
           id: 'ganesh',
@@ -228,15 +228,15 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'lunch',
-      time: '12:45 PM – 2:00 PM',
+      time: '1:15 PM – 2:30 PM',
       title: 'Lunch Break',
       isBreak: true,
       description: 'Complimentary buffet lunch for attendees, speakers, and volunteers. Sponsor booth visits, product demos, and community networking.',
     },
     {
       kind: 'accordion',
-      id: 'slot-1400',
-      time: '2:00 PM – 2:45 PM',
+      id: 'slot-1430',
+      time: '2:30 PM – 3:15 PM',
       sessions: [
         {
           id: 'yeshwanth',
@@ -275,8 +275,8 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     },
     {
       kind: 'accordion',
-      id: 'slot-1445',
-      time: '2:45 PM – 3:30 PM',
+      id: 'slot-1515',
+      time: '3:15 PM – 4:00 PM',
       sessions: [
         {
           id: 'saksham',
@@ -322,7 +322,7 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'high-tea',
-      time: '3:30 PM – 4:00 PM',
+      time: '4:00 PM – 4:30 PM',
       title: 'High Tea',
       isBreak: true,
       description: 'High tea and refreshments break with community conversations and hands-on discussions.',
@@ -330,7 +330,7 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'networking',
-      time: '4:00 PM – 4:15 PM',
+      time: '4:30 PM – 4:45 PM',
       title: 'Networking Break',
       isBreak: true,
       description: 'Connect directly with speakers, mentors, community organizers, and sponsor booth representatives.',
@@ -338,21 +338,21 @@ export const SchedulePage: React.FC<SchedulePageProps> = ({ onNavigateHome }) =>
     {
       kind: 'simple',
       id: 'panel',
-      time: '4:15 PM – 4:45 PM',
+      time: '4:45 PM – 5:15 PM',
       title: 'Panel Discussion',
       description: 'Interactive panel discussion featuring community leaders and AWS experts on Career Paths in Cloud & AI, Community Impact, and Building Scalable Systems.',
     },
     {
       kind: 'simple',
       id: 'valedictory',
-      time: '4:45 PM – 5:15 PM',
+      time: '5:15 PM – 5:45 PM',
       title: 'Valedictory',
       description: 'Valedictory ceremony: felicitation of speakers, organizers, and volunteers, award presentations, and closing remarks.',
     },
     {
       kind: 'simple',
       id: 'swag',
-      time: '5:15 PM – 5:30 PM',
+      time: '5:45 PM – 6:00 PM',
       title: 'Swag Distribution',
       isBreak: true,
       description: 'Exclusive AWS Community Day swag distribution, certificates, stickers, and group photo session.',
